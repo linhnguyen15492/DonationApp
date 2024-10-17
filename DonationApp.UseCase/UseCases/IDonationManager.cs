@@ -1,12 +1,7 @@
 ﻿using DonationApp.Core.Interfaces;
 using DonationApp.Core.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DonationApp.Core.UseCases
+namespace DonationApp.UseCase.UseCases
 {
     public interface IDonationManager
     {

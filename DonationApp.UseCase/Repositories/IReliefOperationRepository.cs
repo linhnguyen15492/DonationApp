@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DonationApp.Core.Dtos
+namespace DonationApp.UseCase.Repositories
 {
-    public class ReliefOperationDto : BaseDto
+    public interface IReliefOperationRepository
     {
     }
 }

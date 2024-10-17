@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DonationApp.Core.Interfaces;
 
-namespace DonationApp.Core.Dtos
+namespace DonationApp.UseCase.Dtos
 {
     public abstract class BaseDto : IDto
     {

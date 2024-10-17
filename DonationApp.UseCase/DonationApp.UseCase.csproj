@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DonationApp.Core\DonationApp.Core.csproj" />
-    <ProjectReference Include="..\DonationApp.UseCase\DonationApp.UseCase.csproj" />
   </ItemGroup>
 
 </Project>
