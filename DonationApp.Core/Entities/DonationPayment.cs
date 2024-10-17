@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DonationApp.Domain.Interfaces
+namespace DonationApp.Core.Entities
 {
-    public interface IRepository
+    public class DonationPayment : BaseEntity
     {
     }
 }

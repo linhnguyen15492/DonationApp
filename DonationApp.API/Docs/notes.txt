@@ -1,0 +1,3 @@
+﻿https://dotnettutorials.net/lesson/repository-pattern-implementation-guidelines-csharp/
+https://dev.to/hbolajraf/c-entity-framework-generic-repository-with-solid-design-pattern-1hp6
+https://www.c-sharpcorner.com/article/clean-architecture-in-asp-net-core-web-api/
