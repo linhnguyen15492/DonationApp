@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Entities
 {
-    public class DonationPayment : BaseEntity
+    public class FinancialAidDisbursement : BaseEntity
     {
     }
 }
