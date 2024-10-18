@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Infrastructure.Services
 {
-    internal class EmailService
+    public class EmailService
     {
     }
 }

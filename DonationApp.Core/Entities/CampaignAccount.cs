@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Entities
 {
-    public class FinancialAidDisbursement : BaseEntity
+    public class CampaignAccount : BankAccount
     {
+        public int CampaignId { get; set; }
+        public Campaign? Campaign { get; set; }
     }
 }

@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DonationApp.Core.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace DonationApp.Core.Entities
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser
     {
+        public string UserId => Id;
+        public string FullName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public UserRoleEnum Role { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

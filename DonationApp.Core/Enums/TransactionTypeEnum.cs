@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DonationApp.UseCase.Repositories
+namespace DonationApp.Core.Enums
 {
-    public interface IReliefOperationRepository
+    public enum TransactionTypeEnum
     {
+        Deposit,
+        Withdrawal
     }
 }

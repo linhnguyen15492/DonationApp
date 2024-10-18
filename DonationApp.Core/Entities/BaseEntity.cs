@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DonationApp.Core.Interfaces;
+﻿using DonationApp.Core.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonationApp.Core.Entities
 {
     public abstract class BaseEntity : IEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

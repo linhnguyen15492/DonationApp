@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Enums
 {
-    public enum UserTypeEnum
+    public enum UserRoleEnum
     {
         Donor,
         Donee,
         CharitableOrganization,
-        SystemAdmin
+        Administrator,
     }
 }
