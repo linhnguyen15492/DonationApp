@@ -23,17 +23,17 @@ namespace DonationApp.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(object id)
+        public virtual async Task<T?> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T> InsertAsync(T entity)
+        public virtual async Task<T> InsertAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
 
@@ -42,7 +42,7 @@ namespace DonationApp.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             var data = await GetByIdAsync(entity.GetType().GetProperty("Id")?.GetValue(entity)!);
 
@@ -56,7 +56,7 @@ namespace DonationApp.Infrastructure.Repositories
             }
         }
 
-        public async Task DeleteAsync(object id)
+        public virtual async Task DeleteAsync(object id)
         {
             T? existing = await _dbSet.FindAsync(id);
             if (existing != null)
@@ -65,12 +65,12 @@ namespace DonationApp.Infrastructure.Repositories
             }
         }
 
-        public async Task SaveAsync()
+        public virtual async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<T> AsQueryable()
+        public virtual IQueryable<T> AsQueryable()
         {
             return _dbSet.AsQueryable();
         }

@@ -18,6 +18,20 @@ namespace DonationApp.Infrastructure.Repositories
         {
         }
 
+        public override async Task<Campaign?> GetByIdAsync(object id)
+        {
+            Campaign? data = await _dbSet.Where(c => c.Id == (int)id).FirstOrDefaultAsync();
+
+            if (data == null)
+            {
+                throw new Exception("Not Found");
+            }
+            else
+            {
+                return data;
+            }
+        }
+
         public Task<Campaign> GetCampaignByCodeWithAccountAsync(string campaignCode)
         {
             throw new NotImplementedException();

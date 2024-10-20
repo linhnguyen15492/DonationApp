@@ -24,6 +24,7 @@ namespace DonationApp.Infrastructure.Mappers
                 OrganizationId = campaign.OrganizationId,
                 IsActivated = campaign.IsActivated,
                 IsDeleted = campaign.IsDeleted,
+                AccountNumber = campaign.CampaignAccount.AccountNumber
             };
         }
 
