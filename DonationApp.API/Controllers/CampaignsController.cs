@@ -25,5 +25,21 @@ namespace DonationApp.API.Controllers
             var result = await _campaignService.CreateCampaignAsync(model);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("get-campaign/{id}")]
+        public async Task<IActionResult> GetCampaignByIdAsync([FromRoute] object id)
+        {
+            var result = await _campaignService.GetCampaignByIdAsync(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-all-campaigns")]
+        public async Task<IActionResult> GetAllCampaignsAsync()
+        {
+            var result = await _campaignService.GetAllCampaignsAsync();
+            return Ok(result);
+        }
     }
 }

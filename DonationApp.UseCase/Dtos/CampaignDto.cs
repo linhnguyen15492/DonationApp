@@ -21,5 +21,7 @@ namespace DonationApp.UseCase.Dtos
         public string OrganizationId { get; set; } = string.Empty;
 
         public bool IsActivated { get; set; }
+
+        public CampaignAccountDto? CampaignAccountDto { get; set; }
     }
 }

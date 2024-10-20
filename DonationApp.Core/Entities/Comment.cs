@@ -4,10 +4,10 @@ namespace DonationApp.Core.Entities
 {
     public class Comment : BaseEntity
     {
-        public int ReliefOperationId { get; set; }
+        public int CampaignId { get; set; }
 
         [ForeignKey("ReliefOperationId")]
-        public Campaign? ReliefOperation { get; set; }
+        public Campaign? Campaign { get; set; }
 
         public string Content { get; set; } = string.Empty;
 

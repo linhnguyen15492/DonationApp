@@ -10,10 +10,9 @@ namespace DonationApp.UseCase.UseCases
 {
     public interface ICampaignService
     {
-        Task<Result<IDto>> CreateCampaignAsync(IDto dto);
-        Task<Result<IDto>> UpdateCampaignAsync(IDto dto);
-        Task<Result<IDto>> DeleteCampaignAsync(IDto dto);
-        Task<Result<IDto>> GetCampaignByIdAsync(int id);
-        Task<Result<IEnumerable<IDto>>> GetAllAsync();
+        Task<Result<IDto>> CreateCampaignAsync(IModel model);
+        Task<Result<IDto>> UpdateCampaignAsync(IModel model);
+        Task<Result<IDto>> GetCampaignByIdAsync(object id);
+        Task<Result<IEnumerable<IDto>>> GetAllCampaignsAsync();
     }
 }

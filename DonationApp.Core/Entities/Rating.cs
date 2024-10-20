@@ -5,9 +5,9 @@ namespace DonationApp.Core.Entities
 {
     public class Rating : BaseEntity
     {
-        public int ReliefOperationId { get; set; }
+        public int CampaignId { get; set; }
 
-        public Campaign? ReliefOperation { get; set; }
+        public Campaign? Campaign { get; set; }
 
         [Range(1, 5)]
         public int Value { get; set; }

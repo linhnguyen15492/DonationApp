@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography;
 
 namespace DonationApp.Core.Entities
 {
@@ -24,5 +25,7 @@ namespace DonationApp.Core.Entities
         public ICollection<Rating>? Ratings { get; set; }
 
         public bool IsActivated { get; set; }
+
+        public CampaignAccount CampaignAccount { get; set; } = default!;
     }
 }

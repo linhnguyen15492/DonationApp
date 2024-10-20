@@ -1,3 +1,15 @@
 ﻿https://dotnettutorials.net/lesson/repository-pattern-implementation-guidelines-csharp/
+https://dotnettutorials.net/lesson/generic-repository-pattern-csharp-mvc/
 https://dev.to/hbolajraf/c-entity-framework-generic-repository-with-solid-design-pattern-1hp6
 https://www.c-sharpcorner.com/article/clean-architecture-in-asp-net-core-web-api/
+
+https://enlabsoftware.com/development/how-to-implement-repository-unit-of-work-design-patterns-in-dot-net-core-practical-examples-part-one.html
+https://code-maze.com/csharp-unit-of-work-pattern/
+https://dotnettutorials.net/lesson/unit-of-work-pattern-in-asp-net-core-mvc-using-ef-core/
+https://dotnettutorials.net/lesson/unit-of-work-csharp-mvc/
+
+
+https://stackoverflow.com/questions/73714355/bettercleaner-way-to-update-record-using-entity-framework-core
+
+https://www.sammeechward.com/entity-framework-timestamps
+https://www.entityframeworktutorial.net/faq/set-created-and-modified-date-in-efcore.aspx

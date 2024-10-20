@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.UseCase.Models
 {
-    public class CampaignModel : IDto
+    public class CampaignModel : IModel
     {
         public string Title { get; set; } = string.Empty;
 

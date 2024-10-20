@@ -36,7 +36,7 @@ namespace DonationApp.Infrastructure.Mappers
                 Location = model.Location,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                OrganizationId = model.OrganizationId
+                OrganizationId = model.OrganizationId,
             };
         }
     }

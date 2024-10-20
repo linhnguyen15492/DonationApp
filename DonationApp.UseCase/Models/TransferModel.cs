@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.UseCase.Models
 {
-    public class TransferModel : IDto
+    public class TransferModel : IModel
     {
         public string FromAccountId { get; set; } = string.Empty;
         public string ToAccountId { get; set; } = string.Empty;

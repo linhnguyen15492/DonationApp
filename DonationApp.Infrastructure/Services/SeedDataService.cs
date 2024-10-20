@@ -26,7 +26,7 @@ namespace DonationApp.Infrastructure.Services
         {
             try
             {
-
+                await SeedRoles();
                 await SeedUsers();
 
             }
@@ -87,8 +87,8 @@ namespace DonationApp.Infrastructure.Services
 
             var charity = new ApplicationUser
             {
-                UserName = "seller",
-                Email = "seller@gmail.com",
+                UserName = "charity",
+                Email = "charity@gmail.com",
                 PhoneNumber = "0123456789",
                 CreatedDate = DateTime.UtcNow,
             };
@@ -104,6 +104,27 @@ namespace DonationApp.Infrastructure.Services
             {
                 result2.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
                 Messages.Enqueue("Seed data User thất bại");
+            }
+        }
+
+        private async Task SeedRoles()
+        {
+            if (!await _roleManager.RoleExistsAsync(UserRoleEnum.Administrator.ToString()))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.Administrator.ToString()));
+                Messages.Enqueue($"Seed data Role {UserRoleEnum.Administrator} thành công");
+            }
+
+            if (!await _roleManager.RoleExistsAsync(UserRoleEnum.Donor.ToString()))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.Donor.ToString()));
+                Messages.Enqueue($"Seed data Role {UserRoleEnum.Donor} thành công");
+            }
+
+            if (!await _roleManager.RoleExistsAsync(UserRoleEnum.CharitableOrganization.ToString()))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.CharitableOrganization.ToString()));
+                Messages.Enqueue($"Seed data Role {UserRoleEnum.CharitableOrganization} thành công");
             }
         }
     }

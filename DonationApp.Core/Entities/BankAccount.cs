@@ -25,9 +25,22 @@ namespace DonationApp.Core.Entities
             }
         }
 
+        protected BankAccount()
+        {
+            Balance = 0;
+            AccountNumber = GenerateAccountNumber();
+        }
+
         public bool IsLocked { get; set; }
 
-        [Required]
-        public required string AccountNumber { get; set; } = string.Empty;
+        public string AccountNumber { get; set; }
+
+        protected string GenerateAccountNumber()
+        {
+            Random generator = new Random();
+            string r = generator.Next(0, 1000000).ToString("D6");
+
+            return r;
+        }
     }
 }

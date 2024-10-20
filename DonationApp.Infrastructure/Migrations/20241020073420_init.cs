@@ -33,7 +33,6 @@ namespace DonationApp.Infrastructure.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     FullName = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -229,7 +228,8 @@ namespace DonationApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ReliefOperationId = table.Column<int>(type: "integer", nullable: false),
+                    CampaignId = table.Column<int>(type: "integer", nullable: false),
+                    ReliefOperationId = table.Column<int>(type: "integer", nullable: true),
                     Content = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -243,8 +243,7 @@ namespace DonationApp.Infrastructure.Migrations
                         name: "FK_Comments_Campaigns_ReliefOperationId",
                         column: x => x.ReliefOperationId,
                         principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
@@ -258,7 +257,7 @@ namespace DonationApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ReliefOperationId = table.Column<int>(type: "integer", nullable: false),
+                    CampaignId = table.Column<int>(type: "integer", nullable: false),
                     Value = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -269,8 +268,8 @@ namespace DonationApp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Ratings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ratings_Campaigns_ReliefOperationId",
-                        column: x => x.ReliefOperationId,
+                        name: "FK_Ratings_Campaigns_CampaignId",
+                        column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -310,7 +309,8 @@ namespace DonationApp.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_CampaignId",
                 table: "BankAccount",
-                column: "CampaignId");
+                column: "CampaignId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_UserId",
@@ -333,9 +333,9 @@ namespace DonationApp.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_ReliefOperationId",
+                name: "IX_Ratings_CampaignId",
                 table: "Ratings",
-                column: "ReliefOperationId");
+                column: "CampaignId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_UserId",

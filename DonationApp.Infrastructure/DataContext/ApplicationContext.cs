@@ -1,11 +1,23 @@
 ﻿using DonationApp.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Reflection.Emit;
 
 namespace DonationApp.Infrastructure.DataContext
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
+        private readonly string _connectionString = "Host=localhost;port=5433;Database=DonationApp;Username=postgres;Password=181117";
+
+        // Tạo ILoggerFactory 
+        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder
+                   .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Warning)
+                   .AddFilter(DbLoggerCategory.Query.Name, LogLevel.Debug)
+                   .AddConsole();
+        });
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -13,7 +25,9 @@ namespace DonationApp.Infrastructure.DataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;port=5433;Database=DonationApp;Username=postgres;Password=181117");
+            optionsBuilder
+                .UseNpgsql(_connectionString)
+                .UseLoggerFactory(loggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -35,6 +49,48 @@ namespace DonationApp.Infrastructure.DataContext
                 }
             }
         }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+            foreach (var entry in entries)
+            {
+
+                if (entry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                }
+                else
+                {
+                    ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                }
+
+            }
+
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+            foreach (var entry in entries)
+            {
+
+                if (entry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                }
+                else
+                {
+                    ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                }
+
+            }
+
+            return base.SaveChanges();
+        }
+
 
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Comment> Comments { get; set; }

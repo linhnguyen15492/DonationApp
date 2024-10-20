@@ -6,11 +6,7 @@ using DonationApp.Infrastructure.Mappers;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.Repositories;
 using DonationApp.UseCase.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Principal;
 
 namespace DonationApp.Infrastructure.Services
 {
@@ -18,44 +14,73 @@ namespace DonationApp.Infrastructure.Services
     {
         private readonly ICampaignRepository _campaignRepository;
         private readonly ICampaignAccountRepository _campaignAccountRepository;
-        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository, IUnitOfWork unitOfWork)
         {
             _campaignRepository = campaignRepository ?? throw new ArgumentNullException(nameof(campaignRepository));
             _campaignAccountRepository = campaignAccountRepository ?? throw new ArgumentNullException(nameof(campaignAccountRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public async Task<Result<IDto>> CreateCampaignAsync(IDto dto)
+        public async Task<Result<IDto>> CreateCampaignAsync(IModel model)
         {
-            var model = dto as CampaignModel;
-            var campaign = model.ToCampaign();
+            var data = model as CampaignModel;
+            var campaign = data?.ToCampaign();
 
-            var data = await _campaignRepository.AddAsync(campaign!);
+            if (campaign is not null)
+            {
+                var res = await InsertCampaignAsync(campaign);
+
+                var bankAccount = new CampaignAccount()
+                {
+                    CampaignId = campaign.Id,
+                };
+
+                await _campaignAccountRepository.InsertAsync(bankAccount);
+                await _campaignAccountRepository.SaveAsync();
+
+
+                return Result<IDto>.Success(campaign.ToCampaignDto());
+
+
+            }
+            else return Result<IDto>.Failure("Failed to create campaign");
+        }
+
+
+        private async Task<int> InsertCampaignAsync(Campaign campaign)
+        {
+            try
+            {
+                var data = await _campaignRepository.InsertAsync(campaign);
+                await _campaignRepository.SaveAsync();
+
+                return data.Id;
+
+            }
+            catch (Exception e) { throw new Exception(e.Message); }
+        }
+
+
+        public async Task<Result<IEnumerable<IDto>>> GetAllCampaignsAsync()
+        {
+
+            var data = await _campaignRepository.GetAllAsync();
 
             if (data is not null)
             {
-                return Result<IDto>.Success(data.ToCampaignDto());
+                return Result<IEnumerable<IDto>>.Success(data.Select(c => c.ToCampaignDto()));
             }
-
-            return Result<IDto>.Failure("");
+            else return Result<IEnumerable<IDto>>.Failure("Failed to get all campaigns");
 
         }
 
-        public Task<Result<IDto>> DeleteCampaignAsync(IDto dto)
+        public Task<Result<IDto>> GetCampaignByIdAsync(object id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<IEnumerable<IDto>>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Result<IDto>> GetCampaignByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Result<IDto>> UpdateCampaignAsync(IDto dto)
+        public Task<Result<IDto>> UpdateCampaignAsync(IModel model)
         {
             throw new NotImplementedException();
         }

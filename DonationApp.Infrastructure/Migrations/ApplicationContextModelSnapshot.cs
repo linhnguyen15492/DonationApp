@@ -75,9 +75,6 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -201,6 +198,9 @@ namespace DonationApp.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CampaignId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
@@ -211,7 +211,7 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("ReliefOperationId")
+                    b.Property<int?>("ReliefOperationId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -237,14 +237,14 @@ namespace DonationApp.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CampaignId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("ReliefOperationId")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -257,7 +257,7 @@ namespace DonationApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReliefOperationId");
+                    b.HasIndex("CampaignId");
 
                     b.HasIndex("UserId");
 
@@ -444,7 +444,8 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<int>("CampaignId")
                         .HasColumnType("integer");
 
-                    b.HasIndex("CampaignId");
+                    b.HasIndex("CampaignId")
+                        .IsUnique();
 
                     b.HasDiscriminator().HasValue("CampaignAccount");
                 });
@@ -475,11 +476,9 @@ namespace DonationApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DonationApp.Core.Entities.Comment", b =>
                 {
-                    b.HasOne("DonationApp.Core.Entities.Campaign", "ReliefOperation")
+                    b.HasOne("DonationApp.Core.Entities.Campaign", "Campaign")
                         .WithMany("Comments")
-                        .HasForeignKey("ReliefOperationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReliefOperationId");
 
                     b.HasOne("DonationApp.Core.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -487,14 +486,14 @@ namespace DonationApp.Infrastructure.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("ReliefOperation");
+                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("DonationApp.Core.Entities.Rating", b =>
                 {
-                    b.HasOne("DonationApp.Core.Entities.Campaign", "ReliefOperation")
+                    b.HasOne("DonationApp.Core.Entities.Campaign", "Campaign")
                         .WithMany("Ratings")
-                        .HasForeignKey("ReliefOperationId")
+                        .HasForeignKey("CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -504,7 +503,7 @@ namespace DonationApp.Infrastructure.Migrations
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("ReliefOperation");
+                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("DonationApp.Core.Entities.Transaction", b =>
@@ -572,8 +571,8 @@ namespace DonationApp.Infrastructure.Migrations
             modelBuilder.Entity("DonationApp.Core.Entities.CampaignAccount", b =>
                 {
                     b.HasOne("DonationApp.Core.Entities.Campaign", "Campaign")
-                        .WithMany()
-                        .HasForeignKey("CampaignId")
+                        .WithOne("CampaignAccount")
+                        .HasForeignKey("DonationApp.Core.Entities.CampaignAccount", "CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -593,6 +592,9 @@ namespace DonationApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DonationApp.Core.Entities.Campaign", b =>
                 {
+                    b.Navigation("CampaignAccount")
+                        .IsRequired();
+
                     b.Navigation("Comments");
 
                     b.Navigation("Ratings");

@@ -9,20 +9,12 @@ namespace DonationApp.Core.Interfaces.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<T> AddAsync(T objModel);
-        void AddRange(IEnumerable<T> objModel);
-        T? GetId(int id);
-        Task<T?> GetIdAsync(int id);
-        T? Get(Expression<Func<T, bool>> predicate);
-        Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> GetList(Expression<Func<T, bool>> predicate);
-        Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
-        int Count();
-        Task<int> CountAsync();
-        void Update(T objModel);
-        void Remove(T objModel);
-        void Dispose();
+        Task<T?> GetByIdAsync(object id);
+        Task<T> InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(object id);
+        Task SaveAsync();
+        IQueryable<T> AsQueryable();
     }
 }

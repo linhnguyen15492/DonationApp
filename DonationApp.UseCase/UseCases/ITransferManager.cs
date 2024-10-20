@@ -10,6 +10,6 @@ namespace DonationApp.UseCase.UseCases
 {
     public interface ITransferManager
     {
-        Task<Result<IDto>> TransferAsync(IDto dto);
+        Task<Result<IDto>> TransferAsync(IModel model);
     }
 }
