@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Reflection.Emit;
 
 namespace DonationApp.Infrastructure.DataContext
 {
@@ -50,52 +49,50 @@ namespace DonationApp.Infrastructure.DataContext
             }
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
-            foreach (var entry in entries)
-            {
+        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+        //    foreach (var entry in entries)
+        //    {
+        //        if (entry.State == EntityState.Added)
+        //        {
+        //            ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+        //        }
+        //        else
+        //        {
+        //            ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+        //        }
 
-                if (entry.State == EntityState.Added)
-                {
-                    ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
-                }
-                else
-                {
-                    ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
-                }
-
-            }
+        //    }
 
 
-            return base.SaveChangesAsync(cancellationToken);
-        }
+        //    return base.SaveChangesAsync(cancellationToken);
+        //}
 
-        public override int SaveChanges()
-        {
-            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
-            foreach (var entry in entries)
-            {
+        //public override int SaveChanges()
+        //{
+        //    var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+        //    foreach (var entry in entries)
+        //    {
 
-                if (entry.State == EntityState.Added)
-                {
-                    ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
-                }
-                else
-                {
-                    ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
-                }
+        //        if (entry.State == EntityState.Added)
+        //        {
+        //            ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+        //        }
+        //        else
+        //        {
+        //            ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+        //        }
 
-            }
+        //    }
 
-            return base.SaveChanges();
-        }
+        //    return base.SaveChanges();
+        //}
 
 
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<CampaignAccount> CampaignAccounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }

@@ -25,6 +25,10 @@ namespace DonationApp.Infrastructure.Services
         public async Task<Result<IDto>> CreateCampaignAsync(IModel model)
         {
             var data = model as CampaignModel;
+
+            //var startDate = DateTime.ParseExact(data!.StartDate, "yyyy/MM/dd", null);
+            //var endDate = DateTime.ParseExact(data!.EndDate, "yyyy/MM/dd", null);
+
             var campaign = data?.ToCampaign();
 
             if (campaign is not null)

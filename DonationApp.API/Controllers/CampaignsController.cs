@@ -36,10 +36,18 @@ namespace DonationApp.API.Controllers
 
         [HttpGet]
         [Route("get-all-campaigns")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllCampaignsAsync()
         {
             var result = await _campaignService.GetAllCampaignsAsync();
-            return Ok(result);
+
+            if (!result.IsSuccess)
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            else
+            {
+                return Ok(result.Value);
+            }
         }
     }
 }

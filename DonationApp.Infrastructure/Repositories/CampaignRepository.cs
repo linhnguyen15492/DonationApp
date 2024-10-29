@@ -36,5 +36,12 @@ namespace DonationApp.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public override async Task<IEnumerable<Campaign>> GetAllAsync()
+        {
+            return await _dbSet.Include(c => c.CampaignAccount)
+                                .Include(c => c.Organization)
+                                .ToListAsync();
+        }
     }
 }

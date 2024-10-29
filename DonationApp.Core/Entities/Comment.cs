@@ -6,7 +6,7 @@ namespace DonationApp.Core.Entities
     {
         public int CampaignId { get; set; }
 
-        [ForeignKey("ReliefOperationId")]
+        [ForeignKey("CampaignId")]
         public Campaign? Campaign { get; set; }
 
         public string Content { get; set; } = string.Empty;

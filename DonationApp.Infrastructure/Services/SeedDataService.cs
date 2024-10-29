@@ -43,6 +43,7 @@ namespace DonationApp.Infrastructure.Services
             var admin = new ApplicationUser
             {
                 UserName = "admin",
+                FullName = "Lĩnh",
                 Email = "admin@gmail.com",
                 PhoneNumber = "0123456789",
                 CreatedDate = DateTime.UtcNow,
@@ -66,6 +67,7 @@ namespace DonationApp.Infrastructure.Services
             var donor = new ApplicationUser
             {
                 UserName = "donor",
+                FullName = "Linh",
                 Email = "donor@gmail.com",
                 PhoneNumber = "0123456789",
                 CreatedDate = DateTime.UtcNow,
@@ -88,6 +90,7 @@ namespace DonationApp.Infrastructure.Services
             var charity = new ApplicationUser
             {
                 UserName = "charity",
+                FullName = "Quỹ vì tương lai",
                 Email = "charity@gmail.com",
                 PhoneNumber = "0123456789",
                 CreatedDate = DateTime.UtcNow,
@@ -127,5 +130,6 @@ namespace DonationApp.Infrastructure.Services
                 Messages.Enqueue($"Seed data Role {UserRoleEnum.CharitableOrganization} thành công");
             }
         }
+
     }
 }
