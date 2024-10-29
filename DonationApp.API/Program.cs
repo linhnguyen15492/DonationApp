@@ -8,7 +8,6 @@ using DonationApp.Infrastructure.UnitOfWork;
 using DonationApp.UseCase.Repositories;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
