@@ -21,6 +21,7 @@ namespace DonationApp.Infrastructure.Repositories
         {
             _context = context;
             _dbSet = context.Set<T>();
+
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()

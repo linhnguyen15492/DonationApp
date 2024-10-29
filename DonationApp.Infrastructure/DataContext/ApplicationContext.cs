@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace DonationApp.Infrastructure.DataContext
 {
@@ -10,11 +11,18 @@ namespace DonationApp.Infrastructure.DataContext
         private readonly string _connectionString = "Host=localhost;port=5433;Database=DonationApp;Username=postgres;Password=181117";
 
         // Tạo ILoggerFactory 
+        //public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+        //{
+        //    builder
+        //           .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Warning)
+        //           .AddFilter(DbLoggerCategory.Query.Name, LogLevel.Debug)
+        //           .AddConsole();
+        //});
+
+        // Tạo ILoggerFactory 
         public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {
             builder
-                   .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Warning)
-                   .AddFilter(DbLoggerCategory.Query.Name, LogLevel.Debug)
                    .AddConsole();
         });
 
@@ -22,11 +30,13 @@ namespace DonationApp.Infrastructure.DataContext
         {
         }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
                 .UseNpgsql(_connectionString)
-                .UseLoggerFactory(loggerFactory);
+                .UseLoggerFactory(loggerFactory)
+                .EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

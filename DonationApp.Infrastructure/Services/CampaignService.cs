@@ -26,14 +26,11 @@ namespace DonationApp.Infrastructure.Services
         {
             var data = model as CampaignModel;
 
-            //var startDate = DateTime.ParseExact(data!.StartDate, "yyyy/MM/dd", null);
-            //var endDate = DateTime.ParseExact(data!.EndDate, "yyyy/MM/dd", null);
-
             var campaign = data?.ToCampaign();
 
             if (campaign is not null)
             {
-                var res = await InsertCampaignAsync(campaign);
+                await InsertCampaignAsync(campaign);
 
                 var bankAccount = new CampaignAccount()
                 {
@@ -42,7 +39,6 @@ namespace DonationApp.Infrastructure.Services
 
                 await _campaignAccountRepository.InsertAsync(bankAccount);
                 await _campaignAccountRepository.SaveAsync();
-
 
 
                 return Result<IDto>.Success(campaign.ToCampaignDto());
