@@ -20,10 +20,21 @@ namespace DonationApp.API.Controllers
 
         [HttpPost]
         [Route("create-campaign")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateCampaignAsync([FromBody] CampaignModel model)
         {
             var result = await _campaignService.CreateCampaignAsync(model);
-            return Ok(result);
+
+            if (!result.IsSuccess)
+            {
+
+                return BadRequest(result.Errors);
+            }
+            else
+            {
+                return Ok(result.Value);
+            }
         }
 
         [HttpGet]

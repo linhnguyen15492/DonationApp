@@ -49,45 +49,47 @@ namespace DonationApp.Infrastructure.DataContext
             }
         }
 
-        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        //{
-        //    var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
-        //    foreach (var entry in entries)
-        //    {
-        //        if (entry.State == EntityState.Added)
-        //        {
-        //            ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
-        //        }
-        //        else
-        //        {
-        //            ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
-        //        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+            foreach (var entry in entries)
+            {
+                if (entry.Entity is BaseEntity)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                    }
+                }
+            }
 
-        //    }
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
+            foreach (var entry in entries)
+            {
+                if (entry.Entity is BaseEntity)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                    }
+                }
+            }
 
-        //    return base.SaveChangesAsync(cancellationToken);
-        //}
-
-        //public override int SaveChanges()
-        //{
-        //    var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
-        //    foreach (var entry in entries)
-        //    {
-
-        //        if (entry.State == EntityState.Added)
-        //        {
-        //            ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
-        //        }
-        //        else
-        //        {
-        //            ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
-        //        }
-
-        //    }
-
-        //    return base.SaveChanges();
-        //}
+            return base.SaveChanges();
+        }
 
 
         public DbSet<Campaign> Campaigns { get; set; }

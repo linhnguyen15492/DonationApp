@@ -20,11 +20,11 @@ namespace DonationApp.UseCase.Dtos
 
         public string OrganizationId { get; set; } = string.Empty;
 
-        public string OrganizationName { get; set; } = string.Empty;
+        public string? OrganizationName { get; set; }
 
         public bool IsActivated { get; set; }
 
-        public string AccountNumber { get; set; } = string.Empty;
-        public double AccountBalance { get; set; }
+        public string? AccountNumber { get; set; } = string.Empty;
+        public double? AccountBalance { get; set; }
     }
 }

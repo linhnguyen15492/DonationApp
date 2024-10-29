@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonationApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241029084834_init")]
+    [Migration("20241029145322_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -291,6 +291,9 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("ReferenceId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("TransactionTypeEnum")
                         .HasColumnType("integer");

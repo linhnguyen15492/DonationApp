@@ -291,6 +291,7 @@ namespace DonationApp.Infrastructure.Migrations
                     Notes = table.Column<string>(type: "text", nullable: false),
                     TransactionTypeEnum = table.Column<int>(type: "integer", nullable: false),
                     BankAccountId = table.Column<int>(type: "integer", nullable: false),
+                    ReferenceId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)

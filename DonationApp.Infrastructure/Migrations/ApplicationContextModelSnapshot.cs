@@ -289,6 +289,9 @@ namespace DonationApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ReferenceId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("TransactionTypeEnum")
                         .HasColumnType("integer");
 

@@ -17,11 +17,11 @@ namespace DonationApp.Infrastructure.Mappers
                 StartDate = campaign.StartDate,
                 EndDate = campaign.EndDate,
                 OrganizationId = campaign.OrganizationId,
-                OrganizationName = campaign.Organization!.FullName,
+                OrganizationName = campaign.Organization?.FullName,
                 IsActivated = campaign.IsActivated,
                 IsDeleted = campaign.IsDeleted,
-                AccountNumber = campaign.CampaignAccount.AccountNumber,
-                AccountBalance = campaign.CampaignAccount.Balance,
+                AccountNumber = campaign.CampaignAccount?.AccountNumber,
+                AccountBalance = campaign.CampaignAccount?.Balance,
             };
         }
 

@@ -44,9 +44,8 @@ namespace DonationApp.Infrastructure.Services
                 await _campaignAccountRepository.SaveAsync();
 
 
+
                 return Result<IDto>.Success(campaign.ToCampaignDto());
-
-
             }
             else return Result<IDto>.Failure("Failed to create campaign");
         }
