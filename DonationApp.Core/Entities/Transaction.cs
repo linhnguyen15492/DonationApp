@@ -18,5 +18,6 @@ namespace DonationApp.Core.Entities
         [ForeignKey("BankAccountId")]
         public BankAccount BankAccount { get; set; } = default!;
 
+        public Guid ReferenceId { get; set; }
     }
 }

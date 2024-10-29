@@ -1,11 +1,6 @@
 ﻿using DonationApp.Core.Entities;
 using DonationApp.UseCase.Dtos;
 using DonationApp.UseCase.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DonationApp.Infrastructure.Mappers
 {
@@ -25,7 +20,8 @@ namespace DonationApp.Infrastructure.Mappers
                 OrganizationName = campaign.Organization!.FullName,
                 IsActivated = campaign.IsActivated,
                 IsDeleted = campaign.IsDeleted,
-                AccountNumber = campaign.CampaignAccount.AccountNumber
+                AccountNumber = campaign.CampaignAccount.AccountNumber,
+                AccountBalance = campaign.CampaignAccount.Balance,
             };
         }
 

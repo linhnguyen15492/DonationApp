@@ -25,5 +25,6 @@ namespace DonationApp.UseCase.Dtos
         public bool IsActivated { get; set; }
 
         public string AccountNumber { get; set; } = string.Empty;
+        public double AccountBalance { get; set; }
     }
 }
