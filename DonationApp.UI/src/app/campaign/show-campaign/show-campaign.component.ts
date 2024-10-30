@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -49,11 +49,13 @@ const MODALS: { [name: string]: Type<any> } = {
 };
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-show-campaign',
+  standalone: true,
+  imports: [],
+  templateUrl: './show-campaign.component.html',
+  styleUrl: './show-campaign.component.css',
 })
-export class HomeComponent implements OnInit {
+export class ShowCampaignComponent implements OnInit {
   closeResult = '';
   employeeList: any = [];
   constructor(

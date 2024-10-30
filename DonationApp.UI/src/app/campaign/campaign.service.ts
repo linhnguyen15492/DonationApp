@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class CampaignService {
   readonly apiUrl = 'http://localhost:7112/api/';
-  readonly photoUrl = 'http://localhost:50306/Photos/';
 
   constructor(private http: HttpClient) {}
 

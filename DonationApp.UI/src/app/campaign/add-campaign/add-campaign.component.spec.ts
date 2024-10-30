@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteCampaignComponent } from './delete-campaign.component';
+import { AddCampaignComponent } from './add-campaign.component';
 
-describe('DeleteCampaignComponent', () => {
-  let component: DeleteCampaignComponent;
-  let fixture: ComponentFixture<DeleteCampaignComponent>;
+describe('AddCampaignComponent', () => {
+  let component: AddCampaignComponent;
+  let fixture: ComponentFixture<AddCampaignComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeleteCampaignComponent ]
+      imports: [AddCampaignComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DeleteCampaignComponent);
+    fixture = TestBed.createComponent(AddCampaignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

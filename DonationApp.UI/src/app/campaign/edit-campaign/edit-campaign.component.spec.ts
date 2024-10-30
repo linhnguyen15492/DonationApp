@@ -8,7 +8,7 @@ describe('EditCampaignComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditCampaignComponent ]
+      imports: [EditCampaignComponent]
     })
     .compileComponents();
 

@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-edit-campaign',
+  standalone: true,
+  imports: [],
   templateUrl: './edit-campaign.component.html',
-  styleUrls: ['./edit-campaign.component.css']
+  styleUrl: './edit-campaign.component.css'
 })
 export class EditCampaignComponent {
 
