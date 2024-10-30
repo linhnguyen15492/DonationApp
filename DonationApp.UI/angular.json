@@ -56,10 +56,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "DonationApp.UI:build:production"
+              "buildTarget": "DonationApp.UI:build:production"
             },
             "development": {
-              "browserTarget": "DonationApp.UI:build:development"
+              "buildTarget": "DonationApp.UI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,7 +67,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DonationApp.UI:build"
+            "buildTarget": "DonationApp.UI:build"
           }
         },
         "test": {
