@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonationApp.Core.Entities
 {
-    public class Transaction : BaseEntity
+    public class Transaction : AuditEntity<int>
     {
         public double Amount { get; set; }
 

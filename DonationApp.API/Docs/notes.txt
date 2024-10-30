@@ -13,3 +13,6 @@ https://stackoverflow.com/questions/73714355/bettercleaner-way-to-update-record-
 
 https://www.sammeechward.com/entity-framework-timestamps
 https://www.entityframeworktutorial.net/faq/set-created-and-modified-date-in-efcore.aspx
+
+
+https://www.c-sharpcorner.com/article/signalr-introduction-and-implementation-using-the-net-core-6-web-api-and-angula/

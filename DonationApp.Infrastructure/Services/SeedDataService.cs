@@ -46,7 +46,7 @@ namespace DonationApp.Infrastructure.Services
                 FullName = "Lĩnh",
                 Email = "admin@gmail.com",
                 PhoneNumber = "0123456789",
-                CreatedDate = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
             };
 
             var result = await _userManager.CreateAsync(admin, "Abc@123");
@@ -70,7 +70,7 @@ namespace DonationApp.Infrastructure.Services
                 FullName = "Linh",
                 Email = "donor@gmail.com",
                 PhoneNumber = "0123456789",
-                CreatedDate = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
             };
 
             var result1 = await _userManager.CreateAsync(donor, "Abc@123");
@@ -93,7 +93,7 @@ namespace DonationApp.Infrastructure.Services
                 FullName = "Quỹ vì tương lai",
                 Email = "charity@gmail.com",
                 PhoneNumber = "0123456789",
-                CreatedDate = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
             };
 
             var result2 = await _userManager.CreateAsync(charity, "Abc@123");

@@ -1,3 +1,4 @@
+using DonationApp.API.Hubs;
 using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
 using DonationApp.Core.Interfaces.Repositories;
@@ -28,8 +29,16 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSignalR();
 
-builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy", builder => builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((hosts) => true));
+});
+
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -45,8 +54,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("CORSPolicy");
+
 app.UseAuthorization();
 
+app.MapHub<MessageHub>("/messageHub");
 app.MapControllers();
 
 app.Run();

@@ -1,9 +1,11 @@
-﻿using DonationApp.Core.Entities;
+﻿using DonationApp.API.Hubs;
+using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DonationApp.API.Controllers
 {
@@ -12,10 +14,12 @@ namespace DonationApp.API.Controllers
     public class CampaignsController : ControllerBase
     {
         private readonly ICampaignService _campaignService;
+        private IHubContext<MessageHub, IMessageHubClient> _messageHub;
 
-        public CampaignsController(ICampaignService campaignService)
+        public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
             _campaignService = campaignService;
+            _messageHub = messageHub;
         }
 
         [HttpPost]
@@ -33,6 +37,9 @@ namespace DonationApp.API.Controllers
             }
             else
             {
+                var messages = new List<string> { $"New Campaign {model.Name} Created" };
+                await _messageHub.Clients.All.PushNotificationAsync(messages);
+
                 return Ok(result.Value);
             }
         }

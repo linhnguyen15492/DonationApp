@@ -1,16 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DonationApp.Core.Entities
 {
-    public class Rating : AuditEntity<int>
+    public class CampaignLike
     {
         public int CampaignId { get; set; }
 
+        [ForeignKey("CampaignId")]
         public Campaign? Campaign { get; set; }
-
-        [Range(1, 5)]
-        public int Value { get; set; }
 
         public string? UserId { get; set; }
 

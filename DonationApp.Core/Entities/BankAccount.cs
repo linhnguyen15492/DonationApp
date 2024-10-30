@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Entities
 {
-    public abstract class BankAccount : BaseEntity
+    public abstract class BankAccount : AuditEntity<int>
     {
         private double _balance;
         public double Balance

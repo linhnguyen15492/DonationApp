@@ -2,7 +2,7 @@
 
 namespace DonationApp.Core.Entities
 {
-    public class Comment : BaseEntity
+    public class Comment : AuditEntity<int>
     {
         public int CampaignId { get; set; }
 

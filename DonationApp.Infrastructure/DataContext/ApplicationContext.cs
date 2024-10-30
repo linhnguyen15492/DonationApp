@@ -1,4 +1,5 @@
 ﻿using DonationApp.Core.Entities;
+using DonationApp.Core.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -57,6 +58,9 @@ namespace DonationApp.Infrastructure.DataContext
                     }
                 }
             }
+
+            builder.Entity<CampaignLike>()
+                .HasKey(cl => new { cl.CampaignId, cl.UserId });
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -64,17 +68,50 @@ namespace DonationApp.Infrastructure.DataContext
             var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
             foreach (var entry in entries)
             {
-                if (entry.Entity is BaseEntity)
+                if (entry.Entity is IAuditEntity auditEntity)
                 {
+
                     if (entry.State == EntityState.Added)
                     {
-                        ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                        auditEntity.CreatedAt = DateTime.UtcNow;
                     }
                     else
                     {
-                        ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                        auditEntity.UpdatedAt = DateTime.UtcNow;
                     }
+
+                    //// Lấy type của entry.Entity
+                    //Type entityType = entry.Entity.GetType();
+                    //if (entityType.IsGenericType && entityType.GetGenericTypeDefinition() == typeof(AuditEntity<>))
+                    //{
+                    //    Type genericArgument = entityType.GetGenericArguments()[0]; // Lấy ra kiểu của T
+
+                    //    if (entry.State == EntityState.Added)
+                    //    {
+                    //        auditEntity.CreatedAt = DateTime.UtcNow;
+                    //    }
+                    //    else
+                    //    {
+                    //        auditEntity.UpdatedAt = DateTime.UtcNow;
+                    //    }
+                    //}
                 }
+
+                //if (entry.Entity is IAuditEntity)
+                //{
+
+                //    if (entry.State == EntityState.Added)
+                //    {
+                //        //((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+
+                //        ((AuditEntity<t)>)entry.Entity).CreatedAt = DateTime.UtcNow;
+                //    }
+                //    else
+                //    {
+                //        //((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                //        ((AuditEntity<Type>)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                //    }
+                //}
             }
 
             return base.SaveChangesAsync(cancellationToken);
@@ -85,17 +122,49 @@ namespace DonationApp.Infrastructure.DataContext
             var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified || e.State == EntityState.Added);
             foreach (var entry in entries)
             {
-                if (entry.Entity is BaseEntity)
+                if (entry.Entity is IAuditEntity auditEntity)
                 {
+
                     if (entry.State == EntityState.Added)
                     {
-                        ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                        auditEntity.CreatedAt = DateTime.UtcNow;
                     }
                     else
                     {
-                        ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                        auditEntity.UpdatedAt = DateTime.UtcNow;
                     }
+
+
+                    // Lấy type của entry.Entity
+                    //Type entityType = entry.Entity.GetType();
+                    //if (entityType.IsGenericType && entityType.GetGenericTypeDefinition() == typeof(AuditEntity<>))
+                    //{
+                    //    Type genericArgument = entityType.GetGenericArguments()[0]; // Lấy ra kiểu của T
+
+                    //    if (entry.State == EntityState.Added)
+                    //    {
+                    //        auditEntity.CreatedAt = DateTime.UtcNow;
+                    //    }
+                    //    else
+                    //    {
+                    //        auditEntity.UpdatedAt = DateTime.UtcNow;
+                    //    }
+                    //}
                 }
+
+
+
+                //if (entry.Entity is BaseEntity)
+                //{
+                //    if (entry.State == EntityState.Added)
+                //    {
+                //        ((BaseEntity)entry.Entity).CreatedAt = DateTime.UtcNow;
+                //    }
+                //    else
+                //    {
+                //        ((BaseEntity)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                //    }
+                //}
             }
 
             return base.SaveChanges();
@@ -108,7 +177,7 @@ namespace DonationApp.Infrastructure.DataContext
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<CampaignAccount> CampaignAccounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-
+        public DbSet<CampaignLike> CampaignLikes { get; set; }
 
     }
 }

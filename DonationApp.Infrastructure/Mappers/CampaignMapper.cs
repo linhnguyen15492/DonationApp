@@ -11,7 +11,7 @@ namespace DonationApp.Infrastructure.Mappers
             return new CampaignDto
             {
                 Id = campaign.Id,
-                Title = campaign.Title,
+                Name = campaign.Name,
                 Description = campaign.Description,
                 Location = campaign.Location,
                 StartDate = campaign.StartDate,
@@ -29,7 +29,7 @@ namespace DonationApp.Infrastructure.Mappers
         {
             return new Campaign
             {
-                Title = model.Title,
+                Name = model.Name,
                 Description = model.Description,
                 Location = model.Location,
                 StartDate = model.StartDate,
