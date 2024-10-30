@@ -1,0 +1,44 @@
+[
+  {
+    "name": "string",
+    "description": "string",
+    "location": "string",
+    "startDate": "2024-10-30",
+    "endDate": "2024-10-30",
+    "organizationId": "64661607-9b5a-45b9-901b-04c876ccd874",
+    "organizationName": "Quỹ vì tương lai",
+    "isActivated": false,
+    "accountNumber": "947308",
+    "accountBalance": 0,
+    "id": 1,
+    "isDeleted": false
+  },
+  {
+    "name": "",
+    "description": "string",
+    "location": "string",
+    "startDate": "2024-10-30",
+    "endDate": "2024-10-30",
+    "organizationId": "64661607-9b5a-45b9-901b-04c876ccd874",
+    "organizationName": "Quỹ vì tương lai",
+    "isActivated": false,
+    "accountNumber": "964904",
+    "accountBalance": 0,
+    "id": 3,
+    "isDeleted": false
+  },
+  {
+    "name": "string",
+    "description": "string",
+    "location": "string",
+    "startDate": "2024-10-30",
+    "endDate": "2024-10-30",
+    "organizationId": "64661607-9b5a-45b9-901b-04c876ccd874",
+    "organizationName": "Quỹ vì tương lai",
+    "isActivated": false,
+    "accountNumber": "814652",
+    "accountBalance": 0,
+    "id": 4,
+    "isDeleted": false
+  }
+]

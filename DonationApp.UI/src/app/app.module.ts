@@ -11,10 +11,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './campaign/edit-campaign/edit-campaign.component';
 import { DeleteCampaignComponent } from './campaign/delete-campaign/delete-campaign.component';
-import { HomeComponent } from './home/home.component';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
-import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
-import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +22,6 @@ import { ViewEmployeeComponent } from './view-employee/view-employee.component';
     CreateCampaignComponent,
     EditCampaignComponent,
     DeleteCampaignComponent,
-    HomeComponent,
-    AddEmployeeComponent,
-    EditEmployeeComponent,
-    ViewEmployeeComponent,
   ],
   imports: [
     BrowserModule,
