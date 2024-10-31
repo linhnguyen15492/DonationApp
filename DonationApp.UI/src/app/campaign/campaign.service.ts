@@ -1,45 +1,98 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
+import { ApiPaths } from '../api-paths';
+import { Campaign } from '../models/campaign';
+import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CampaignService {
-  readonly apiUrl = 'http://localhost:7112/api/';
+  private campaignUrl = {
+    getAllCampaigns:
+      environment.apiUrl + ApiPaths.Campaign + '/get-all-campaigns',
+    addCampaign: environment.apiUrl + ApiPaths.Campaign + '/create-campaign/',
+    getCampaignById: environment.apiUrl + '/api/campaign/',
+    deleteCampaignById: environment.apiUrl + '/api/campaign/',
+    updateCampaign: environment.apiUrl + '/api/campaign/',
+  };
 
-  constructor(private http: HttpClient) {}
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
-  // Department
-  getAllCampaigns(): Observable<any[]> {
-    var path = 'campaign/get-all-campaigns';
-    return this.http.get<any[]>(this.apiUrl + path);
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
+
+  private log(message: string) {
+    this.messageService.add(`HeroService: ${message}`);
   }
 
-  createCampaign(dept: any): Observable<any> {
-    var path = 'campaign/create-campaign';
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-    return this.http.post<any>(this.apiUrl + path, dept, httpOptions);
+  getCampaigns(): Observable<Campaign[]> {
+    return this.http.get<Campaign[]>(this.campaignUrl.getAllCampaigns).pipe(
+      tap((_) => this.log('fetched campaigns')),
+      catchError(this.handleError<Campaign[]>('getCampaigns', []))
+    );
   }
 
-  updateCampaign(dept: any): Observable<any> {
-    var path = 'campaign/update-campaign';
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-    return this.http.put<any>(this.apiUrl + path, dept, httpOptions);
+  getCampaign(id: number): Observable<Campaign> {
+    const url = `${this.campaignUrl.getCampaignById}/${id}`;
+    return this.http.get<Campaign>(url).pipe(
+      tap((_) => this.log(`fetched campaign id=${id}`)),
+      catchError(this.handleError<Campaign>(`getCampaign id=${id}`))
+    );
   }
 
-  deleteCamapaign(deptId: number): Observable<number> {
-    var path = 'campaign/delete-campaign/';
+  updateCampaign(campaign: Campaign): Observable<any> {
+    return this.http
+      .put(this.campaignUrl.updateCampaign, campaign, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`updated campaign id=${campaign.id}`)),
+        catchError(this.handleError<any>('updateCampaign'))
+      );
+  }
 
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  addCampaign(campaign: Campaign): Observable<Campaign> {
+    return this.http
+      .post<Campaign>(this.campaignUrl.addCampaign, campaign, this.httpOptions)
+      .pipe(
+        tap((newCampaign: Campaign) =>
+          this.log(`added hero w/ id=${newCampaign.id}`)
+        ),
+        catchError(this.handleError<Campaign>('addCampaign'))
+      );
+  }
+
+  deleteCampaign(id: number): Observable<Campaign> {
+    const url = `${this.campaignUrl.deleteCampaignById}/${id}`;
+
+    return this.http.delete<Campaign>(url, this.httpOptions).pipe(
+      tap((_) => this.log(`deleted campaign id=${id}`)),
+      catchError(this.handleError<Campaign>('deleteCampaign'))
+    );
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   *
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
     };
-    return this.http.delete<number>(this.apiUrl + path + deptId, httpOptions);
   }
 }
