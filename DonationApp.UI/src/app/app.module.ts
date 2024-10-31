@@ -5,6 +5,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { NotificationComponent } from "./notification/notification.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +16,9 @@ import { provideHttpClient } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-  ],
+    RouterModule,
+    NotificationComponent
+],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
