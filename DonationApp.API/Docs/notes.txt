@@ -29,3 +29,5 @@ https://www.c-sharpcorner.com/article/crud-operation-with-angular-5-http-client-
 https://www.c-sharpcorner.com/article/angular-crud-using-net-core-web-api/
 
 https://hackernoon.com/how-to-build-an-employee-management-crud-app-with-angular-and-material-ui
+
+https://v17.angular.io/tutorial/tour-of-heroes/toh-pt6
