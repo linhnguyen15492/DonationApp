@@ -60,6 +60,10 @@ namespace DonationApp.Infrastructure.DataContext
 
             builder.Entity<CampaignLike>()
                 .HasKey(cl => new { cl.CampaignId, cl.UserId });
+
+            builder.Entity<CampaignLikeCount>()
+                .HasIndex(c => c.CampaignId)
+                .IsUnique();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -171,12 +175,19 @@ namespace DonationApp.Infrastructure.DataContext
 
 
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
+
         public DbSet<UserAccount> UserAccounts { get; set; }
+
         public DbSet<CampaignAccount> CampaignAccounts { get; set; }
+
         public DbSet<Transaction> Transactions { get; set; }
+
         public DbSet<CampaignLike> CampaignLikes { get; set; }
+
         public DbSet<CampaignLikeCount> CampaignLikeCounts { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

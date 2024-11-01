@@ -13,13 +13,17 @@ namespace DonationApp.Infrastructure.UnitOfWork
     {
         private readonly ApplicationContext _context;
 
-        public CampaignLikeUnitOfWork(ApplicationContext context)
-        {
-            _context=context;
-        }
-        public ICampaignLikeRepository CampaignLikeRepository => throw new NotImplementedException();
+        public ICampaignLikeRepository CampaignLikeRepository { get; }
 
-        public ICampaignLikeCountRepository CampaignLikeCounterRepository => throw new NotImplementedException();
+        public ICampaignLikeCountRepository CampaignLikeCounterRepository { get; }
+
+        public CampaignLikeUnitOfWork(ApplicationContext context, ICampaignLikeRepository campaignLikeRepository, ICampaignLikeCountRepository campaignLikeCounterRepository)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            CampaignLikeRepository = campaignLikeRepository ?? throw new ArgumentNullException(nameof(campaignLikeRepository));
+            CampaignLikeCounterRepository = campaignLikeCounterRepository ?? throw new ArgumentNullException(nameof(campaignLikeCounterRepository));
+        }
+
 
         public Task BeginTransactionAsync()
         {

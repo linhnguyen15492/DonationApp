@@ -14,12 +14,16 @@ namespace DonationApp.API.Controllers
     public class CampaignsController : ControllerBase
     {
         private readonly ICampaignService _campaignService;
+
         private IHubContext<MessageHub, IMessageHubClient> _messageHub;
 
-        public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub)
+        private readonly ICampaignLikeService _campaignLikeService;
+
+        public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub, ICampaignLikeService campaignLikeService)
         {
             _campaignService = campaignService;
             _messageHub = messageHub;
+            _campaignLikeService = campaignLikeService;
         }
 
         [HttpPost]
@@ -65,6 +69,23 @@ namespace DonationApp.API.Controllers
             else
             {
                 return Ok(result.Value);
+            }
+        }
+
+        [HttpPost("like-campagin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LikeCampaignAsync([FromBody] LikeCampaignModel model)
+        {
+            var result = await _campaignLikeService.LikeCampaignAsync(model);
+
+            if (result == -1)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok("Success");
             }
         }
     }

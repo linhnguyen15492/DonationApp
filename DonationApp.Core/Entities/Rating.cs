@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonationApp.Core.Entities
 {
+    [NotMapped]
     public class Rating : AuditEntity<int>
     {
         public int CampaignId { get; set; }

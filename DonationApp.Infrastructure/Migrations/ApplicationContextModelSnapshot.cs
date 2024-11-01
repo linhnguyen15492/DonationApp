@@ -232,6 +232,28 @@ namespace DonationApp.Infrastructure.Migrations
                     b.ToTable("CampaignLikes");
                 });
 
+            modelBuilder.Entity("DonationApp.Core.Entities.CampaignLikeCount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CampaignId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignId")
+                        .IsUnique();
+
+                    b.ToTable("CampaignLikeCounts");
+                });
+
             modelBuilder.Entity("DonationApp.Core.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -274,49 +296,6 @@ namespace DonationApp.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("DonationApp.Core.Entities.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CampaignId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CampaignId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("DonationApp.Core.Entities.Transaction", b =>
@@ -545,27 +524,21 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Navigation("Campaign");
                 });
 
-            modelBuilder.Entity("DonationApp.Core.Entities.Comment", b =>
+            modelBuilder.Entity("DonationApp.Core.Entities.CampaignLikeCount", b =>
                 {
                     b.HasOne("DonationApp.Core.Entities.Campaign", "Campaign")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonationApp.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("Campaign");
                 });
 
-            modelBuilder.Entity("DonationApp.Core.Entities.Rating", b =>
+            modelBuilder.Entity("DonationApp.Core.Entities.Comment", b =>
                 {
                     b.HasOne("DonationApp.Core.Entities.Campaign", "Campaign")
-                        .WithMany("Ratings")
+                        .WithMany("Comments")
                         .HasForeignKey("CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -669,8 +642,6 @@ namespace DonationApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

@@ -22,12 +22,16 @@ builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAccountRepository, CampaignAccountRepository>();
 builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<ICampaignLikeRepository, CampaignLikeRepository>();
+builder.Services.AddScoped<ICampaignLikeCountRepository, CampaignLikeCountRepository>();
 
 builder.Services.AddScoped<ITransactionUnitOfWork, TransactionUnitOfWork>();
+builder.Services.AddScoped<ICampaignLikeUnitOfWork, CampaignLikeUnitOfWork>();
 
 
 builder.Services.AddScoped<ISeedDataService, SeedDataService>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
+builder.Services.AddScoped<ICampaignLikeService, CampaignLikeService>();
 
 builder.Services.AddScoped<ITransferManager, TransferManager>();
 

@@ -9,5 +9,6 @@ namespace DonationApp.Core.Interfaces.Repositories
 {
     public interface ICampaignLikeCountRepository : IGenericRepository<CampaignLikeCount>
     {
+        Task<CampaignLikeCount?> GetByCampaignIdAsync(int campaignId);
     }
 }
