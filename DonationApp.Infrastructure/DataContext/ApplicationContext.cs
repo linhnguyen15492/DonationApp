@@ -12,20 +12,20 @@ namespace DonationApp.Infrastructure.DataContext
         private readonly string _connectionString = "Host=localhost;port=5433;Database=DonationApp;Username=postgres;Password=181117";
 
         // Tạo ILoggerFactory 
-        //public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-        //{
-        //    builder
-        //           .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Warning)
-        //           .AddFilter(DbLoggerCategory.Query.Name, LogLevel.Debug)
-        //           .AddConsole();
-        //});
-
-        // Tạo ILoggerFactory 
         public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {
             builder
+                   .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Warning)
+                   .AddFilter(DbLoggerCategory.Query.Name, LogLevel.Debug)
                    .AddConsole();
         });
+
+        // Tạo ILoggerFactory 
+        //public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+        //{
+        //    builder
+        //           .AddConsole();
+        //});
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -36,8 +36,7 @@ namespace DonationApp.Infrastructure.DataContext
         {
             optionsBuilder
                 .UseNpgsql(_connectionString)
-                .UseLoggerFactory(loggerFactory)
-                .EnableSensitiveDataLogging();
+                .UseLoggerFactory(loggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -178,6 +177,6 @@ namespace DonationApp.Infrastructure.DataContext
         public DbSet<CampaignAccount> CampaignAccounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<CampaignLike> CampaignLikes { get; set; }
-
+        public DbSet<CampaignLikeCount> CampaignLikeCounts { get; set; }
     }
 }

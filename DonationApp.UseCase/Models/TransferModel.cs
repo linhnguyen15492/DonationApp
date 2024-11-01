@@ -1,4 +1,5 @@
-﻿using DonationApp.Core.Interfaces;
+﻿using DonationApp.Core.Enums;
+using DonationApp.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace DonationApp.UseCase.Models
 {
     public class TransferModel : IModel
     {
-        public string FromAccountId { get; set; } = string.Empty;
-        public string ToAccountId { get; set; } = string.Empty;
+        public string FromAccountNumber { get; set; } = string.Empty;
+        public string ToAccountNumber { get; set; } = string.Empty;
         public double Amount { get; set; }
         public string Notes { get; set; } = string.Empty;
+
+        public TransferTypeEnum TransferType { get; set; }
     }
 }

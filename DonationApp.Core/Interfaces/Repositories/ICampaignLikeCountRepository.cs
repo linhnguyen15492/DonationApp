@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Interfaces.Repositories
 {
-    public interface ICampaignAccountRepository : IGenericRepository<CampaignAccount>, IBankAccountRepository<CampaignAccount>
+    public interface ICampaignLikeCountRepository : IGenericRepository<CampaignLikeCount>
     {
-
     }
 }

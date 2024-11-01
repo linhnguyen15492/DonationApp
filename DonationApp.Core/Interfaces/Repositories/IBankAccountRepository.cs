@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Core.Interfaces.Repositories
 {
-    public interface ICampaignAccountRepository : IGenericRepository<CampaignAccount>, IBankAccountRepository<CampaignAccount>
+    public interface IBankAccountRepository<T> where T : class
     {
-
+        Task<T?> FindByIdAsync(string accountNumber);
+        Task<IEnumerable<T>> FindByUserIdAsync(Guid userId);
     }
 }

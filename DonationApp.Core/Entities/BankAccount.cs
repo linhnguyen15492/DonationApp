@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DonationApp.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace DonationApp.Core.Entities
         {
             get { return _balance; }
 
-            private set
+            set
             {
-                if (value < 0)
+                if (value < MinimumRequiredAmount)
                 {
-                    throw new Exception("Balance cannot be negative");
+                    throw new InvalidBalanceException();
                 }
 
                 _balance = value;
@@ -42,5 +43,7 @@ namespace DonationApp.Core.Entities
 
             return r;
         }
+
+        public double MinimumRequiredAmount { get; set; } // can be negative
     }
 }

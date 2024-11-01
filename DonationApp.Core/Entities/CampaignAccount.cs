@@ -15,6 +15,5 @@ namespace DonationApp.Core.Entities
         [ForeignKey(nameof(CampaignId))]
         public Campaign Campaign { get; set; } = default!;
 
-
     }
 }

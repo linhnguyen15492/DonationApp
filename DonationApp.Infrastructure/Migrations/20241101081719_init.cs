@@ -202,6 +202,7 @@ namespace DonationApp.Infrastructure.Migrations
                     Balance = table.Column<double>(type: "double precision", nullable: false),
                     IsLocked = table.Column<bool>(type: "boolean", nullable: false),
                     AccountNumber = table.Column<string>(type: "text", nullable: false),
+                    MinimumRequiredAmount = table.Column<double>(type: "double precision", nullable: false),
                     Discriminator = table.Column<string>(type: "character varying(21)", maxLength: 21, nullable: false),
                     CampaignId = table.Column<int>(type: "integer", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: true),
@@ -323,14 +324,10 @@ namespace DonationApp.Infrastructure.Migrations
                     Amount = table.Column<double>(type: "double precision", nullable: false),
                     AccountNumber = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: false),
-                    TransactionTypeEnum = table.Column<int>(type: "integer", nullable: false),
+                    TransactionType = table.Column<int>(type: "integer", nullable: false),
                     BankAccountId = table.Column<int>(type: "integer", nullable: false),
                     ReferenceId = table.Column<Guid>(type: "uuid", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "text", nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

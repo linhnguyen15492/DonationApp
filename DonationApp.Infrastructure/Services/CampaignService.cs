@@ -13,13 +13,13 @@ namespace DonationApp.Infrastructure.Services
     public class CampaignService : ICampaignService
     {
         private readonly ICampaignRepository _campaignRepository;
+
         private readonly ICampaignAccountRepository _campaignAccountRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository, IUnitOfWork unitOfWork)
+
+        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository)
         {
             _campaignRepository = campaignRepository ?? throw new ArgumentNullException(nameof(campaignRepository));
             _campaignAccountRepository = campaignAccountRepository ?? throw new ArgumentNullException(nameof(campaignAccountRepository));
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<Result<IDto>> CreateCampaignAsync(IModel model)

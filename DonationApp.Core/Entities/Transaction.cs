@@ -1,9 +1,10 @@
 ﻿using DonationApp.Core.Enums;
+using DonationApp.Core.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonationApp.Core.Entities
 {
-    public class Transaction : AuditEntity<int>
+    public class Transaction : EntityBase<int>
     {
         public double Amount { get; set; }
 
@@ -11,7 +12,7 @@ namespace DonationApp.Core.Entities
 
         public string Notes { get; set; } = string.Empty;
 
-        public TransactionTypeEnum TransactionTypeEnum { get; set; }
+        public TransactionTypeEnum TransactionType { get; set; }
 
         public int BankAccountId { get; set; }
 
@@ -19,5 +20,7 @@ namespace DonationApp.Core.Entities
         public BankAccount BankAccount { get; set; } = default!;
 
         public Guid ReferenceId { get; set; }
+
+        public DateTime TransactionDate { get; set; }
     }
 }

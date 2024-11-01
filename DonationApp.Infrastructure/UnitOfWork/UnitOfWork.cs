@@ -18,9 +18,24 @@ namespace DonationApp.Infrastructure.UnitOfWork
             _context = context;
         }
 
+        public Task BeginTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CancelAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<int> CommitAsync()
         {
             return _context.SaveChangesAsync();
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

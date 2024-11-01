@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace DonationApp.Infrastructure.Repositories
 {
-    public class CampaignAccountRepository : GenericRepository<CampaignAccount>, ICampaignAccountRepository
+    public class UserAccountRepository : GenericRepository<UserAccount>, IUserAccountRepository
     {
-        public CampaignAccountRepository(ApplicationContext context) : base(context)
+        public UserAccountRepository(ApplicationContext context) : base(context)
         {
         }
 
-        public async Task<CampaignAccount?> FindByIdAsync(string accountNumber)
+        public async Task<UserAccount?> FindByIdAsync(string accountNumber)
         {
             return await _dbSet.Where(a => a.AccountNumber == accountNumber).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<CampaignAccount>> FindByUserIdAsync(Guid customerId)
+        public Task<IEnumerable<UserAccount>> FindByUserIdAsync(Guid customerId)
         {
             throw new NotImplementedException();
         }

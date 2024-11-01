@@ -9,5 +9,9 @@ namespace DonationApp.Core.Interfaces
     public interface IUnitOfWork
     {
         Task<int> CommitAsync();
+
+        Task BeginTransactionAsync();
+        Task<int> SaveChangesAsync();
+        Task CancelAsync();
     }
 }

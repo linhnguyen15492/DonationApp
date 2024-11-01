@@ -141,6 +141,9 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("boolean");
 
+                    b.Property<double>("MinimumRequiredAmount")
+                        .HasColumnType("double precision");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -334,16 +337,6 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<int>("BankAccountId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("text");
@@ -351,15 +344,11 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<Guid>("ReferenceId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("TransactionTypeEnum")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

@@ -28,6 +28,7 @@ namespace DonationApp.Infrastructure.Services
             {
                 await SeedRoles();
                 await SeedUsers();
+                await SeedUserAccounts();
 
             }
             catch
@@ -61,7 +62,6 @@ namespace DonationApp.Infrastructure.Services
                 result.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
                 Messages.Enqueue("Seed data User thất bại");
             }
-
 
 
             var donor = new ApplicationUser
@@ -108,6 +108,29 @@ namespace DonationApp.Infrastructure.Services
                 result2.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
                 Messages.Enqueue("Seed data User thất bại");
             }
+
+
+            var bank = new ApplicationUser
+            {
+                UserName = "bank",
+                FullName = "BankingSystem",
+                Email = "system@gmail.com",
+                PhoneNumber = "0123456789",
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            var result3 = await _userManager.CreateAsync(bank, "Abc@123");
+
+            if (result3.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(bank, UserRoleEnum.Administrator.ToString());
+                Messages.Enqueue($"Seed data User {bank.UserName} thành công");
+            }
+            else
+            {
+                result3.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
+                Messages.Enqueue("Seed data User thất bại");
+            }
         }
 
         private async Task SeedRoles()
@@ -131,5 +154,56 @@ namespace DonationApp.Infrastructure.Services
             }
         }
 
+        private async Task SeedUserAccounts()
+        {
+            var user = await _userManager.FindByNameAsync("admin");
+
+            if (user == null)
+            {
+                Messages.Enqueue("Không tìm thấy User");
+                return;
+            }
+            else
+            {
+                var account = new UserAccount
+                {
+                    UserId = user.Id,
+                    AccountNumber = "123456789",
+                    Balance = 1000000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = user.Id
+                };
+
+                await _context.UserAccounts.AddAsync(account);
+                await _context.SaveChangesAsync();
+
+                Messages.Enqueue("Seed data UserAccount thành công");
+            }
+
+            var bank = await _userManager.FindByNameAsync("bank");
+
+            if (bank == null)
+            {
+                Messages.Enqueue("Không tìm thấy User");
+                return;
+            }
+            else
+            {
+                var account = new UserAccount
+                {
+                    UserId = bank.Id,
+                    AccountNumber = "999999999",
+                    Balance = 0,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = bank.Id,
+                    MinimumRequiredAmount = double.MinValue,
+                };
+
+                await _context.UserAccounts.AddAsync(account);
+                await _context.SaveChangesAsync();
+
+                Messages.Enqueue("Seed data UserAccount thành công");
+            }
+        }
     }
 }

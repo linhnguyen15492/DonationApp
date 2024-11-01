@@ -20,10 +20,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
 builder.Services.AddScoped<ICampaignAccountRepository, CampaignAccountRepository>();
+builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+builder.Services.AddScoped<ITransactionUnitOfWork, TransactionUnitOfWork>();
+
 
 builder.Services.AddScoped<ISeedDataService, SeedDataService>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 
+builder.Services.AddScoped<ITransferManager, TransferManager>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationContext>()
