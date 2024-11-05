@@ -19,11 +19,15 @@ namespace DonationApp.API.Controllers
 
         private readonly ICampaignLikeService _campaignLikeService;
 
-        public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub, ICampaignLikeService campaignLikeService)
+        private readonly ICommentService _commentService;
+
+        public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub,
+            ICampaignLikeService campaignLikeService, ICommentService commentService)
         {
             _campaignService = campaignService;
             _messageHub = messageHub;
             _campaignLikeService = campaignLikeService;
+            _commentService = commentService;
         }
 
         [HttpPost]
@@ -86,6 +90,20 @@ namespace DonationApp.API.Controllers
             else
             {
                 return Ok("Success");
+            }
+        }
+
+        public async Task<IActionResult> AddComment([FromBody] CommentModel model)
+        {
+            var result = await _commentService.AddCommentAsync(model);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Errors);
+            }
+            else
+            {
+                return Ok(result.Value);
             }
         }
     }
