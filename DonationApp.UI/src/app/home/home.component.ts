@@ -5,11 +5,12 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
+import { NotificationComponent } from "../notification/notification.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NotificationComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NotificationComponent } from "./notification/notification.component";
+import { SignupComponent } from "./signup/signup.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,9 +18,10 @@ import { NotificationComponent } from "./notification/notification.component";
     ReactiveFormsModule,
     AppRoutingModule,
     RouterModule,
-    NotificationComponent
+    NotificationComponent,
+    SignupComponent
 ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
