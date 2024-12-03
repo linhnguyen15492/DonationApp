@@ -6,22 +6,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NotificationComponent } from "./notification/notification.component";
-import { SignupComponent } from "./signup/signup.component";
+import { NotificationComponent } from './notification/notification.component';
+import { SignupComponent } from './signup/signup.component';
+import { CommonModule } from '@angular/common';
+import { ActorFormComponent } from './actor-form/actor-form.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ActorFormComponent],
   imports: [
     BrowserModule,
+    CommonModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     RouterModule,
     NotificationComponent,
-    SignupComponent
-],
+    SignupComponent,
+  ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

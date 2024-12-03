@@ -7,26 +7,27 @@
                 <div class="card-header">
                     Đăng ký
                 </div>
-                <div>
-                    hello {{name}}
-                </div>
 
                 <div class="card-body">
-                    <form method="post" (ngSubmit)="onSubmit()">
+                    <form (ngSubmit)="onSubmit()">
                         <div class="mb-3">
                             <label for="username" class="form-label">Tên đăng nhập</label>
-                            <input type="text" class="form-control" [(ngModel)]="name" required>
+                            <input type="text" class="form-control" id="name" [(ngModel)]="user.username"
+                                name="username">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" [(ngModel)]="user.email" required>
+                            <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Mật khẩu</label>
                             <input type="password" class="form-control" id="password" [(ngModel)]="user.password"
-                                required>
+                                required name="password">
                         </div>
                         <button type="submit" class="btn btn-primary">Đăng ký</button>
+
+                        <pre>user {{ user | json }}</pre>
+
                     </form>
                 </div>
             </div>
