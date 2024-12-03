@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../core/models/user';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
-  user: User = {} as User;
+  @Input() user: User = {} as User;
 
   constructor(private authService: AuthService) { }
   ngOnInit(): void {
