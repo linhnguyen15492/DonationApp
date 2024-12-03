@@ -1,3 +1,4 @@
+using DonationApp.API.Configuration;
 using DonationApp.API.Hubs;
 using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
@@ -9,10 +10,21 @@ using DonationApp.Infrastructure.UnitOfWork;
 using DonationApp.UseCase.Repositories;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("PostgreSQL"));
+
+builder.Services.AddDbContext<ApplicationContext>((provider, options) =>
+{
+    var settings = provider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+    var connectionString = $"Host={settings.Host};port={settings.Port};Database={settings.Database};Username={settings.Username};Password={settings.Password}";
+    options.UseNpgsql(connectionString);
+});
+
 builder.Services.AddDbContext<ApplicationContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

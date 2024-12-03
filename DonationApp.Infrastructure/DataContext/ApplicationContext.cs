@@ -9,8 +9,6 @@ namespace DonationApp.Infrastructure.DataContext
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
-        private readonly string _connectionString = "Host=localhost;port=5433;Database=DonationApp;Username=postgres;Password=181117";
-
         // Tạo ILoggerFactory 
         public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {
@@ -20,13 +18,6 @@ namespace DonationApp.Infrastructure.DataContext
                    .AddConsole();
         });
 
-        // Tạo ILoggerFactory 
-        //public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-        //{
-        //    builder
-        //           .AddConsole();
-        //});
-
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
@@ -35,7 +26,6 @@ namespace DonationApp.Infrastructure.DataContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseNpgsql(_connectionString)
                 .UseLoggerFactory(loggerFactory);
         }
 
