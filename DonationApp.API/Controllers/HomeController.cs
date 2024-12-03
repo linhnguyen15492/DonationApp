@@ -14,6 +14,7 @@ namespace DonationApp.API.Controllers
     public class HomeController : ControllerBase
     {
         private readonly ISeedDataService _seeder;
+        private readonly IDatabaseService _databaseService;
 
         public HomeController(ApplicationContext context, ISeedDataService seeder, RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager)
@@ -34,6 +35,25 @@ namespace DonationApp.API.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+
+        [HttpPost("db/create-database")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateDatabaseAsync()
+        {
+            var res = await _databaseService.CreateDatabaseAsync();
+
+            if (res)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+
         }
 
     }

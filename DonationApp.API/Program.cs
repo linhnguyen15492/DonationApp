@@ -33,6 +33,7 @@ builder.Services.AddScoped<ICampaignLikeUnitOfWork, CampaignLikeUnitOfWork>();
 builder.Services.AddScoped<ISeedDataService, SeedDataService>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICampaignLikeService, CampaignLikeService>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 //builder.Services.AddScoped<ICommentService, ICommentService>();
 
 builder.Services.AddScoped<ITransferManager, TransferManager>();
