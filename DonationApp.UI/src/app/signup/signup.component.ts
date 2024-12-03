@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 export class SignupComponent implements OnInit {
   @Input() user: User = {} as User;
 
+  name: string = 'aaaa';
+
   constructor(private authService: AuthService) { }
   ngOnInit(): void {
     throw new Error('Method not implemented.');

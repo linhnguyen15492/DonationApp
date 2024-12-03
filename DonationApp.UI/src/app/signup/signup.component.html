@@ -7,11 +7,15 @@
                 <div class="card-header">
                     Đăng ký
                 </div>
+                <div>
+                    hello {{name}}
+                </div>
+
                 <div class="card-body">
                     <form method="post" (ngSubmit)="onSubmit()">
                         <div class="mb-3">
                             <label for="username" class="form-label">Tên đăng nhập</label>
-                            <input type="text" class="form-control" id="username" [(ngModel)]="user.username" required>
+                            <input type="text" class="form-control" [(ngModel)]="name" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
