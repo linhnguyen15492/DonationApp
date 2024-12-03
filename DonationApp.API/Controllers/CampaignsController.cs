@@ -93,18 +93,18 @@ namespace DonationApp.API.Controllers
             }
         }
 
-        public async Task<IActionResult> AddComment([FromBody] CommentModel model)
-        {
-            var result = await _commentService.AddCommentAsync(model);
+        //public async Task<IActionResult> AddComment([FromBody] CommentModel model)
+        //{
+        //    var result = await _commentService.AddCommentAsync(model);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Errors);
-            }
-            else
-            {
-                return Ok(result.Value);
-            }
-        }
+        //    if (!result.IsSuccess)
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
+        //    else
+        //    {
+        //        return Ok(result.Value);
+        //    }
+        //}
     }
 }
