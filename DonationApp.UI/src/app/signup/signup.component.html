@@ -44,7 +44,8 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label text-dark fw-bold">Đăng ký với vai trò</label>
-                            <select name="role" id="role" class="form-control" [(ngModel)]="registerModel.role">
+                            <select title="Vai trò" name="role" id="role" class="form-control"
+                                [(ngModel)]="registerModel.role">
                                 <option *ngFor="let role of roles" [value]="role.code">{{ role.name }}
                                 </option>
                             </select>
