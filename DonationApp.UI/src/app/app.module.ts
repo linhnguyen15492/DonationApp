@@ -10,6 +10,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { SignupComponent } from './signup/signup.component';
 import { CommonModule } from '@angular/common';
 import { ActorFormComponent } from './actor-form/actor-form.component';
+import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-detail.component';
 
 @NgModule({
   declarations: [AppComponent, ActorFormComponent],
@@ -23,6 +24,7 @@ import { ActorFormComponent } from './actor-form/actor-form.component';
     RouterModule,
     NotificationComponent,
     SignupComponent,
+    CampaignDetailComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
