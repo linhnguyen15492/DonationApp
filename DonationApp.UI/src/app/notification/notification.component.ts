@@ -19,7 +19,7 @@ export class NotificationComponent {
   private hubConnectionBuilder!: HubConnection;
 
   offers: any[] = [];
-  constructor() {}
+  constructor() { }
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder()
       .withUrl(this.api_url)

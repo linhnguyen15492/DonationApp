@@ -46,7 +46,7 @@ import { CommonModule } from '@angular/common';
   `,
 })
 export class NgModalConfirm {
-  constructor(public modal: NgbActiveModal) {}
+  constructor(public modal: NgbActiveModal) { }
 }
 
 const MODALS: { [name: string]: Type<any> } = {
@@ -69,7 +69,7 @@ export class CampaignComponent implements OnInit {
     // private toastr: ToastrService,
     private service: CampaignService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCampaigns();

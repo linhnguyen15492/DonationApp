@@ -17,6 +17,7 @@ namespace DonationApp.API.Controllers
             _transferManager=transferManager;
         }
 
+
         [HttpPost("donate")]
         public async Task<IActionResult> DonateAsync([FromBody] TransferModel model)
         {
@@ -32,6 +33,7 @@ namespace DonationApp.API.Controllers
             }
             return Ok(result);
         }
+
 
         [HttpPost("disburse")]
         public async Task<IActionResult> DisburseAsync([FromBody] TransferModel model)

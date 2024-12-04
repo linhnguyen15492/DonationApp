@@ -152,6 +152,12 @@ namespace DonationApp.Infrastructure.Services
                 await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.CharitableOrganization.ToString()));
                 Messages.Enqueue($"Seed data Role {UserRoleEnum.CharitableOrganization} thành công");
             }
+
+            if (!await _roleManager.RoleExistsAsync(UserRoleEnum.Donee.ToString()))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.Donee.ToString()));
+                Messages.Enqueue($"Seed data Role {UserRoleEnum.Donee} thành công");
+            }
         }
 
         private async Task SeedUserAccounts()

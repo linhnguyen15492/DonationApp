@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Actor } from '../core/models/actor';
+import { Actor } from '../models/actor';
+
 
 @Component({
   selector: 'app-actor-form',
