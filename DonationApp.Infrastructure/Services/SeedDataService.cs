@@ -2,6 +2,8 @@
 using DonationApp.Core.Enums;
 using DonationApp.Core.Interfaces;
 using DonationApp.Infrastructure.DataContext;
+using DonationApp.UseCase.Models;
+using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,14 +14,16 @@ namespace DonationApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICampaignService _campaignService;
+
         public Queue<string> Messages { get; set; } = new Queue<string>();
 
-        public SeedDataService(ApplicationContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public SeedDataService(ApplicationContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICampaignService campaignService)
         {
-
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+            _campaignService = campaignService;
         }
 
         public async Task SeedDataAsync()
@@ -29,6 +33,7 @@ namespace DonationApp.Infrastructure.Services
                 await SeedRoles();
                 await SeedUsers();
                 await SeedUserAccounts();
+                await SeedCampaigns();
 
             }
             catch
@@ -209,6 +214,138 @@ namespace DonationApp.Infrastructure.Services
                 await _context.SaveChangesAsync();
 
                 Messages.Enqueue("Seed data UserAccount thành công");
+            }
+        }
+
+        private async Task SeedCampaigns()
+        {
+            var userId = await _userManager.GetUserIdAsync(await _userManager.FindByNameAsync("charity"));
+
+            if (userId == null)
+            {
+                Messages.Enqueue("Không tìm thấy User");
+                return;
+            }
+
+            var campaign = new CampaignModel
+            {
+                Name = "Chung tay vượt qua cơn bão",
+                Description = "Chung tay vượt qua cơn bão",
+                Location = "Hải Phòng",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result = await _campaignService.CreateCampaignAsync(campaign);
+            if (result.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
+            }
+
+            var campaign1 = new CampaignModel
+            {
+                Name = "Chung sức vì miền Trung",
+                Description = "Chung sức vì miền Trung",
+                Location = "Miền Trung",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result1 = await _campaignService.CreateCampaignAsync(campaign1);
+            if (result1.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
+            }
+
+
+            var campaign2 = new CampaignModel
+            {
+                Name = "Xây dựng lại quê hương",
+                Description = "Xây dựng lại quê hương",
+                Location = "Miền Trung",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result2 = await _campaignService.CreateCampaignAsync(campaign2);
+            if (result2.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
+            }
+
+            var campaign3 = new CampaignModel
+            {
+                Name = "Cả nước chung tay vì đồng bào",
+                Description = "Cả nước chung tay vì đồng bào",
+                Location = "Miền Trung",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result3 = await _campaignService.CreateCampaignAsync(campaign3);
+            if (result3.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
+            }
+
+            var campaign4 = new CampaignModel
+            {
+                Name = "Doanh nghiệp đồng hành cùng cộng đồng",
+                Description = "Doanh nghiệp đồng hành cùng cộng đồng",
+                Location = "Miền Trung",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result4 = await _campaignService.CreateCampaignAsync(campaign4);
+            if (result4.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
+            }
+
+            var campaign5 = new CampaignModel
+            {
+                Name = "Mỗi người một tấm lòng",
+                Description = "Mỗi người một tấm lòng",
+                Location = "Miền Trung",
+                StartDate = new DateOnly(2021, 1, 1),
+                EndDate = new DateOnly(2021, 12, 31),
+                OrganizationId = userId
+            };
+
+            var result5 = await _campaignService.CreateCampaignAsync(campaign5);
+            if (result5.IsSuccess)
+            {
+                Messages.Enqueue("Seed data Campaign thành công");
+            }
+            else
+            {
+                Messages.Enqueue("Seed data Campaign thất bại");
             }
         }
     }

@@ -238,11 +238,18 @@
           </li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div *ngIf="!isLoggedIn" class="col-md-3 text-end">
           <button routerLink="/login" type="button" class="btn btn-outline-primary me-2">
             Login
           </button>
           <a class="btn btn-primary" routerLink="/signup">Sign-up</a>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="col-md-3 text-end">
+          Xin chào, <span class="fw-bold text-success">{{ user?.username }}</span>
+          <a class="btn btn-sm btn-outline-danger ms-2" (click)="logout()">
+            Logout
+          </a>
         </div>
       </header>
 

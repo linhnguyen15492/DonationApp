@@ -2,6 +2,7 @@
 using DonationApp.Core.Interfaces;
 using DonationApp.Infrastructure.DataContext;
 using DonationApp.Infrastructure.Services;
+using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,9 @@ namespace DonationApp.API.Controllers
 
         public HomeController(ApplicationContext context, ISeedDataService seeder, RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
-            IDatabaseService databaseService)
+            IDatabaseService databaseService, ICampaignService campaignService)
         {
-            _seeder = new SeedDataService(context, roleManager, userManager);
+            _seeder = new SeedDataService(context, roleManager, userManager, campaignService);
             _databaseService = databaseService;
         }
 
