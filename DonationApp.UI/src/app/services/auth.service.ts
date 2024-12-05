@@ -31,7 +31,9 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/Account/login`, loginModel).pipe(
       map((response: any) => {
         const token = response.accessToken;
-        const user: User = { username: loginModel.username, token: token };
+        const userId = response.userId;
+        const user: User = { id: userId, username: loginModel.username, token: token };
+        console.log(user);
         this.setToken(token);
         this.currentUserSubject.next(user);
         this.isLoggedInSubject.next(true);
