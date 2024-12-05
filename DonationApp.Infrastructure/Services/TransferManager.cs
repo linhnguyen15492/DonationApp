@@ -76,7 +76,9 @@ namespace DonationApp.Infrastructure.Services
 
                     await _transactionUnitOfWork.SaveChangesAsync();
 
-                    return TransactionResult.Success;
+                    var result = TransactionResult.Success;
+
+                    return result;
                 }
                 catch (Exception ex)
                 {

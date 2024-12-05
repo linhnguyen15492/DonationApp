@@ -1,8 +1,10 @@
-﻿using DonationApp.Core.Interfaces;
+﻿using DonationApp.API.Hubs;
+using DonationApp.Core.Interfaces;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DonationApp.API.Controllers
 {
@@ -11,10 +13,12 @@ namespace DonationApp.API.Controllers
     public class TransferController : ControllerBase
     {
         private readonly ITransferManager _transferManager;
+        private IHubContext<MessageHub, IMessageHubClient> _messageHub;
 
-        public TransferController(ITransferManager transferManager)
+        public TransferController(ITransferManager transferManager, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
             _transferManager=transferManager;
+            _messageHub = messageHub;
         }
 
 
@@ -31,6 +35,8 @@ namespace DonationApp.API.Controllers
             {
                 return BadRequest(result.ResultCode.ToString());
             }
+
+
             return Ok(result);
         }
 
