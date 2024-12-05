@@ -4,13 +4,14 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NotificationComponent } from './notification/notification.component';
 import { SignupComponent } from './signup/signup.component';
 import { CommonModule } from '@angular/common';
 import { ActorFormComponent } from './actor-form/actor-form.component';
 import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-detail.component';
+import { AuthInterceptor } from './services/authInterceptor';
 
 @NgModule({
   declarations: [AppComponent, ActorFormComponent],
@@ -26,7 +27,9 @@ import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-det
     SignupComponent,
     CampaignDetailComponent,
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(),
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

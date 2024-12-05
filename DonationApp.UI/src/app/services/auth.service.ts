@@ -21,7 +21,7 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   register(registerModel: RegisterModel): Observable<any> {
     return this.http.post(`${this.apiUrl}/Account/register`, registerModel);
