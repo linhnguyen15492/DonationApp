@@ -7,11 +7,10 @@ import { UserRoles } from '../models/userRoles';
 
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
+    selector: 'app-signup',
+    imports: [FormsModule, CommonModule],
+    templateUrl: './signup.component.html',
+    styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
   registerModel: RegisterModel = {} as RegisterModel;

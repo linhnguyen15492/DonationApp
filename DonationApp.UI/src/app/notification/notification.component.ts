@@ -7,11 +7,10 @@ import {
 } from '@microsoft/signalr';
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css',
+    selector: 'app-notification',
+    imports: [CommonModule],
+    templateUrl: './notification.component.html',
+    styleUrl: './notification.component.css'
 })
 export class NotificationComponent {
   private api_url = 'https://localhost:7112/messageHub';

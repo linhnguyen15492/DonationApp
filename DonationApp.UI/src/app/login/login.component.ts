@@ -7,11 +7,10 @@ import { User } from '../models/user';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, ErrorMessageComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+    selector: 'app-login',
+    imports: [FormsModule, ErrorMessageComponent],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent {
   errorMessage: string = '';

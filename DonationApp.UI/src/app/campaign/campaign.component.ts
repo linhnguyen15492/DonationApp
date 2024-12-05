@@ -9,8 +9,8 @@ import { Campaign } from '../models/campaign';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'ng-modal-confirm',
-  template: `
+    selector: 'ng-modal-confirm',
+    template: `
     <div class="modal-header">
       <h5 class="modal-title" id="modal-title">Delete Confirmation</h5>
       <button
@@ -44,6 +44,7 @@ import { CommonModule } from '@angular/common';
       </button>
     </div>
   `,
+    standalone: false
 })
 export class NgModalConfirm {
   constructor(public modal: NgbActiveModal) { }
@@ -54,11 +55,10 @@ const MODALS: { [name: string]: Type<any> } = {
 };
 
 @Component({
-  selector: 'app-campaign',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './campaign.component.html',
-  styleUrl: './campaign.component.css',
+    selector: 'app-campaign',
+    imports: [CommonModule],
+    templateUrl: './campaign.component.html',
+    styleUrl: './campaign.component.css'
 })
 export class CampaignComponent implements OnInit {
   closeResult = '';

@@ -9,11 +9,10 @@ import { NotificationComponent } from "../notification/notification.component";
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, NotificationComponent, RouterLink],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+    selector: 'app-home',
+    imports: [CommonModule, NotificationComponent, RouterLink],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent {
   private api_url = 'https://localhost:7112/messageHub';
