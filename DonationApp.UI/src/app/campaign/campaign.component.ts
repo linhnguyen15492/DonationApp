@@ -1,18 +1,21 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type, Inject, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
 import { CampaignService } from './campaign.service';
 import { HttpClient } from '@angular/common/http';
-import { computeStyles } from '@popperjs/core';
 import { Campaign } from '../models/campaign';
 import { CommonModule } from '@angular/common';
+import { TransferManagerService } from '../services/transfer-manager.service';
+import { AuthService } from '../services/auth.service';
+import { TransferModel } from '../models/transferModel';
+import { User } from '../models/user';
+import { TransferResult } from '../models/transferResult';
 
 @Component({
   selector: 'ng-modal-confirm',
   template: `
     <div class="modal-header">
-      <h5 class="modal-title" id="modal-title">Delete Confirmation</h5>
+      <h5 class="modal-title" id="modal-title">Xác nhận đóng góp</h5>
       <button
         type="button"
         class="btn close"
@@ -24,7 +27,28 @@ import { CommonModule } from '@angular/common';
       </button>
     </div>
     <div class="modal-body">
-      <p>Are you sure you want to delete?</p>
+      <p>
+        Bạn có muốn đóng góp cho chương trình
+        <span class="fw-bold text-success"
+          >{{ campaign.name }} {{ campaign.accountNumber }}</span
+        >?
+      </p>
+      <input
+        type="number"
+        class="form-control mb-2"
+        name="amount"
+        #amount
+        placeholder="Nhập số tiền"
+        required
+      />
+      <textarea
+        type="text"
+        class="form-control mb-2"
+        name="note"
+        #note
+        placeholder="Nhập lời nhắn"
+        rows="5"
+      ></textarea>
     </div>
     <div class="modal-footer">
       <button
@@ -32,53 +56,73 @@ import { CommonModule } from '@angular/common';
         class="btn btn-outline-secondary"
         (click)="modal.dismiss('cancel click')"
       >
-        CANCEL
+        Hủy
       </button>
       <button
+        [disabled]="!amount.value || +amount.value === 0"
         type="button"
         ngbAutofocus
         class="btn btn-success"
-        (click)="modal.close('Ok click')"
+        (click)="
+          modal.close({
+            amount: amount.value,
+            note: note.value,
+            toAccount: campaign.accountNumber
+          })
+        "
       >
-        OK
+        Xác nhận
       </button>
     </div>
   `,
-  standalone: false
+  standalone: true,
 })
 export class NgModalConfirm {
-  constructor(public modal: NgbActiveModal) { }
+  campaign: Campaign;
+  constructor(
+    public modal: NgbActiveModal,
+    @Inject('campaign') campaign: Campaign
+  ) {
+    this.campaign = campaign;
+  }
 }
 
 const MODALS: { [name: string]: Type<any> } = {
-  deleteModal: NgModalConfirm,
+  donateModal: NgModalConfirm,
 };
 
 @Component({
   selector: 'app-campaign',
   imports: [CommonModule],
+  standalone: true,
   templateUrl: './campaign.component.html',
-  styleUrl: './campaign.component.css'
+  styleUrl: './campaign.component.css',
 })
 export class CampaignComponent implements OnInit {
   closeResult = '';
   campaigns: Campaign[] = [];
+
+  user: User | null = null;
+
   constructor(
     private router: Router,
     private modalService: NgbModal,
-    // private toastr: ToastrService,
     private service: CampaignService,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private transferManager: TransferManagerService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getCampaigns();
   }
 
   async getCampaigns() {
-    await this.service.getCampaigns().subscribe((data) => {
-      console.log(data);
-      this.campaigns = data;
+    await this.service.getCampaigns().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.campaigns = data;
+      },
     });
   }
 
@@ -100,6 +144,65 @@ export class CampaignComponent implements OnInit {
     this.campaigns = this.campaigns.filter((c) => c !== campaign);
     this.service.deleteCampaign(campaign.id).subscribe((res) => {
       console.log(res);
+    });
+  }
+
+  donate(campaign: Campaign) {
+    this.authService.isLoggedIn$.subscribe({
+      next: (isLoggedIn) => {
+        if (!isLoggedIn) {
+          this.router.navigate(['/login']);
+          return;
+        }
+
+        this.authService.currentUser.subscribe({
+          next: (user) => {
+            this.user = user;
+            console.log(this.user);
+          },
+        });
+
+        this.modalService
+          .open(MODALS['donateModal'], {
+            ariaLabelledBy: 'modal-basic-title',
+            injector: Injector.create({
+              providers: [{ provide: 'campaign', useValue: campaign }],
+            }),
+          })
+          .result.then((result) => {
+            console.log(result);
+            const transferModel: TransferModel = {
+              fromAccount: result.accountNumber,
+              toAccount: result.toAccount,
+              amount: result.amount,
+              note: result.note,
+              type: 0,
+            };
+            this.transferManager.transfer(transferModel).subscribe({
+              next: (res) => {
+                console.log(`Đóng góp thành công: ${res}`);
+                this.router.navigate(['/transfer-result'], {
+                  queryParams: {
+                    amount: result.amount,
+                    note: result.note,
+                    success: true,
+                  },
+                });
+              },
+              error: (error) => {
+                console.log(error);
+
+                this.router.navigate(['/transfer-result'], {
+                  queryParams: {
+                    amount: result.amount,
+                    note: result.note,
+                    success: false,
+                  },
+                });
+              },
+            });
+          });
+      },
     });
   }
 

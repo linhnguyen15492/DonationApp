@@ -9,6 +9,7 @@ import { UserRoles } from '../models/userRoles';
 @Component({
     selector: 'app-signup',
     imports: [FormsModule, CommonModule],
+    standalone: true,
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css'
 })

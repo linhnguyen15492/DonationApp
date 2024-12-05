@@ -9,6 +9,7 @@ import { ErrorMessageComponent } from '../error-message/error-message.component'
 @Component({
     selector: 'app-login',
     imports: [FormsModule, ErrorMessageComponent],
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'
 })

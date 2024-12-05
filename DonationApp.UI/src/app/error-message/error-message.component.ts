@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'app-error-message',
     imports: [CommonModule],
+    standalone: true,
     templateUrl: './error-message.component.html',
     styleUrl: './error-message.component.css'
 })

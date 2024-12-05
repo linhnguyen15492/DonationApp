@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-campaign-detail',
-    imports: [],
+    standalone: true,
     templateUrl: './campaign-detail.component.html',
     styleUrl: './campaign-detail.component.css'
 })

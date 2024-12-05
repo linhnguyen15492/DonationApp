@@ -1,0 +1,40 @@
+<div *ngIf="success" class="d-flex justify-content-center">
+    <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-header">Header</div>
+        <div class="card-body text-success">
+            <h5 class="card-title text-center">Success card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="!success" class="d-flex justify-content-center">
+    <div class="card border-danger mb-3" style="width: 20rem; height: 25rem;">
+        <div class="card-header text-center fw-bold">Chuyển khoản thất bại</div>
+        <div class="card-body text-danger">
+            <h5 class="card-title text-center fw-bold">{{ amount | number: '1.0-0' }} VNĐ</h5>
+            <br />
+
+            <div class="row">
+                <div class="col-6">
+                    <p class="card-text">Người nhận</p>
+                </div>
+                <div class="col-6">
+                    <p class="card-text text-end">{{ note }}</p>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                    <p class="card-text">Người nhận</p>
+                </div>
+                <div class="col-6">
+                    <p class="card-text text-end">{{ note }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

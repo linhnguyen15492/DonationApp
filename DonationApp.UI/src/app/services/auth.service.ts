@@ -21,7 +21,7 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   register(registerModel: RegisterModel): Observable<any> {
     return this.http.post(`${this.apiUrl}/Account/register`, registerModel);
@@ -32,7 +32,11 @@ export class AuthService {
       map((response: any) => {
         const token = response.accessToken;
         const userId = response.userId;
-        const user: User = { id: userId, username: loginModel.username, token: token };
+        const user: User = {
+          id: userId,
+          username: loginModel.username,
+          token: token,
+        };
         console.log(user);
         this.setToken(token);
         this.currentUserSubject.next(user);

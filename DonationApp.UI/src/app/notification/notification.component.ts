@@ -9,6 +9,7 @@ import {
 @Component({
     selector: 'app-notification',
     imports: [CommonModule],
+    standalone: true,
     templateUrl: './notification.component.html',
     styleUrl: './notification.component.css'
 })

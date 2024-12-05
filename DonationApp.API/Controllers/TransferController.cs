@@ -17,7 +17,7 @@ namespace DonationApp.API.Controllers
 
         public TransferController(ITransferManager transferManager, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
-            _transferManager=transferManager;
+            _transferManager = transferManager;
             _messageHub = messageHub;
         }
 
@@ -55,6 +55,14 @@ namespace DonationApp.API.Controllers
                 return BadRequest(result.ResultCode.ToString());
             }
             return Ok(result);
+        }
+
+        [HttpPost("mock-donate")]
+        public async Task<IActionResult> MockDonateAsync([FromBody] TransferModel model)
+        {
+
+            model.Notes = "Success";
+            return Ok(await Task.FromResult(model));
         }
     }
 }
