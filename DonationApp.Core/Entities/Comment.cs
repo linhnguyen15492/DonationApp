@@ -11,7 +11,7 @@ namespace DonationApp.Core.Entities
 
         public string Content { get; set; } = string.Empty;
 
-        public string? UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         [ForeignKey("UserId")]
         public ApplicationUser? ApplicationUser { get; set; }

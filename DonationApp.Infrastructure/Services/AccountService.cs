@@ -45,6 +45,7 @@ namespace DonationApp.Infrastructure.Services
 
                 return Result<TokenModel>.Success(new TokenModel
                 {
+                    UserId = user.Id,
                     AccessToken = token.Item1,
                     RefreshToken = token.Item2,
                 });
@@ -123,6 +124,7 @@ namespace DonationApp.Infrastructure.Services
             {
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email!),
+                new Claim("userId", user.Id!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

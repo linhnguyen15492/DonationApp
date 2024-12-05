@@ -74,9 +74,15 @@ namespace DonationApp.Infrastructure.Services
 
         }
 
-        public Task<Result<IDto>> GetCampaignByIdAsync(object id)
+        public async Task<Result<IDto>> GetCampaignByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var data = await _campaignRepository.GetByIdAsync(id);
+            if (data is not null)
+            {
+                return Result<IDto>.Success(data.ToCampaignDto());
+            }
+            else return Result<IDto>.Failure("Failed to get campaign by id");
+
         }
 
         public Task<Result<IDto>> UpdateCampaignAsync(IModel model)

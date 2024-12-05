@@ -54,10 +54,15 @@ namespace DonationApp.API.Controllers
 
         [HttpGet]
         [Route("get-campaign/{id}")]
-        public async Task<IActionResult> GetCampaignByIdAsync([FromRoute] object id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetCampaignByIdAsync([FromRoute] int id)
         {
             var result = await _campaignService.GetCampaignByIdAsync(id);
-            return Ok(result);
+            if (!result.IsSuccess)
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+
+            return Ok(result.Value);
         }
 
         [HttpGet]
@@ -93,18 +98,21 @@ namespace DonationApp.API.Controllers
             }
         }
 
-        //public async Task<IActionResult> AddComment([FromBody] CommentModel model)
-        //{
-        //    var result = await _commentService.AddCommentAsync(model);
+        [HttpPost("add-comment")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddComment([FromBody] CommentModel model)
+        {
+            var result = await _commentService.AddCommentAsync(model);
 
-        //    if (!result.IsSuccess)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
-        //    else
-        //    {
-        //        return Ok(result.Value);
-        //    }
-        //}
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Errors);
+            }
+            else
+            {
+                return Ok(result.Value);
+            }
+        }
     }
 }

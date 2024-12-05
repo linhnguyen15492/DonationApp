@@ -42,6 +42,7 @@ builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ICampaignLikeRepository, CampaignLikeRepository>();
 builder.Services.AddScoped<ICampaignLikeCountRepository, CampaignLikeCountRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 
 builder.Services.AddScoped<ITransactionUnitOfWork, TransactionUnitOfWork>();
@@ -53,7 +54,7 @@ builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICampaignLikeService, CampaignLikeService>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-//builder.Services.AddScoped<ICommentService, ICommentService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddScoped<ITransferManager, TransferManager>();
 

@@ -12,7 +12,7 @@ namespace DonationApp.UseCase.UseCases
     {
         Task<Result<IDto>> CreateCampaignAsync(IModel model);
         Task<Result<IDto>> UpdateCampaignAsync(IModel model);
-        Task<Result<IDto>> GetCampaignByIdAsync(object id);
+        Task<Result<IDto>> GetCampaignByIdAsync(int id);
         Task<Result<IEnumerable<IDto>>> GetAllCampaignsAsync();
     }
 }

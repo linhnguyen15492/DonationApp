@@ -26,5 +26,7 @@ namespace DonationApp.UseCase.Dtos
 
         public string? AccountNumber { get; set; } = string.Empty;
         public double? AccountBalance { get; set; }
+
+        public ICollection<CommentDto> Comments { get; set; } = new List<CommentDto>();
     }
 }

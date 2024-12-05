@@ -20,7 +20,11 @@ namespace DonationApp.Infrastructure.Repositories
 
         public override async Task<Campaign?> GetByIdAsync(object id)
         {
-            Campaign? data = await _dbSet.Where(c => c.Id == (int)id).FirstOrDefaultAsync();
+            Campaign? data = await _dbSet.Where(c => c.Id == (int)id)
+                                            .Include(c => c.CampaignAccount)
+                                            .Include(c => c.Organization)
+                                            .Include(c => c.Comments)
+                                            .FirstOrDefaultAsync();
 
             if (data == null)
             {
