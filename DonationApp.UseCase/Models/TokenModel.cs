@@ -11,5 +11,9 @@ namespace DonationApp.UseCase.Models
         public string UserId { get; set; } = string.Empty;
         public string AccessToken { get; set; } = string.Empty; // jwt token
         public string RefreshToken { get; set; } = string.Empty;
+
+        public string UserName { get; set; } = string.Empty;
+        public string AccountNumber { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
     }
 }

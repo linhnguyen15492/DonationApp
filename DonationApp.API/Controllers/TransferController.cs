@@ -1,5 +1,6 @@
 ﻿using DonationApp.API.Hubs;
 using DonationApp.Core.Interfaces;
+using DonationApp.Infrastructure.Services;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,8 @@ namespace DonationApp.API.Controllers
     {
         private readonly ITransferManager _transferManager;
         private IHubContext<MessageHub, IMessageHubClient> _messageHub;
+
+        List<string> notifications = new List<string>();
 
         public TransferController(ITransferManager transferManager, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
@@ -36,7 +39,8 @@ namespace DonationApp.API.Controllers
                 return BadRequest(result.ResultCode.ToString());
             }
 
-
+            notifications.Add($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            await _messageHub.Clients.All.PushNotificationAsync(notifications);
             return Ok(result);
         }
 
@@ -61,8 +65,12 @@ namespace DonationApp.API.Controllers
         public async Task<IActionResult> MockDonateAsync([FromBody] TransferModel model)
         {
 
-            model.Notes = "Success";
-            return Ok(await Task.FromResult(model));
+            notifications.Add($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            await _messageHub.Clients.All.PushNotificationAsync(notifications);
+
+            var result = TransactionResult.Success("", sender: model.Sender, receiver: model.Receiver);
+
+            return Ok(await Task.FromResult(result));
         }
     }
 }

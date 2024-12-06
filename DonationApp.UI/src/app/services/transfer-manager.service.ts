@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { TransferModel } from '../models/transferModel';
 import { Observable } from 'rxjs';
+import { TransactionResult } from '../models/transactionResult';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,10 @@ import { Observable } from 'rxjs';
 export class TransferManagerService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  transfer(transferModel: TransferModel) {
-    return this.http.post(`${this.apiUrl}/transfer/mock-donate`, transferModel);
+  transfer(transferModel: TransferModel): Observable<TransactionResult> {
+    console.log('transferModel trong service', transferModel);
+    return this.http.post<TransactionResult>(`${this.apiUrl}/transfer/donate`, transferModel);
   }
 }

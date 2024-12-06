@@ -1,6 +1,7 @@
 ﻿using DonationApp.Core.Configurations;
 using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
+using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Core.Shared;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
@@ -20,14 +21,16 @@ namespace DonationApp.Infrastructure.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtOptions _jwtOptions;
+        private readonly IUserAccountRepository _userAccountRepository;
 
         public AccountService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-            SignInManager<ApplicationUser> signInManager, IOptionsMonitor<JwtOptions> options)
+            SignInManager<ApplicationUser> signInManager, IOptionsMonitor<JwtOptions> options, IUserAccountRepository userAccountRepository)
         {
             _userManager=userManager;
             _roleManager=roleManager;
             _signInManager=signInManager;
             _jwtOptions=options.CurrentValue;
+            _userAccountRepository=userAccountRepository;
         }
 
         public async Task<Result<TokenModel>> LoginAsync(IModel model)
@@ -43,11 +46,21 @@ namespace DonationApp.Infrastructure.Services
             {
                 var token = GenerateJwtToken(user);
 
+                var account = await _userAccountRepository.FindByUserIdAsync(user.Id);
+
+                if (account is null)
+                {
+                    return Result<TokenModel>.Failure("Account not found");
+                }
+
                 return Result<TokenModel>.Success(new TokenModel
                 {
                     UserId = user.Id,
                     AccessToken = token.Item1,
                     RefreshToken = token.Item2,
+                    UserName = user.UserName!,
+                    AccountNumber = account.AccountNumber,
+                    FullName = user.FullName
                 });
             }
         }

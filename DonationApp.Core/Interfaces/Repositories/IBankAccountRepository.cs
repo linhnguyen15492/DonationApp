@@ -9,7 +9,7 @@ namespace DonationApp.Core.Interfaces.Repositories
 {
     public interface IBankAccountRepository<T> where T : class
     {
-        Task<T?> FindByIdAsync(string accountNumber);
-        Task<IEnumerable<T>> FindByUserIdAsync(Guid userId);
+        Task<T?> FindByAccountNumberAsync(string accountNumber);
+        Task<T?> FindByUserIdAsync(string userId);
     }
 }

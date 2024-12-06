@@ -16,12 +16,12 @@ namespace DonationApp.Infrastructure.Repositories
         {
         }
 
-        public async Task<CampaignAccount?> FindByIdAsync(string accountNumber)
+        public async Task<CampaignAccount?> FindByAccountNumberAsync(string accountNumber)
         {
             return await _dbSet.Where(a => a.AccountNumber == accountNumber).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<CampaignAccount>> FindByUserIdAsync(Guid customerId)
+        public Task<CampaignAccount?> FindByUserIdAsync(string userId)
         {
             throw new NotImplementedException();
         }

@@ -111,7 +111,7 @@ export class CampaignComponent implements OnInit {
     private http: HttpClient,
     private transferManager: TransferManagerService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCampaigns();
@@ -170,33 +170,39 @@ export class CampaignComponent implements OnInit {
             }),
           })
           .result.then((result) => {
-            console.log(result);
+            console.log('result lấy từ modal, user, campaign trong component', result);
             const transferModel: TransferModel = {
-              fromAccount: result.accountNumber,
-              toAccount: result.toAccount,
+              fromAccountNumber: this.user!.accountNumber,
+              toAccountNumber: campaign.accountNumber,
               amount: result.amount,
               note: result.note,
               type: 0,
+              sender: this.user!.fullName,
+              receiver: campaign.name,
             };
             this.transferManager.transfer(transferModel).subscribe({
               next: (res) => {
-                console.log(`Đóng góp thành công: ${res}`);
+                console.log('res trong component', res);
                 this.router.navigate(['/transfer-result'], {
                   queryParams: {
                     amount: result.amount,
                     note: result.note,
-                    success: true,
+                    success: res.isSuccess,
+                    sender: res.sender,
+                    receiver: res.receiver,
                   },
                 });
               },
               error: (error) => {
-                console.log(error);
+                console.log('error trong component', error);
 
                 this.router.navigate(['/transfer-result'], {
                   queryParams: {
                     amount: result.amount,
                     note: result.note,
                     success: false,
+                    sender: this.user!.fullName,
+                    receiver: campaign.name,
                   },
                 });
               },

@@ -29,8 +29,8 @@ namespace DonationApp.Infrastructure.Services
                 {
                     await _transactionUnitOfWork.BeginTransactionAsync();
 
-                    UserAccount? fromAccount = await _transactionUnitOfWork.UserAccountRepository.FindByIdAsync(input.FromAccountNumber);
-                    CampaignAccount? toAccount = await _transactionUnitOfWork.CampaignAccountRepository.FindByIdAsync(input.ToAccountNumber);
+                    UserAccount? fromAccount = await _transactionUnitOfWork.UserAccountRepository.FindByAccountNumberAsync(input.FromAccountNumber);
+                    CampaignAccount? toAccount = await _transactionUnitOfWork.CampaignAccountRepository.FindByAccountNumberAsync(input.ToAccountNumber);
 
                     if (fromAccount == null || fromAccount.IsLocked)
                     {
@@ -76,7 +76,7 @@ namespace DonationApp.Infrastructure.Services
 
                     await _transactionUnitOfWork.SaveChangesAsync();
 
-                    var result = TransactionResult.Success;
+                    var result = TransactionResult.Success("Chuyển khoản thành công", sender: input.Sender, receiver: input.Receiver);
 
                     return result;
                 }
@@ -101,8 +101,8 @@ namespace DonationApp.Infrastructure.Services
                 {
                     await _transactionUnitOfWork.BeginTransactionAsync();
 
-                    CampaignAccount? fromAccount = await _transactionUnitOfWork.CampaignAccountRepository.FindByIdAsync(input.FromAccountNumber);
-                    UserAccount? toAccount = await _transactionUnitOfWork.UserAccountRepository.FindByIdAsync(input.ToAccountNumber);
+                    CampaignAccount? fromAccount = await _transactionUnitOfWork.CampaignAccountRepository.FindByAccountNumberAsync(input.FromAccountNumber);
+                    UserAccount? toAccount = await _transactionUnitOfWork.UserAccountRepository.FindByAccountNumberAsync(input.ToAccountNumber);
 
                     if (fromAccount == null || fromAccount.IsLocked)
                     {
@@ -148,7 +148,7 @@ namespace DonationApp.Infrastructure.Services
 
                     await _transactionUnitOfWork.SaveChangesAsync();
 
-                    return TransactionResult.Success;
+                    return TransactionResult.Success("Chuyển khoản thành công", sender: input.Sender, receiver: input.Receiver);
                 }
                 catch (Exception ex)
                 {

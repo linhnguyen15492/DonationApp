@@ -13,6 +13,8 @@ export class TransferResultComponent implements OnInit {
   amount: number = 0;
   note: string = '';
   success: boolean = false;
+  sender: string = '';
+  receiver: string = '';
 
   constructor(private route: ActivatedRoute) {}
 
@@ -21,6 +23,8 @@ export class TransferResultComponent implements OnInit {
       this.amount = params['amount'];
       this.note = params['note'];
       this.success = params['success'] === 'true';
+      this.sender = params['sender'];
+      this.receiver = params['receiver'];
 
       console.log(this.success);
     });

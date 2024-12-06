@@ -16,5 +16,8 @@ namespace DonationApp.UseCase.Models
         public string Notes { get; set; } = string.Empty;
 
         public TransferTypeEnum TransferType { get; set; }
+
+        public string Sender { get; set; } = string.Empty;
+        public string Receiver { get; set; } = string.Empty;
     }
 }

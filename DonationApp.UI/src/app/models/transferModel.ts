@@ -1,7 +1,9 @@
 export interface TransferModel {
-  fromAccount: string;
-  toAccount: string;
+  fromAccountNumber: string;
+  toAccountNumber: string;
   amount: number;
   note: string;
   type: number;
+  sender: string;
+  receiver: string;
 }

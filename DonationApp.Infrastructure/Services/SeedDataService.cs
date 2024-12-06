@@ -136,6 +136,51 @@ namespace DonationApp.Infrastructure.Services
                 result3.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
                 Messages.Enqueue("Seed data User thất bại");
             }
+
+
+            var donor1 = new ApplicationUser
+            {
+                UserName = "hcmus",
+                FullName = "Trường Đại Học Khoa Học Tự Nhiên TP.HCM",
+                Email = "system@gmail.com",
+                PhoneNumber = "0123456789",
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            var result4 = await _userManager.CreateAsync(donor1, "Abc@123");
+
+            if (result4.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(donor1, UserRoleEnum.Donor.ToString());
+                Messages.Enqueue($"Seed data User {donor1.UserName} thành công");
+            }
+            else
+            {
+                result4.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
+                Messages.Enqueue("Seed data User thất bại");
+            }
+
+            var donee1 = new ApplicationUser
+            {
+                UserName = "donee1",
+                FullName = "Nguyễn Văn A",
+                Email = "system@gmail.com",
+                PhoneNumber = "0123456789",
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            var result5 = await _userManager.CreateAsync(donee1, "Abc@123");
+
+            if (result5.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(donee1, UserRoleEnum.Donor.ToString());
+                Messages.Enqueue($"Seed data User {donee1.UserName} thành công");
+            }
+            else
+            {
+                result5.Errors.ToList().ForEach(error => Messages.Enqueue(error.Description));
+                Messages.Enqueue("Seed data User thất bại");
+            }
         }
 
         private async Task SeedRoles()
@@ -179,7 +224,7 @@ namespace DonationApp.Infrastructure.Services
                 var account = new UserAccount
                 {
                     UserId = user.Id,
-                    AccountNumber = "123456789",
+                    AccountNumber = "111111",
                     Balance = 1000000,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = user.Id
@@ -207,6 +252,31 @@ namespace DonationApp.Infrastructure.Services
                     Balance = 0,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = bank.Id,
+                    MinimumRequiredAmount = double.MinValue,
+                };
+
+                await _context.UserAccounts.AddAsync(account);
+                await _context.SaveChangesAsync();
+
+                Messages.Enqueue("Seed data UserAccount thành công");
+            }
+
+            var hcmus = await _userManager.FindByNameAsync("hcmus");
+
+            if (hcmus == null)
+            {
+                Messages.Enqueue("Không tìm thấy User");
+                return;
+            }
+            else
+            {
+                var account = new UserAccount
+                {
+                    UserId = hcmus.Id,
+                    AccountNumber = "888888",
+                    Balance = 2000000000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = hcmus.Id,
                     MinimumRequiredAmount = double.MinValue,
                 };
 
