@@ -1,6 +1,5 @@
 import { Component, OnInit, Type, Inject, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CampaignService } from './campaign.service';
 import { HttpClient } from '@angular/common/http';
 import { Campaign } from '../models/campaign';
@@ -10,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 import { TransferModel } from '../models/transferModel';
 import { User } from '../models/user';
 import { TransferResult } from '../models/transferResult';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ng-modal-confirm',
@@ -169,7 +169,7 @@ export class CampaignComponent implements OnInit {
               providers: [{ provide: 'campaign', useValue: campaign }],
             }),
           })
-          .result.then((result) => {
+          .result.then((result: { amount: any; note: any; }) => {
             console.log('result lấy từ modal, user, campaign trong component', result);
             const transferModel: TransferModel = {
               fromAccountNumber: this.user!.accountNumber,
