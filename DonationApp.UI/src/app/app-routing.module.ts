@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
+import { HeatmapComponent } from './heatmap/heatmap.component';
 import { TransferResultComponent } from './transfer-result/transfer-result.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'heatmap', component: HeatmapComponent },
   { path: 'transfer-result', component: TransferResultComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
