@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { ActorFormComponent } from './actor-form/actor-form.component';
 import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-detail.component';
 import { AuthInterceptor } from './services/authInterceptor';
+import { HeatmapComponent } from './heatmap/heatmap.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, ActorFormComponent],
@@ -24,6 +26,8 @@ import { AuthInterceptor } from './services/authInterceptor';
     NotificationComponent,
     SignupComponent,
     CampaignDetailComponent,
+    HeatmapComponent,
+    NgbModule
   ],
   providers: [provideHttpClient(),
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
