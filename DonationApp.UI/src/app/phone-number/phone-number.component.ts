@@ -23,7 +23,7 @@ var config = {
   styleUrl: './phone-number.component.css'
 })
 export class PhoneNumberComponent implements OnInit {
-  @Input() phoneNumber: string = '';
+  phoneNumber: any;
   reCapchaVerifier: any;
 
   constructor(private router: Router) { }
@@ -33,11 +33,17 @@ export class PhoneNumberComponent implements OnInit {
   }
 
   getOTP() {
+
+    // test 
+    // localStorage.setItem('phoneNumber', this.phoneNumber)
+    // this.router.navigate(['/code'])
+
     this.reCapchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', { size: 'invisible' })
 
     firebase.auth().signInWithPhoneNumber(this.phoneNumber, this.reCapchaVerifier).then((confirmationResult) => {
       localStorage.setItem('verificationId', JSON.stringify
         (confirmationResult.verificationId))
+      localStorage.setItem('phoneNumber', this.phoneNumber)
       this.router.navigate(['/code'])
     }).catch((error) => {
       alert(error.message)

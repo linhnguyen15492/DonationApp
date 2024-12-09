@@ -19,6 +19,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 export class CodeComponent implements OnInit {
   otp!: string
   verify: any;
+  phoneNumber: any;
   constructor(private router: Router) { }
 
   config = {
@@ -35,6 +36,7 @@ export class CodeComponent implements OnInit {
 
   ngOnInit() {
     this.verify = JSON.parse(localStorage.getItem('verificationId') || '{}')
+    this.phoneNumber = localStorage.getItem('phoneNumber')
     console.log(this.verify);
   }
 
@@ -43,12 +45,18 @@ export class CodeComponent implements OnInit {
   }
 
   handleClick() {
+
+    // test 
+    // this.router.navigate(['/signup'])
+
     var credentials = firebase.auth.PhoneAuthProvider.credential(this.verify, this.otp);
     firebase.auth().signInWithCredential(credentials).then((response) => {
       console.log(response);
       localStorage.setItem('user_data', JSON.stringify(response));
-      this.router.navigate(['/about'])
+      this.router.navigate(['/signup'])
     }).catch((error) => {
+      localStorage.removeItem('phoneNumber')
+      localStorage.removeItem('verificationId')
       alert(error.message)
     })
   }

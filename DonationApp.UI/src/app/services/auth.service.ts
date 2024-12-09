@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { LoginModel } from '../models/login';
@@ -24,7 +24,13 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   register(registerModel: RegisterModel): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Account/register`, registerModel);
+
+    return this.http.post(`${this.apiUrl}/Account/register`, registerModel).pipe(
+      map((response: any) => {
+        console.log(response);
+        return response.isSuccess;
+      })
+    );
   }
 
   login(loginModel: LoginModel): Observable<User> {

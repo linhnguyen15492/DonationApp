@@ -9,6 +9,7 @@ import { HeatmapComponent } from './heatmap/heatmap.component';
 import { TransferResultComponent } from './transfer-result/transfer-result.component';
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
 import { CodeComponent } from './code/code.component';
+import { RegisterResultComponent } from './register-result/register-result.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'heatmap', component: HeatmapComponent },
   { path: 'transfer-result', component: TransferResultComponent },
+  { path: 'register-result', component: RegisterResultComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'phone', component: PhoneNumberComponent },
   { path: 'code', component: CodeComponent },
@@ -27,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,4 +1,23 @@
-<div class="otp">
-    <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
-    <button (click)="handleClick()" class ="btn btn-success mt-4">Verify otp</button>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-5">
+
+            <div class="card">
+                <div class="card-header bg-outline-primary text-dark">
+                    Xác thực số điện thoại <span class="text-dark fw-bold">{{phoneNumber}}</span>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="otp">
+                        <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                        <button (click)="handleClick()" class="btn btn-success mt-4">Verify otp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- <div class="otp">
+    <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+    <button (click)="handleClick()" class="btn btn-success mt-4">Verify otp</button>
+</div> -->
