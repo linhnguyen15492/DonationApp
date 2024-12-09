@@ -1,13 +1,5 @@
 export const environment = {
-    production: false,
-    apiUrl: 'https://localhost:7112/api',
-    firebase:
-    {
-        apiKey: '',
-        authDomain: '',
-        projectId: '',
-        storageBucket: '',
-        messagingSenderId: '',
-        appId: ''
-    }
+  production: false,
+  apiUrl: 'https://localhost:7112/api',
+  firebase: {},
 };

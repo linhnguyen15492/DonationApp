@@ -13,6 +13,10 @@ import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-det
 import { AuthInterceptor } from './services/authInterceptor';
 import { HeatmapComponent } from './heatmap/heatmap.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment.development';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [AppComponent, ActorFormComponent],
@@ -27,11 +31,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SignupComponent,
     CampaignDetailComponent,
     HeatmapComponent,
-    NgbModule
+    NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
-  providers: [provideHttpClient(),
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  providers: [
+    provideHttpClient(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
