@@ -13,10 +13,10 @@ export class CampaignService {
   private campaignUrl = {
     getAllCampaigns:
       environment.apiUrl + ApiPaths.Campaign + '/get-all-campaigns',
-    addCampaign: environment.apiUrl + ApiPaths.Campaign + '/create-campaign/',
-    getCampaignById: environment.apiUrl + '/api/campaign/',
-    deleteCampaignById: environment.apiUrl + '/api/campaign/',
-    updateCampaign: environment.apiUrl + '/api/campaign/',
+    addCampaign: environment.apiUrl + ApiPaths.Campaign + '/create-campaign',
+    getCampaignById: environment.apiUrl + '/campaign/get-campaign',
+    deleteCampaignById: environment.apiUrl + '/campaign',
+    updateCampaign: environment.apiUrl + '/campaign',
   };
 
   httpOptions = {
@@ -26,7 +26,7 @@ export class CampaignService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService
-  ) { }
+  ) {}
 
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);

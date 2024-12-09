@@ -24,6 +24,7 @@ namespace DonationApp.Infrastructure.Repositories
                                             .Include(c => c.CampaignAccount)
                                             .Include(c => c.Organization)
                                             .Include(c => c.Comments)
+                                                .ThenInclude(c => c.ApplicationUser)
                                             .FirstOrDefaultAsync();
 
             if (data == null)

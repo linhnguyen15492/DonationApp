@@ -1,5 +1,5 @@
 import { Component, OnInit, Type, Inject, Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CampaignService } from './campaign.service';
 import { HttpClient } from '@angular/common/http';
 import { Campaign } from '../models/campaign';
@@ -93,7 +93,7 @@ const MODALS: { [name: string]: Type<any> } = {
 
 @Component({
   selector: 'app-campaign',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   standalone: true,
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.css',
@@ -111,7 +111,7 @@ export class CampaignComponent implements OnInit {
     private http: HttpClient,
     private transferManager: TransferManagerService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCampaigns();
@@ -169,8 +169,11 @@ export class CampaignComponent implements OnInit {
               providers: [{ provide: 'campaign', useValue: campaign }],
             }),
           })
-          .result.then((result: { amount: any; note: any; }) => {
-            console.log('result lấy từ modal, user, campaign trong component', result);
+          .result.then((result: { amount: any; note: any }) => {
+            console.log(
+              'result lấy từ modal, user, campaign trong component',
+              result
+            );
             const transferModel: TransferModel = {
               fromAccountNumber: this.user!.accountNumber,
               toAccountNumber: campaign.accountNumber,

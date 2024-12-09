@@ -10,6 +10,7 @@ import { TransferResultComponent } from './transfer-result/transfer-result.compo
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
 import { CodeComponent } from './code/code.component';
 import { RegisterResultComponent } from './register-result/register-result.component';
+import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-detail.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'phone', component: PhoneNumberComponent },
   { path: 'code', component: CodeComponent },
+  { path: 'campaign/:id', component: CampaignDetailComponent },
 ];
 
 @NgModule({

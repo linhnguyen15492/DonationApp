@@ -6,12 +6,15 @@
 
         <div *ngFor="let campaign of campaigns" class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
               role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <title>Placeholder</title>
               <rect width="100%" height="100%" fill="#55595c" />
               <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
+            </svg> -->
+
+            <img src="/assets/images/image0.jpg" class="img-fluid rounded-start" alt="...">
+
             <div class="card-body">
               <p class="card-text">
                 <span class="fw-bold mb-2">{{ campaign.name }}</span>
@@ -30,9 +33,9 @@
                   <button type="button" class="btn btn-sm btn-outline-success" (click)="donate(campaign)">
                     Đóng góp
                   </button>
-                  <button type="button" class="btn btn-sm btn-outline-primary">
+                  <a type="button" class="btn btn-sm btn-outline-primary" [routerLink]="['/campaign', campaign.id]">
                     Chi tiết
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

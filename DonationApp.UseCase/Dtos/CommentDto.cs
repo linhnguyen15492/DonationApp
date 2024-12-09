@@ -10,6 +10,7 @@ namespace DonationApp.UseCase.Dtos
     {
         public int CampaignId { get; set; }
         public string UserId { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
     }
 }

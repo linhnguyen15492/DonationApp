@@ -11,4 +11,5 @@ export interface Campaign {
   accountBalance: number;
   id: number;
   isDeleted: boolean;
+  comments: Comment[];
 }
