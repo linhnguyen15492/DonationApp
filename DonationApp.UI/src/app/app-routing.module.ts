@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { HeatmapComponent } from './heatmap/heatmap.component';
 import { TransferResultComponent } from './transfer-result/transfer-result.component';
+import { PhoneNumberComponent } from './phone-number/phone-number.component';
+import { CodeComponent } from './code/code.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: 'heatmap', component: HeatmapComponent },
   { path: 'transfer-result', component: TransferResultComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'phone', component: PhoneNumberComponent },
+  { path: 'code', component: CodeComponent },
 ];
 
 @NgModule({
