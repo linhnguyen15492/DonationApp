@@ -14,7 +14,7 @@ namespace DonationApp.Core.Interfaces.Repositories
         Task<T> InsertAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(object id);
-        Task SaveAsync();
+        Task<int> SaveAsync();
         IQueryable<T> AsQueryable();
     }
 }

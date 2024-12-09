@@ -66,9 +66,9 @@ namespace DonationApp.Infrastructure.Repositories
             }
         }
 
-        public virtual async Task SaveAsync()
+        public virtual async Task<int> SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public virtual IQueryable<T> AsQueryable()

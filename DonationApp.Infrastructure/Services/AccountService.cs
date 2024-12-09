@@ -46,6 +46,7 @@ namespace DonationApp.Infrastructure.Services
             {
                 var token = GenerateJwtToken(user);
 
+                // phải lấy được account tương ứng thì mới đăng nhập được
                 var account = await _userAccountRepository.FindByUserIdAsync(user.Id);
 
                 if (account is null)
@@ -85,19 +86,29 @@ namespace DonationApp.Infrastructure.Services
                     return false;
                 };
 
-                var result = await _userManager.CreateAsync(user, registerModel.Password);
-                if (result.Succeeded)
+                var userResult = await _userManager.CreateAsync(user, registerModel.Password);
+
+                if (userResult.Succeeded)
                 {
                     // Assign the user to the specified role
                     var roleResult = await _userManager.AddToRoleAsync(user, registerModel.RoleName);
 
-                    if (!roleResult.Succeeded)
+                    // Create a bank account for the user
+                    await _userAccountRepository.InsertAsync(new UserAccount
+                    {
+                        UserId = user.Id
+                    });
+                    var accountResult = await _userAccountRepository.SaveAsync();
+
+                    if (!roleResult.Succeeded || accountResult < 1)
                     {
                         // If role assignment fails, you might want to delete the user
                         await _userManager.DeleteAsync(user);
+
+                        return false;
                     }
 
-                    return roleResult.Succeeded;
+                    return true;
                 }
             }
 

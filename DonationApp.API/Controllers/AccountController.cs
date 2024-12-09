@@ -1,4 +1,5 @@
 ﻿using DonationApp.Core.Interfaces;
+using DonationApp.Core.Shared;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +40,7 @@ namespace DonationApp.API.Controllers
             var result = await _accountService.RegisterAsync(model);
             if (result)
             {
-                return Ok("Create user successfully!");
+                return Ok(Result<RegisterModel>.Success(model));
             }
 
             return BadRequest();
