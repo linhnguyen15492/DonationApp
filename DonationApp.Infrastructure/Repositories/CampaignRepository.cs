@@ -25,6 +25,7 @@ namespace DonationApp.Infrastructure.Repositories
                                             .Include(c => c.Organization)
                                             .Include(c => c.Comments)
                                                 .ThenInclude(c => c.ApplicationUser)
+                                            .Include(c => c.CampaignLikeCount)
                                             .FirstOrDefaultAsync();
 
             if (data == null)
@@ -47,6 +48,11 @@ namespace DonationApp.Infrastructure.Repositories
             return await _dbSet.Include(c => c.CampaignAccount)
                                 .Include(c => c.Organization)
                                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Campaign>> GetAllCampaignByUserId(string userId)
+        {
+            return await _dbSet.Where(c => c.OrganizationId == userId).ToListAsync();
         }
     }
 }

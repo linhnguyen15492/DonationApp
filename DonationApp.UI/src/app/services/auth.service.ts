@@ -21,16 +21,17 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   register(registerModel: RegisterModel): Observable<any> {
-
-    return this.http.post(`${this.apiUrl}/Account/register`, registerModel).pipe(
-      map((response: any) => {
-        console.log(response);
-        return response.isSuccess;
-      })
-    );
+    return this.http
+      .post(`${this.apiUrl}/Account/register`, registerModel)
+      .pipe(
+        map((response: any) => {
+          console.log(response);
+          return response.isSuccess;
+        })
+      );
   }
 
   login(loginModel: LoginModel): Observable<User> {
@@ -44,6 +45,7 @@ export class AuthService {
           token: token,
           accountNumber: response.accountNumber,
           fullName: response.fullName,
+          roles: response.roles,
         };
         console.log(user);
         this.setToken(token);

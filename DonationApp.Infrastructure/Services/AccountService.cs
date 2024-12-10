@@ -49,6 +49,11 @@ namespace DonationApp.Infrastructure.Services
                 // phải lấy được account tương ứng thì mới đăng nhập được
                 var account = await _userAccountRepository.FindByUserIdAsync(user.Id);
 
+                var roles = await _userManager.GetRolesAsync(user);
+
+                var rolestring = string.Join(",", roles);
+
+
                 if (account is null)
                 {
                     return Result<TokenModel>.Failure("Account not found");
@@ -61,7 +66,8 @@ namespace DonationApp.Infrastructure.Services
                     RefreshToken = token.Item2,
                     UserName = user.UserName!,
                     AccountNumber = account.AccountNumber,
-                    FullName = user.FullName
+                    FullName = user.FullName,
+                    Roles = rolestring
                 });
             }
         }

@@ -1,5 +1,6 @@
 ﻿using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
+using DonationApp.Core.Shared;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using System;
@@ -18,11 +19,6 @@ namespace DonationApp.Infrastructure.Services
         public CampaignLikeService(ICampaignLikeUnitOfWork campaignLikeUnitOfWork)
         {
             _campaignLikeUnitOfWork = campaignLikeUnitOfWork ?? throw new ArgumentNullException(nameof(campaignLikeUnitOfWork));
-        }
-
-        public Task<int> DislikeCampaignAsync(IModel model)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<int> LikeCampaignAsync(IModel model)
@@ -67,7 +63,38 @@ namespace DonationApp.Infrastructure.Services
         }
 
 
-        private async Task<bool> IsUserLikeCampaign(string userId, int campaignId)
+        public async Task<int> UnlikeCampaignAsync(IModel model)
+        {
+            var input = (LikeCampaignModel)model;
+            if (input is not null)
+            {
+                if (!await IsUserLikeCampaign(input.UserId, input.CampaignId))
+                {
+                    return -1;
+                }
+
+                await _campaignLikeUnitOfWork.BeginTransactionAsync();
+
+                var res = await _campaignLikeUnitOfWork.CampaignLikeRepository.DeleteAsync(input.UserId, input.CampaignId);
+
+                if (res > 0)
+                {
+                    var data = await _campaignLikeUnitOfWork.CampaignLikeCounterRepository.GetByCampaignIdAsync(input.CampaignId);
+
+                    if (data is not null)
+                    {
+                        data.Count -= 1;
+                        await _campaignLikeUnitOfWork.CampaignLikeCounterRepository.UpdateAsync(data);
+                    }
+                }
+
+                return await _campaignLikeUnitOfWork.SaveChangesAsync();
+            }
+            return -1;
+        }
+
+
+        public async Task<bool> IsUserLikeCampaign(string userId, int campaignId)
         {
             var record = await _campaignLikeUnitOfWork.CampaignLikeRepository.GetByUserIdAndCampaignId(userId, campaignId);
 

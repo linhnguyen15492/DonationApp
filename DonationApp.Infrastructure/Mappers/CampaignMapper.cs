@@ -22,6 +22,7 @@ namespace DonationApp.Infrastructure.Mappers
                 IsDeleted = campaign.IsDeleted,
                 AccountNumber = campaign.CampaignAccount?.AccountNumber,
                 AccountBalance = campaign.CampaignAccount?.Balance,
+                LikeCount = campaign.CampaignLikeCount?.Count ?? 0,
                 Comments = campaign.Comments?.Select(c => new CommentDto
                 {
                     UserId = c.UserId!,

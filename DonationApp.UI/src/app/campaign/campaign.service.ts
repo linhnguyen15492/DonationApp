@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.development';
 import { ApiPaths } from '../api-paths';
 import { Campaign } from '../models/campaign';
 import { MessageService } from '../services/message.service';
+import { CommentModel } from '../models/comment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,11 @@ export class CampaignService {
     getCampaignById: environment.apiUrl + '/campaign/get-campaign',
     deleteCampaignById: environment.apiUrl + '/campaign',
     updateCampaign: environment.apiUrl + '/campaign',
+    comment: environment.apiUrl + '/campaign/add-comment',
+    like: environment.apiUrl + '/campaign/like-campagin',
+    unlike: environment.apiUrl + '/campaign/unlike-campagin',
+    isLiked: environment.apiUrl + '/campaign/isLiked',
+    getCampaignsByUserId: environment.apiUrl + '/campaign/get-campaigns',
   };
 
   httpOptions = {
@@ -74,6 +80,54 @@ export class CampaignService {
       tap((_) => this.log(`deleted campaign id=${id}`)),
       catchError(this.handleError<Campaign>('deleteCampaign'))
     );
+  }
+
+  like(campaignId: number, userId: string): Observable<any> {
+    return this.http
+      .post(this.campaignUrl.like, { campaignId, userId }, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`liked campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('like'))
+      );
+  }
+
+  unlike(campaignId: number, userId: string): Observable<any> {
+    return this.http
+      .post(this.campaignUrl.unlike, { campaignId, userId }, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`unliked campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('like'))
+      );
+  }
+
+  isLiked(campaignId: number, userId: string): Observable<boolean> {
+    return this.http
+      .get<boolean>(
+        `${this.campaignUrl.isLiked}/${userId}/${campaignId}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => this.log(`liked campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('isLiked'))
+      );
+  }
+
+  comment(comment: CommentModel): Observable<any> {
+    return this.http
+      .post(this.campaignUrl.comment, comment, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`commented campaign id=${comment.campaignId}`)),
+        catchError(this.handleError<any>('comment'))
+      );
+  }
+
+  getCampaignByUserId(userId: string): Observable<Campaign[]> {
+    return this.http
+      .get<Campaign[]>(`${this.campaignUrl.getCampaignsByUserId}/${userId}`)
+      .pipe(
+        tap((_) => this.log('fetched campaigns')),
+        catchError(this.handleError<Campaign[]>('getCampaigns', []))
+      );
   }
 
   /**

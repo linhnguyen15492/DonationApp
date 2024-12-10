@@ -28,5 +28,7 @@ namespace DonationApp.UseCase.Dtos
         public double? AccountBalance { get; set; }
 
         public ICollection<CommentDto> Comments { get; set; } = new List<CommentDto>();
+
+        public int LikeCount { get; set; }
     }
 }

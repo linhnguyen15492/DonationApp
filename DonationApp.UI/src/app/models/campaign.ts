@@ -1,3 +1,5 @@
+import { CommentResponse } from "./comment";
+
 export interface Campaign {
   name: string;
   description: string;
@@ -11,5 +13,6 @@ export interface Campaign {
   accountBalance: number;
   id: number;
   isDeleted: boolean;
-  comments: Comment[];
+  comments: CommentResponse[];
+  likeCount: number;
 }

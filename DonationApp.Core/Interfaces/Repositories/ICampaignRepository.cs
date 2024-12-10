@@ -11,5 +11,7 @@ namespace DonationApp.UseCase.Repositories
     public interface ICampaignRepository : IGenericRepository<Campaign>
     {
         Task<Campaign> GetCampaignByCodeWithAccountAsync(string campaignCode);
+
+        Task<IEnumerable<Campaign>> GetAllCampaignByUserId(string userId);
     }
 }

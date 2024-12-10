@@ -15,5 +15,7 @@ namespace DonationApp.UseCase.Models
         public string UserName { get; set; } = string.Empty;
         public string AccountNumber { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
+
+        public string Roles { get; set; } = string.Empty;
     }
 }

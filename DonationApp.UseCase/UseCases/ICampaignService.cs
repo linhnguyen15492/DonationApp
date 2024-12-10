@@ -14,5 +14,6 @@ namespace DonationApp.UseCase.UseCases
         Task<Result<IDto>> UpdateCampaignAsync(IModel model);
         Task<Result<IDto>> GetCampaignByIdAsync(int id);
         Task<Result<IEnumerable<IDto>>> GetAllCampaignsAsync();
+        Task<Result<IEnumerable<IDto>>> GetAllCampaignByUserId(string userId);
     }
 }

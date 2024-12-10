@@ -10,6 +10,8 @@ namespace DonationApp.UseCase.UseCases
     public interface ICampaignLikeService
     {
         Task<int> LikeCampaignAsync(IModel model);
-        Task<int> DislikeCampaignAsync(IModel model);
+        Task<int> UnlikeCampaignAsync(IModel model);
+
+        Task<bool> IsUserLikeCampaign(string userId, int campaignId);
     }
 }

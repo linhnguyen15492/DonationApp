@@ -74,6 +74,19 @@ namespace DonationApp.Infrastructure.Services
 
         }
 
+        public async Task<Result<IEnumerable<IDto>>> GetAllCampaignByUserId(string userId)
+        {
+
+            var data = await _campaignRepository.GetAllCampaignByUserId(userId);
+
+            if (data is not null)
+            {
+                return Result<IEnumerable<IDto>>.Success(data.Select(c => c.ToCampaignDto()));
+            }
+            else return Result<IEnumerable<IDto>>.Failure("Failed to get all campaigns");
+
+        }
+
         public async Task<Result<IDto>> GetCampaignByIdAsync(int id)
         {
             var data = await _campaignRepository.GetByIdAsync(id);

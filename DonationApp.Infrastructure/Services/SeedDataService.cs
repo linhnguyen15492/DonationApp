@@ -285,6 +285,31 @@ namespace DonationApp.Infrastructure.Services
 
                 Messages.Enqueue("Seed data UserAccount thành công");
             }
+
+            var charity = await _userManager.FindByNameAsync("charity");
+
+            if (charity == null)
+            {
+                Messages.Enqueue("Không tìm thấy User");
+                return;
+            }
+            else
+            {
+                var account = new UserAccount
+                {
+                    UserId = charity.Id,
+                    AccountNumber = "111111111",
+                    Balance = 0,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = charity.Id,
+                    MinimumRequiredAmount = double.MinValue,
+                };
+
+                await _context.UserAccounts.AddAsync(account);
+                await _context.SaveChangesAsync();
+
+                Messages.Enqueue("Seed data UserAccount thành công");
+            }
         }
 
         private async Task SeedCampaigns()

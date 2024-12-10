@@ -27,5 +27,7 @@ namespace DonationApp.Core.Entities
         public bool IsActivated { get; set; }
 
         public CampaignAccount CampaignAccount { get; set; } = default!;
+
+        public CampaignLikeCount CampaignLikeCount { get; set; } = default!;
     }
 }
