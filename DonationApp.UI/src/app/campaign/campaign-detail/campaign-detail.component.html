@@ -1,85 +1,147 @@
 <style>
-    .like-button {
-        border: none;
-        background: none;
-        cursor: pointer;
-    }
+  .like-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 
-    .liked {
-        color: red;
-        font-size: 30px;
-    }
+  .liked {
+    color: red;
+    font-size: 30px;
+  }
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
-<div class="card mb-3 border-0 ">
-    <div class="row g-0">
-        <div class="col-md-6">
-            <img src="/assets/images/test.jpg" class="img-fluid rounded-start" alt="...">
+<div class="card mb-3 border-0">
+  <div class="row g-0">
+    <div class="col-md-6">
+      <img
+        src="/assets/images/test.jpg"
+        class="img-fluid rounded-start"
+        alt="..."
+      />
+
+      <div class="row">
+        <div class="col-auto">
+          <div class="mt-2">
+            <a
+              [ngClass]="{ disabled: !campaign.isActivated }"
+              routerLink="/subscribe-campaign"
+              class="fw-bold text-decoration-none btn btn-sm btn-outline-success"
+              ><i class="fa fa-plus" style="font-size: 12px"></i> Đăng ký để
+              được hỗ trợ</a
+            >
+          </div>
         </div>
-        <div class="col-md-6">
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-md-9">
-                        <h5 class="card-title">{{ campaign.name }}</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <button *ngIf="isLoggedIn" class="like-button h3" id="likeButton" (click)="onclick()"><i
-                                class="fa fa-heart" [ngClass]="{'liked': isLiked}"></i></button>
-                    </div>
-                </div>
-                <p class="card-text">{{ campaign.description }}</p>
-                <p class="card-text"><span class="text-body-secondary"> Tổ chức từ ngày {{ campaign.startDate | date:
-                        'dd/MM/yyyy' }} đến ngày {{ campaign.endDate | date: 'dd/MM/yyyy' }} tại {{ campaign.location
-                        }}</span></p>
-                <p class="card-text"><span class="text-body-secondary"> Tổ chức bởi {{ campaign.organizationName
-                        }}</span></p>
-                <p class="card-text"><span class="text-success fw-bold"> Số dư: {{ campaign.accountBalance |
-                        number:'1.0-0' }} VNĐ</span></p>
-
-                <p class="card-text"><span class="text-primary fw-bold h5">{{ campaign.likeCount | number :
-                        '1.0-0' }}
-                        &#10084; </span></p>
-
-                <div class="container-fluid overflow-auto border rounded border-secondary-subtle"
-                    style="width: 100%; height: 460px;">
-                    <div *ngFor="let comment of campaign.comments" class="m-2">
-                        <span class="fw-bold m-2">{{ comment.userName }}</span>
-                        <span class="text-body-emphasis border rounded p-1">{{ comment.content }}</span>
-                    </div>
-                </div>
-
-            </div>
+        <div class="col-auto">
+          <div class="mt-2">
+            <a
+              [ngClass]="{ disabled: !campaign.isActivated }"
+              routerLink="/donate-campaign"
+              class="fw-bold text-decoration-none btn btn-sm btn-outline-primary"
+              ><i class="fa fa-heart" style="font-size: 12px"></i> Ủng hộ
+              ngay</a
+            >
+          </div>
         </div>
-
+      </div>
     </div>
 
-    <div *ngIf="isLoggedIn; else elseBlock" class="card-footer border-0 bg-transparent">
+    <div class="col-md-6">
+      <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <textarea [(ngModel)]="commentContent" class="form-control" rows="2"></textarea>
-                </div>
-                <button (click)="comment()" class="btn btn-primary mt-2">Bình luận</button>
-
-            </div>
+          <div class="col-md-9">
+            <h5 class="card-title">{{ campaign.name }}</h5>
+          </div>
+          <div class="col-md-3">
+            <button
+              *ngIf="isLoggedIn"
+              class="like-button h3"
+              id="likeButton"
+              (click)="onclick()"
+            >
+              <i class="fa fa-heart" [ngClass]="{ liked: isLiked }"></i>
+            </button>
+          </div>
         </div>
+        <p class="card-text">{{ campaign.description }}</p>
+        <p class="card-text">
+          <span class="text-body-secondary">
+            Tổ chức từ ngày {{ campaign.startDate | date : "dd/MM/yyyy" }} đến
+            ngày {{ campaign.endDate | date : "dd/MM/yyyy" }} tại
+            {{ campaign.location }}</span
+          >
+        </p>
+        <p class="card-text">
+          <span class="text-body-secondary">
+            Tổ chức bởi {{ campaign.organizationName }}</span
+          >
+        </p>
+        <p class="card-text">
+          <span class="text-success fw-bold">
+            Số dư: {{ campaign.accountBalance | number : "1.0-0" }} VNĐ</span
+          >
+        </p>
+
+        <p class="card-text">
+          <span class="text-primary fw-bold h5"
+            >{{ campaign.likeCount | number : "1.0-0" }} &#10084;
+          </span>
+        </p>
+
+        <div
+          class="container-fluid overflow-auto border rounded border-secondary-subtle"
+          style="width: 100%; height: 460px"
+        >
+          <div *ngFor="let comment of campaign.comments" class="m-2">
+            <span class="fw-bold m-2">{{ comment.userName }}</span>
+            <span class="text-body-emphasis border rounded p-1">{{
+              comment.content
+            }}</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <ng-template #elseBlock>
-        <div class="card-footer border-0 bg-transparent">
-            <div class="row">
-                <div class="col-md-6">
-                </div>
-                <div class="col-md-6">
-                    <a class="link-offset-3 link-underline link-underline-opacity-0" style="cursor: pointer;"
-                        routerLink="/login">Đăng nhập để bình luận</a>
-                </div>
-            </div>
+  <div
+    *ngIf="isLoggedIn; else elseBlock"
+    class="card-footer border-0 bg-transparent"
+  >
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <textarea
+            [(ngModel)]="commentContent"
+            class="form-control"
+            rows="2"
+          ></textarea>
         </div>
-    </ng-template>
+        <button (click)="comment()" class="btn btn-primary mt-2">
+          Bình luận
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #elseBlock>
+    <div class="card-footer border-0 bg-transparent">
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <a
+            class="link-offset-3 link-underline link-underline-opacity-0"
+            style="cursor: pointer"
+            routerLink="/login"
+            >Đăng nhập để bình luận</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

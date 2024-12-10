@@ -15,12 +15,14 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { environment } from '../environments/environment'; 
 import { NgOtpInputComponent } from 'ng-otp-input';
+import { WeatherComponent } from './weather/weather.component';
 @NgModule({
   declarations: [
     AppComponent,
     PhoneNumberComponent,
     CodeComponent,
-    DashboardComponent
+    DashboardComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,

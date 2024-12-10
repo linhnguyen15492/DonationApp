@@ -1,9 +1,17 @@
-import { Component, OnInit, Type, Inject, Injector } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Type,
+  Inject,
+  Injector,
+  input,
+  Input,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CampaignService } from './campaign.service';
 import { HttpClient } from '@angular/common/http';
 import { Campaign } from '../models/campaign';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { TransferManagerService } from '../services/transfer-manager.service';
 import { AuthService } from '../services/auth.service';
 import { TransferModel } from '../models/transferModel';
@@ -29,9 +37,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-body">
       <p>
         Bạn có muốn đóng góp cho chương trình
-        <span class="fw-bold text-success"
-          >{{ campaign.name }} {{ campaign.accountNumber }}</span
-        >?
+        <span class="fw-bold text-success">{{ campaign.name }} </span>?
       </p>
       <input
         type="number"
@@ -50,6 +56,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
         rows="5"
       ></textarea>
     </div>
+
     <div class="modal-footer">
       <button
         type="button"
@@ -59,7 +66,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
         Hủy
       </button>
       <button
-        [disabled]="!amount.value || +amount.value === 0"
+        [ngClass]="{ disabled: !amount.value || +amount.value === 0 }"
         type="button"
         ngbAutofocus
         class="btn btn-success"
@@ -76,6 +83,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
   `,
   standalone: true,
+  imports: [NgClass, CommonModule],
 })
 export class NgModalConfirm {
   campaign: Campaign;
@@ -84,6 +92,10 @@ export class NgModalConfirm {
     @Inject('campaign') campaign: Campaign
   ) {
     this.campaign = campaign;
+  }
+
+  onchange() {
+    console.log();
   }
 }
 
@@ -101,6 +113,7 @@ const MODALS: { [name: string]: Type<any> } = {
 export class CampaignComponent implements OnInit {
   closeResult = '';
   campaigns: Campaign[] = [];
+  error: boolean = false;
 
   user: User | null = null;
 
@@ -183,9 +196,16 @@ export class CampaignComponent implements OnInit {
               sender: this.user!.fullName,
               receiver: campaign.name,
             };
+
+            if (this.user!.balance < result.amount) {
+              alert('Số dư không đủ');
+              this.error = true;
+
+              return;
+            }
+
             this.transferManager.transfer(transferModel).subscribe({
               next: (res) => {
-                console.log('res trong component', res);
                 this.router.navigate(['/transfer-result'], {
                   queryParams: {
                     amount: result.amount,

@@ -48,12 +48,13 @@ namespace DonationApp.Infrastructure.DataContext
                 }
             }
 
-            builder.Entity<CampaignLike>()
-                .HasKey(cl => new { cl.CampaignId, cl.UserId });
+            builder.Entity<CampaignLike>().HasKey(cl => new { cl.CampaignId, cl.UserId });
 
             builder.Entity<CampaignLikeCount>()
                 .HasIndex(c => c.CampaignId)
                 .IsUnique();
+
+            builder.Entity<SubscribeCampaign>().HasKey(sc => new { sc.CampaignId, sc.UserId });
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -179,5 +180,7 @@ namespace DonationApp.Infrastructure.DataContext
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
+
+        public DbSet<SubscribeCampaign> SubscribeCampaigns { get; set; }
     }
 }

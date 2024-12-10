@@ -13,6 +13,8 @@ import { RegisterResultComponent } from './register-result/register-result.compo
 import { CampaignDetailComponent } from './campaign/campaign-detail/campaign-detail.component';
 import { CampaignListComponent } from './campaign/campaign-list/campaign-list.component';
 import { UnauthorizedErrorComponent } from './unauthorized-error/unauthorized-error.component';
+import { AddCampaignComponent } from './campaign/add-campaign/add-campaign.component';
+import { SubscribeCampaignComponent } from './subscribe-campaign/subscribe-campaign.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -29,6 +31,9 @@ const routes: Routes = [
   { path: 'campaign/:id', component: CampaignDetailComponent },
   { path: 'campaignManager', component: CampaignListComponent },
   { path: 'unauthorize-error', component: UnauthorizedErrorComponent },
+  { path: 'add-campaign', component: AddCampaignComponent },
+  { path: 'subscribe-campaign', component: SubscribeCampaignComponent },
+
 ];
 
 @NgModule({

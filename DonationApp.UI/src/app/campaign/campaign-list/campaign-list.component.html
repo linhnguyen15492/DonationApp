@@ -1,3 +1,44 @@
-<div>
-  <p *ngFor="let campaign of campaigns">{{ campaign.name }}</p>
+<h5>Các chương trình quản lý bởi {{ user?.fullName }}</h5>
+
+<div class="row">
+  <div class="text-end">
+    <a routerLink="/add-campaign" class="btn btn-success">Tạo chiến dịch</a>
+  </div>
 </div>
+
+<br />
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên chiến dịch</th>
+      <th scope="col">Địa điểm</th>
+      <th scope="col">Từ ngày</th>
+      <th scope="col">Đến ngày</th>
+      <th scope="col">Tình trạng</th>
+      <th scope="col">Số dư</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let campaign of campaigns">
+      <th scope="row">{{ campaign.id }}</th>
+      <td>{{ campaign.name }}</td>
+      <td>{{ campaign.location }}</td>
+      <td>{{ campaign.startDate | date }}</td>
+      <td>{{ campaign.endDate | date }}</td>
+      <td>
+        <p *ngIf="!campaign.isActivated" class="text-danger fw-bold">
+          Deactivate
+        </p>
+        <p *ngIf="campaign.isActivated" class="text-success fw-bold">Active</p>
+      </td>
+      <td>{{ campaign.accountBalance | number : "1.0-0" }}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-success m-1">Chi tiết</button>
+        <button class="btn btn-sm btn-outline-danger m-1">Deactivate</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

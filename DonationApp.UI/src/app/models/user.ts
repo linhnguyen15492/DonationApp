@@ -5,4 +5,5 @@ export interface User {
   accountNumber: string;
   fullName: string;
   roles: string;
+  balance : number;
 }

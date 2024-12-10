@@ -67,7 +67,8 @@ namespace DonationApp.Infrastructure.Services
                     UserName = user.UserName!,
                     AccountNumber = account.AccountNumber,
                     FullName = user.FullName,
-                    Roles = rolestring
+                    Roles = rolestring,
+                    Balance = account.Balance
                 });
             }
         }

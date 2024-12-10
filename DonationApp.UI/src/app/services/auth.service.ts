@@ -46,6 +46,7 @@ export class AuthService {
           accountNumber: response.accountNumber,
           fullName: response.fullName,
           roles: response.roles,
+          balance: response.balance,
         };
         console.log(user);
         this.setToken(token);

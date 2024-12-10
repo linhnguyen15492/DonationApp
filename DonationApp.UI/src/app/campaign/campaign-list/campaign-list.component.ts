@@ -26,15 +26,17 @@ export class CampaignListComponent implements OnInit {
     this.authService.currentUser.subscribe((user) => {
       this.user = user;
 
-      if (!this.user) {
-        this.router.navigate(['/login']);
-      }
+      // if (!this.user) {
+      //   this.router.navigate(['/login']);
+      // }
 
-      if (this.user && this.user.roles !== 'CharitableOrganization') {
-        this.router.navigate(['/unauthorize-error']);
-      }
+      // if (this.user && this.user.roles !== 'CharitableOrganization') {
+      //   this.router.navigate(['/unauthorize-error']);
+      // }
 
-      this.getCampagins();
+      // this.getCampagins();
+
+      this.getAllCampaigns();
     });
   }
 
@@ -45,5 +47,13 @@ export class CampaignListComponent implements OnInit {
         console.log(campaigns);
         this.campaigns = campaigns;
       });
+  }
+
+  getAllCampaigns() {
+    this.campaignService.getCampaigns().subscribe((campaigns) => {
+      this.campaigns = campaigns;
+
+      console.log(this.campaigns);
+    });
   }
 }

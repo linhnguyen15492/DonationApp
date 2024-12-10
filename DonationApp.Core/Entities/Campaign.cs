@@ -24,10 +24,12 @@ namespace DonationApp.Core.Entities
 
         public ICollection<Rating>? Ratings { get; set; }
 
-        public bool IsActivated { get; set; }
+        public bool IsActivated { get; set; } = true;
 
         public CampaignAccount CampaignAccount { get; set; } = default!;
 
         public CampaignLikeCount CampaignLikeCount { get; set; } = default!;
+
+        public ICollection<ApplicationUser>? Subscribers { get; set; }
     }
 }

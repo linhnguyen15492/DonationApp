@@ -1,0 +1,8 @@
+          <div class="mt-2">
+            <a
+              routerLink="/donate-campaign"
+              class="fw-bold text-decoration-none btn btn-sm btn-outline-primary"
+              ><i class="fa fa-heart" style="font-size: 12px"></i> Ủng hộ
+              ngay</a
+            >
+          </div>
