@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonationApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241211080533_init")]
+    [Migration("20241211153407_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -517,7 +517,8 @@ namespace DonationApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.HasDiscriminator().HasValue("UserAccount");
                 });
@@ -684,12 +685,17 @@ namespace DonationApp.Infrastructure.Migrations
             modelBuilder.Entity("DonationApp.Core.Entities.UserAccount", b =>
                 {
                     b.HasOne("DonationApp.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("UserAccount")
+                        .HasForeignKey("DonationApp.Core.Entities.UserAccount", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("DonationApp.Core.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("UserAccount");
                 });
 
             modelBuilder.Entity("DonationApp.Core.Entities.Campaign", b =>

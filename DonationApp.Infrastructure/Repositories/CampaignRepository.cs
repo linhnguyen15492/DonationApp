@@ -52,7 +52,26 @@ namespace DonationApp.Infrastructure.Repositories
 
         public async Task<IEnumerable<Campaign>> GetAllCampaignByUserId(string userId)
         {
-            return await _dbSet.Where(c => c.OrganizationId == userId).ToListAsync();
+            return await _dbSet.Where(c => c.OrganizationId == userId)
+                                .Include(c => c.CampaignAccount)
+                                .Include(c => c.Organization)
+                                .ToListAsync();
+        }
+
+        public async Task<bool> DeactivateCompaign(int id)
+        {
+            var c = await _dbSet.FindAsync(id);
+
+            if (c == null)
+            {
+                return false;
+            }
+            else
+            {
+                c.IsActivated = false;
+                await _context.SaveChangesAsync();
+                return true;
+            }
         }
     }
 }

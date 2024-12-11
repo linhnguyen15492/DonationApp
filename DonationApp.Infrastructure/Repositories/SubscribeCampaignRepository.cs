@@ -1,6 +1,7 @@
 ﻿using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Infrastructure.DataContext;
+using DonationApp.UseCase.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,12 @@ namespace DonationApp.Infrastructure.Repositories
         public async Task<SubscribeCampaign?> GetByCampaignIdAndUserId(int campaignId, string userId)
         {
             return await _dbSet.Where(s => s.CampaignId == campaignId && s.UserId == userId).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<SubscribeCampaign>> GetSubscribersByCampaignId(int campaignId)
+        {
+            return await _dbSet.Include(c => c.ApplicationUser).ThenInclude(c => c!.UserAccount)
+                                .Where(c => c.CampaignId == campaignId).ToListAsync();
         }
     }
 }

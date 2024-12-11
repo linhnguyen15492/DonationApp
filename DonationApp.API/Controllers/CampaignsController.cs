@@ -1,6 +1,7 @@
 ﻿using DonationApp.API.Hubs;
 using DonationApp.Core.Entities;
 using DonationApp.Core.Interfaces;
+using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Core.Shared;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
@@ -22,13 +23,20 @@ namespace DonationApp.API.Controllers
 
         private readonly ICommentService _commentService;
 
+        private readonly ISubcribeCampaignRepository _subcribeCampaignRepository;
+
+        private readonly ISubscribeService _subscribeService;
+
         public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub,
-            ICampaignLikeService campaignLikeService, ICommentService commentService)
+            ICampaignLikeService campaignLikeService, ICommentService commentService,
+             ISubcribeCampaignRepository subcribeCampaignRepository, ISubscribeService subscribeService)
         {
             _campaignService = campaignService;
             _messageHub = messageHub;
             _campaignLikeService = campaignLikeService;
             _commentService = commentService;
+            _subcribeCampaignRepository = subcribeCampaignRepository;
+            _subscribeService = subscribeService;
         }
 
         [HttpPost]
@@ -198,6 +206,56 @@ namespace DonationApp.API.Controllers
             else
             {
                 return Ok(false);
+            }
+        }
+
+        [HttpGet("get-subscribers/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetSubscribersByCampaignId(int id)
+        {
+            var result = await _subscribeService.GetSubscribersByCampaignId(id);
+            if (result is not null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("deactivate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeactivateCampaign([FromBody] int campaignId)
+        {
+            var result = await _campaignService.DeactivateCampaign(campaignId);
+
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("activate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ActivateCampaign(int campaignId)
+        {
+            var result = await _campaignService.DeactivateCampaign(campaignId);
+
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

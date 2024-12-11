@@ -20,6 +20,7 @@ export class AuthService {
 
   private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
+  private userKey = 'currentUser';
 
   constructor(private http: HttpClient) {}
 
@@ -50,6 +51,7 @@ export class AuthService {
         };
         console.log(user);
         this.setToken(token);
+        this.setUser(user);
         this.currentUserSubject.next(user);
         this.isLoggedInSubject.next(true);
         return user;
@@ -64,7 +66,23 @@ export class AuthService {
 
   // Lấy token
   getToken(): string | null {
-    return sessionStorage.getItem(this.tokenKey);
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  setUser(user: User) {
+    console.log(user);
+    sessionStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  getUser(): User | null {
+    const json = localStorage.getItem(this.userKey);
+
+    let user: User;
+    user = JSON.parse(json!);
+
+    console.log('parse', user);
+
+    return user;
   }
 
   // Xóa token

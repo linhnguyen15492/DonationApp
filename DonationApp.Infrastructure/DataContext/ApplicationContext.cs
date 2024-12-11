@@ -54,7 +54,12 @@ namespace DonationApp.Infrastructure.DataContext
                 .HasIndex(c => c.CampaignId)
                 .IsUnique();
 
+            //builder.Entity<UserAccount>().HasOne(UserAccount => UserAccount.ApplicationUser)
+            //    .WithOne(ApplicationUser => ApplicationUser.UserAccount)
+            //    .HasForeignKey<UserAccount>(UserAccount => UserAccount.UserId);
+
             builder.Entity<SubscribeCampaign>().HasKey(sc => new { sc.CampaignId, sc.UserId });
+
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

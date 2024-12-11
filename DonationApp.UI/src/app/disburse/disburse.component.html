@@ -1,0 +1,54 @@
+<div class="container mt-5 w-75">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          Xác nhận chuyển tiền hỗ trợ
+        </div>
+
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="username" class="form-label"
+                >Chuyển từ chiến dịch</label
+              >
+              <p class="text-dark fw-bold h5">{{ transferModel.sender }}</p>
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Đến người nhận</label>
+              <p class="text-dark fw-bold h5">{{ transferModel.receiver }}</p>
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Nhập số tiền</label>
+              <input
+                type="number"
+                class="form-control"
+                id="name"
+                name="amount"
+                [(ngModel)]="transferModel.amount"
+                (keyup)="onChangeAmount($event)"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Lời nhắn</label>
+              <textarea
+                class="form-control"
+                name="notes"
+                [(ngModel)]="transferModel.note"
+              >
+              </textarea>
+            </div>
+
+            <div class="mb-3">
+              <app-error-message
+                [errorMessage]="errorMessage"
+              ></app-error-message>
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="error">Xác nhận</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

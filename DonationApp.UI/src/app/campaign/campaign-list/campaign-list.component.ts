@@ -56,4 +56,30 @@ export class CampaignListComponent implements OnInit {
       console.log(this.campaigns);
     });
   }
+
+  activateCampaign(campaignId: number) {
+    console.log('Activating campaign', campaignId);
+    this.campaignService.activateCampaign(campaignId).subscribe({
+      next: (data) => {
+        console.log('Campaign activated', data);
+        window.location.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  deactivateCampaign(campaignId: number) {
+    console.log('Deactivating campaign', campaignId);
+    this.campaignService.deactivateCampaign(campaignId).subscribe({
+      next: (data) => {
+        console.log('Campaign deactivated', data);
+        window.location.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 }

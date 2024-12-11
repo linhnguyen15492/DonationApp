@@ -3,7 +3,7 @@ export interface TransferModel {
   toAccountNumber: string;
   amount: number;
   note: string;
-  type: number;
+  transferType: number;
   sender: string;
   receiver: string;
 }

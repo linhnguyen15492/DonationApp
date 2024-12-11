@@ -1,4 +1,5 @@
-﻿using DonationApp.Core.Interfaces;
+﻿using DonationApp.Core.Entities;
+using DonationApp.Core.Interfaces;
 using DonationApp.Core.Shared;
 
 namespace DonationApp.UseCase.UseCases
@@ -12,6 +13,7 @@ namespace DonationApp.UseCase.UseCases
         Task<Result<IEnumerable<IDto>>> GetAllCampaignByUserId(string userId);
         Task<bool> SubscribeCampaign(IModel model);
         Task<bool> IsSubscribedCampaign(IModel model);
+        Task<bool> DeactivateCampaign(int id);
 
     }
 }

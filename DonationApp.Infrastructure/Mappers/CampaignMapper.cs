@@ -29,7 +29,7 @@ namespace DonationApp.Infrastructure.Mappers
                     Content = c.Content,
                     CampaignId = c.CampaignId,
                     UserName = c.ApplicationUser?.FullName!
-                }).ToList() ?? new List<CommentDto>()
+                }).ToList() ?? new List<CommentDto>(),                
             };
         }
 

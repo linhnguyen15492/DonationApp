@@ -43,7 +43,20 @@
           [routerLink]="['/manage-campaign', campaign.id]"
           >Chi tiết</a
         >
-        <button class="btn btn-sm btn-outline-danger m-1">Deactivate</button>
+        <button
+        (click)="deactivateCampaign(campaign.id)"
+          *ngIf="campaign.isActivated"
+          class="btn btn-sm btn-outline-danger m-1"
+        >
+          Deactivate
+        </button>
+        <button
+          (click)="activateCampaign(campaign.id)"
+          *ngIf="!campaign.isActivated"
+          class="btn btn-sm btn-outline-primary m-1"
+        >
+          Activate
+        </button>
       </td>
     </tr>
   </tbody>

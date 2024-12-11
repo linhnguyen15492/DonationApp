@@ -16,6 +16,7 @@ import { UnauthorizedErrorComponent } from './unauthorized-error/unauthorized-er
 import { AddCampaignComponent } from './campaign/add-campaign/add-campaign.component';
 import { SubscribeCampaignComponent } from './subscribe-campaign/subscribe-campaign.component';
 import { ManageCampaignComponent } from './manage-campaign/manage-campaign.component';
+import { DisburseComponent } from './disburse/disburse.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -35,6 +36,8 @@ const routes: Routes = [
   { path: 'add-campaign', component: AddCampaignComponent },
   { path: 'subscribe-campaign', component: SubscribeCampaignComponent },
   { path: 'manage-campaign/:id', component: ManageCampaignComponent },
+  { path: 'disburse', component: DisburseComponent },
+
 ];
 
 @NgModule({

@@ -56,6 +56,7 @@ builder.Services.AddScoped<ICampaignLikeService, CampaignLikeService>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ISubscribeService, SubscribeService>();
 
 builder.Services.AddScoped<ITransferManager, TransferManager>();
 

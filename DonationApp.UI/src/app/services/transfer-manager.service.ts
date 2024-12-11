@@ -12,10 +12,21 @@ import { TransactionResult } from '../models/transactionResult';
 export class TransferManagerService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   transfer(transferModel: TransferModel): Observable<TransactionResult> {
     console.log('transferModel trong service', transferModel);
-    return this.http.post<TransactionResult>(`${this.apiUrl}/transfer/donate`, transferModel);
+    return this.http.post<TransactionResult>(
+      `${this.apiUrl}/transfer/donate`,
+      transferModel
+    );
+  }
+
+  disburse(transferModel: TransferModel): Observable<TransactionResult> {
+    console.log('transferModel trong service', transferModel);
+    return this.http.post<TransactionResult>(
+      `${this.apiUrl}/transfer/disburse`,
+      transferModel
+    );
   }
 }

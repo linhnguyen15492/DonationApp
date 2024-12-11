@@ -192,7 +192,7 @@ export class CampaignComponent implements OnInit {
               toAccountNumber: campaign.accountNumber,
               amount: result.amount,
               note: result.note,
-              type: 0,
+              transferType: 0,
               sender: this.user!.fullName,
               receiver: campaign.name,
             };

@@ -58,8 +58,12 @@ namespace DonationApp.API.Controllers
             {
                 return BadRequest(result.ResultCode.ToString());
             }
+
+            notifications.Add($"{model.Sender} vừa thực hiện chi hỗ trợ cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            await _messageHub.Clients.All.PushNotificationAsync(notifications);
             return Ok(result);
         }
+
 
         [HttpPost("mock-donate")]
         public async Task<IActionResult> MockDonateAsync([FromBody] TransferModel model)

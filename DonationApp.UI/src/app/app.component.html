@@ -302,7 +302,7 @@
             </li>
           </ul>
 
-          <div *ngIf="!isLoggedIn" class="col-md-3 text-end">
+          <div *ngIf="!user" class="col-md-3 text-end">
             <button
               routerLink="/login"
               type="button"
@@ -313,9 +313,9 @@
             <a class="btn btn-primary" routerLink="/phone">Sign-up</a>
           </div>
 
-          <div *ngIf="isLoggedIn" class="col-md-3 text-end">
+          <div *ngIf="user != null" class="col-md-3 text-end">
             Xin chào,
-            <span class="fw-bold text-success">{{ user?.username }}</span>
+            <span class="fw-bold text-success">{{ user.username }}</span>
             <a class="btn btn-sm btn-outline-danger ms-2" (click)="logout()">
               Logout
             </a>

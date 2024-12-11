@@ -10,5 +10,7 @@ namespace DonationApp.Core.Interfaces.Repositories
     public interface ISubcribeCampaignRepository : IGenericRepository<SubscribeCampaign>
     {
         public Task<SubscribeCampaign?> GetByCampaignIdAndUserId(int campaignId, string userId);
+
+        public Task<IEnumerable<SubscribeCampaign>> GetSubscribersByCampaignId(int campaignId);
     }
 }

@@ -8,10 +8,10 @@ import { AuthService } from './services/auth.service';
 import { User } from './models/user';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private authService: AuthService) {}
@@ -24,6 +24,10 @@ export class AppComponent {
       this.isLoggedIn = user !== null;
       this.user = user;
     });
+
+    this.user = this.authService.getUser();
+
+    console.log('user', this.user);
   }
 
   logout() {

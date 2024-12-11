@@ -1,1 +1,60 @@
-<p>manage-campaign works!</p>
+<div class="container-fluid">
+  <h3>{{ campaign.name }}</h3>
+
+  <div class="mb-3 row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Số dư</label>
+    <div class="col-sm-10">
+      <input
+        type="text"
+        readonly
+        class="form-control-plaintext text-success fw-bold h6"
+        id="staticEmail"
+        value="{{ campaign.accountBalance | number : '1.0-0' }}"
+      />
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Họ tên</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Email</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sub of subscribers">
+        <td>{{ sub.fullName }}</td>
+        <td>{{ sub.phoneNumber }}</td>
+        <td>{{ sub.address }}</td>
+        <td>{{ sub.email }}</td>
+        <td>
+          <div
+            *ngIf="sub.subscribeStatus === 'Pending'"
+            class="text-warning fw-bold"
+          >
+            {{ sub.subscribeStatus }}
+          </div>
+          <div
+            *ngIf="sub.subscribeStatus === 'Verified'"
+            class="text-success fw-bold"
+          >
+            {{ sub.subscribeStatus }}
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-success me-2">Phê duyệt</button>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            (click)="disburse(campaign, sub)"
+          >
+            Chi hỗ trợ
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

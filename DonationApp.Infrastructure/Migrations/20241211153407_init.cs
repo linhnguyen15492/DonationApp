@@ -334,7 +334,8 @@ namespace DonationApp.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_UserId",
                 table: "BankAccount",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CampaignLikeCounts_CampaignId",

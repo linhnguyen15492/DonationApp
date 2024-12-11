@@ -6,6 +6,7 @@ import { ApiPaths } from '../api-paths';
 import { Campaign, CreateCampaign } from '../models/campaign';
 import { MessageService } from '../services/message.service';
 import { CommentModel } from '../models/comment';
+import { Subscriber } from '../models/subscriber';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,9 @@ export class CampaignService {
     getCampaignsByUserId: environment.apiUrl + '/campaign/get-campaigns',
     subscribeCampaign: environment.apiUrl + '/campaign/subscribe',
     isSubscribed: environment.apiUrl + '/campaign/is-subscribe',
+    getSubscribers: environment.apiUrl + '/campaign/get-subscribers',
+    activate: environment.apiUrl + '/campaign/activate',
+    deactivate: environment.apiUrl + '/campaign/deactivate',
   };
 
   httpOptions = {
@@ -155,6 +159,33 @@ export class CampaignService {
       .pipe(
         tap((_) => this.log(`liked campaign id=${campaignId}`)),
         catchError(this.handleError<any>('isLiked'))
+      );
+  }
+
+  getSubscribers(campaignId: number): Observable<Subscriber[]> {
+    return this.http
+      .get<Subscriber[]>(`${this.campaignUrl.getSubscribers}/${campaignId}`)
+      .pipe(
+        tap((_) => this.log(`get subscribers of id=${campaignId}`)),
+        catchError(this.handleError<Subscriber[]>('isLiked'))
+      );
+  }
+
+  activateCampaign(campaignId: number): Observable<any> {
+    return this.http
+      .post(`${this.campaignUrl.activate}`, campaignId, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`activated campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('activateCampaign'))
+      );
+  }
+
+  deactivateCampaign(campaignId: number): Observable<any> {
+    return this.http
+      .post(`${this.campaignUrl.deactivate}`, campaignId, this.httpOptions)
+      .pipe(
+        tap((_) => this.log(`deactivated campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('deactivateCampaign'))
       );
   }
 
