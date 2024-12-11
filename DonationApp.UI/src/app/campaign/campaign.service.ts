@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiPaths } from '../api-paths';
-import { Campaign } from '../models/campaign';
+import { Campaign, CreateCampaign } from '../models/campaign';
 import { MessageService } from '../services/message.service';
 import { CommentModel } from '../models/comment';
 
@@ -23,6 +23,8 @@ export class CampaignService {
     unlike: environment.apiUrl + '/campaign/unlike-campagin',
     isLiked: environment.apiUrl + '/campaign/isLiked',
     getCampaignsByUserId: environment.apiUrl + '/campaign/get-campaigns',
+    subscribeCampaign: environment.apiUrl + '/campaign/subscribe',
+    isSubscribed: environment.apiUrl + '/campaign/is-subscribe',
   };
 
   httpOptions = {
@@ -62,7 +64,7 @@ export class CampaignService {
       );
   }
 
-  addCampaign(campaign: Campaign): Observable<Campaign> {
+  addCampaign(campaign: CreateCampaign): Observable<Campaign> {
     return this.http
       .post<Campaign>(this.campaignUrl.addCampaign, campaign, this.httpOptions)
       .pipe(
@@ -127,6 +129,32 @@ export class CampaignService {
       .pipe(
         tap((_) => this.log('fetched campaigns')),
         catchError(this.handleError<Campaign[]>('getCampaigns', []))
+      );
+  }
+
+  subscribeCampaign(campaignId: number, userId: string): Observable<any> {
+    return this.http
+      .post(
+        this.campaignUrl.subscribeCampaign,
+        { campaignId, userId },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => this.log(`liked campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('like'))
+      );
+  }
+
+  isSubscribed(campaignId: number, userId: string): Observable<boolean> {
+    return this.http
+      .post<boolean>(
+        `${this.campaignUrl.isSubscribed}`,
+        { campaignId, userId },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => this.log(`liked campaign id=${campaignId}`)),
+        catchError(this.handleError<any>('isLiked'))
       );
   }
 

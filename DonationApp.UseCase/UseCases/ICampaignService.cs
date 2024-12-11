@@ -1,10 +1,5 @@
 ﻿using DonationApp.Core.Interfaces;
 using DonationApp.Core.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DonationApp.UseCase.UseCases
 {
@@ -15,5 +10,8 @@ namespace DonationApp.UseCase.UseCases
         Task<Result<IDto>> GetCampaignByIdAsync(int id);
         Task<Result<IEnumerable<IDto>>> GetAllCampaignsAsync();
         Task<Result<IEnumerable<IDto>>> GetAllCampaignByUserId(string userId);
+        Task<bool> SubscribeCampaign(IModel model);
+        Task<bool> IsSubscribedCampaign(IModel model);
+
     }
 }

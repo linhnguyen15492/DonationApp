@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonationApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241210113116_init")]
+    [Migration("20241211080533_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -313,6 +313,10 @@ namespace DonationApp.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubscribeStatus")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("CampaignId", "UserId");

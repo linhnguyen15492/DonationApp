@@ -220,7 +220,8 @@ namespace DonationApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     CampaignId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    SubscribeStatus = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

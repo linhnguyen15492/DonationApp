@@ -1,1 +1,76 @@
-<p>add-campaign works!</p>
+<div class="row">
+  <div class="col-6">
+    <div class="form-control">
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Tên chiến dịch</label>
+        <input
+          [(ngModel)]="campaign.name"
+          name="name"
+          type="text"
+          class="form-control"
+          id=""
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Địa điểm</label>
+        <input
+          type="text"
+          class="form-control"
+          id=""
+          name="location"
+          [(ngModel)]="campaign.location"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col-6">
+            <label for="" class="form-label fw-bold">Từ ngày</label>
+            <input
+              class="form-control"
+              id=""
+              rows="3"
+              type="date"
+              [(ngModel)]="campaign.startDate"
+            />
+          </div>
+          <div class="col-6">
+            <label for="" class="form-label fw-bold">Đến ngày</label>
+            <input
+              class="form-control"
+              id=""
+              rows="3"
+              type="date"
+              [(ngModel)]="campaign.endDate"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="form-label fw-bold">Mô tả</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id=""
+          placeholder="Nhập mô tả"
+          rows="3"
+          [(ngModel)]="campaign.description"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col-6">
+            <button class="btn btn-primary" (click)="createCampaign()">
+              Tạo chiến dịch
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Campaign } from 'src/app/models/campaign';
 import { CampaignService } from '../campaign.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
 import { CommentModel, CommentResponse } from 'src/app/models/comment';
 import { FormsModule } from '@angular/forms';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -27,7 +28,8 @@ export class CampaignDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private campaignService: CampaignService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -158,5 +160,16 @@ export class CampaignDetailComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  subscribe() {
+    console.log('user logged in: ', this.isLoggedIn);
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/subscribe-campaign'], {
+        queryParams: { id: this.campaign.id },
+      });
+    }
   }
 }

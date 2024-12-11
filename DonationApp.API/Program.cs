@@ -43,6 +43,7 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ICampaignLikeRepository, CampaignLikeRepository>();
 builder.Services.AddScoped<ICampaignLikeCountRepository, CampaignLikeCountRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ISubcribeCampaignRepository, SubscribeCampaignRepository>();
 
 
 builder.Services.AddScoped<ITransactionUnitOfWork, TransactionUnitOfWork>();

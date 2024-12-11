@@ -86,7 +86,7 @@ namespace DonationApp.API.Controllers
         [Route("get-campaigns/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllCampaignsAsync([FromRoute]string userId)
+        public async Task<IActionResult> GetAllCampaignsAsync([FromRoute] string userId)
         {
             var result = await _campaignService.GetAllCampaignByUserId(userId);
 
@@ -158,6 +158,39 @@ namespace DonationApp.API.Controllers
         public async Task<IActionResult> IsUserLikeCampaign(string userId, int campaignId)
         {
             var result = await _campaignLikeService.IsUserLikeCampaign(userId, campaignId);
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+
+
+        [HttpPost("subscribe")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> SubscribeCampaign([FromBody] SubscribeModel model)
+        {
+            var result = await _campaignService.SubscribeCampaign(model);
+            if (result)
+            {
+                return Ok("Success");
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("is-subscribe")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> IsSubscribedCampaign([FromBody] SubscribeModel model)
+        {
+            var result = await _campaignService.IsSubscribedCampaign(model);
             if (result)
             {
                 return Ok(true);

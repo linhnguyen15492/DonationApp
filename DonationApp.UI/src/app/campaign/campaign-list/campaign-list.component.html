@@ -2,7 +2,9 @@
 
 <div class="row">
   <div class="text-end">
-    <a routerLink="/add-campaign" class="btn btn-success">Tạo chiến dịch</a>
+    <a routerLink="/add-campaign" class="btn btn-success">
+      <span class="h6">&#43;</span> Thêm mới</a
+    >
   </div>
 </div>
 
@@ -36,7 +38,11 @@
       </td>
       <td>{{ campaign.accountBalance | number : "1.0-0" }}</td>
       <td>
-        <button class="btn btn-sm btn-outline-success m-1">Chi tiết</button>
+        <a
+          class="btn btn-sm btn-outline-success m-1"
+          [routerLink]="['/manage-campaign', campaign.id]"
+          >Chi tiết</a
+        >
         <button class="btn btn-sm btn-outline-danger m-1">Deactivate</button>
       </td>
     </tr>

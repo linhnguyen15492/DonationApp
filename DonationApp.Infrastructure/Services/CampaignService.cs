@@ -1,4 +1,5 @@
 ﻿using DonationApp.Core.Entities;
+using DonationApp.Core.Enums;
 using DonationApp.Core.Interfaces;
 using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Core.Shared;
@@ -16,10 +17,14 @@ namespace DonationApp.Infrastructure.Services
 
         private readonly ICampaignAccountRepository _campaignAccountRepository;
 
-        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository)
+        private readonly ISubcribeCampaignRepository _subcribeCampaignRepository;
+
+        public CampaignService(ICampaignRepository campaignRepository, ICampaignAccountRepository campaignAccountRepository,
+            ISubcribeCampaignRepository subcribeCampaignRepository)
         {
             _campaignRepository = campaignRepository ?? throw new ArgumentNullException(nameof(campaignRepository));
             _campaignAccountRepository = campaignAccountRepository ?? throw new ArgumentNullException(nameof(campaignAccountRepository));
+            _subcribeCampaignRepository = subcribeCampaignRepository ?? throw new ArgumentNullException(nameof(subcribeCampaignRepository));
         }
 
         public async Task<Result<IDto>> CreateCampaignAsync(IModel model)
@@ -101,6 +106,54 @@ namespace DonationApp.Infrastructure.Services
         public Task<Result<IDto>> UpdateCampaignAsync(IModel model)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> SubscribeCampaign(IModel model)
+        {
+            var input = model as SubscribeModel;
+
+            if (input is not null)
+            {
+                try
+                {
+                    var subscribe = new SubscribeCampaign()
+                    {
+                        CampaignId = input.CampaignId,
+                        UserId = input.UserId,
+                        SubscribeStatus = SubscribeStatusEnum.Pending.ToString()
+                    };
+
+                    await _subcribeCampaignRepository.InsertAsync(subscribe);
+                    await _subcribeCampaignRepository.SaveAsync();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsSubscribedCampaign(IModel model)
+        {
+            var input = model as SubscribeModel;
+
+            if (input is not null)
+            {
+                var res = await _subcribeCampaignRepository.GetByCampaignIdAndUserId(input.CampaignId, input.UserId);
+
+                if (res is not null)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
         }
     }
 }

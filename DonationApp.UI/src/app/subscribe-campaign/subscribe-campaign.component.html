@@ -13,66 +13,75 @@
   }
 </style>
 
-<h2>Hướng dẫn đăng ký nhận hỗ trợ từ thiện</h2>
+<div class="mb-5">
+  <h2>Hướng dẫn đăng ký nhận hỗ trợ từ thiện</h2>
 
-<p>
-  Để đăng ký nhận hỗ trợ từ các chương trình từ thiện, bạn có thể thực hiện theo
-  các bước sau:
-</p>
+  <p>
+    Để đăng ký nhận hỗ trợ từ các chương trình từ thiện, bạn có thể thực hiện
+    theo các bước sau:
+  </p>
 
-<ol>
-  <li>
-    <strong>Tìm hiểu thông tin về các tổ chức từ thiện:</strong>
-    <ul>
-      <li>Nghiên cứu thông tin trên các website, mạng xã hội.</li>
-      <li>Liên hệ trực tiếp với tổ chức để được tư vấn.</li>
-    </ul>
-  </li>
-  <li>
-    <strong>Liên hệ với tổ chức từ thiện:</strong>
-    <ul>
-      <li>Gọi điện.</li>
-      <li>Gửi email.</li>
-      <li>Đến trực tiếp.</li>
-    </ul>
-  </li>
-  <li>
-    <strong>Thu thập đầy đủ hồ sơ:</strong>
-    <ul>
-      <li>Đọc kỹ hướng dẫn đăng ký.</li>
-      <li>Chuẩn bị đầy đủ giấy tờ.</li>
-      <li>Kiểm tra kỹ hồ sơ trước khi gửi.</li>
-    </ul>
-  </li>
-  <li>
-    <strong>Nộp hồ sơ:</strong>
-    <ul>
-      <li>Gửi trực tiếp.</li>
-      <li>Gửi qua bưu điện.</li>
-      <li>Gửi qua email.</li>
-    </ul>
-  </li>
-  <li>
-    <strong>Theo dõi và chờ kết quả:</strong>
-    <ul>
-      <li>Liên lạc định kỳ với tổ chức.</li>
-      <li>Kiên nhẫn chờ đợi.</li>
-    </ul>
-  </li>
-</ol>
+  <ol>
+    <li>
+      <strong>Tìm hiểu thông tin về các tổ chức từ thiện:</strong>
+      <ul>
+        <li>Nghiên cứu thông tin trên các website, mạng xã hội.</li>
+        <li>Liên hệ trực tiếp với tổ chức để được tư vấn.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Liên hệ với tổ chức từ thiện:</strong>
+      <ul>
+        <li>Gọi điện.</li>
+        <li>Gửi email.</li>
+        <li>Đến trực tiếp.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Thu thập đầy đủ hồ sơ:</strong>
+      <ul>
+        <li>Đọc kỹ hướng dẫn đăng ký.</li>
+        <li>Chuẩn bị đầy đủ giấy tờ.</li>
+        <li>Kiểm tra kỹ hồ sơ trước khi gửi.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Nộp hồ sơ:</strong>
+      <ul>
+        <li>Gửi trực tiếp.</li>
+        <li>Gửi qua bưu điện.</li>
+        <li>Gửi qua email.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Theo dõi và chờ kết quả:</strong>
+      <ul>
+        <li>Liên lạc định kỳ với tổ chức.</li>
+        <li>Kiên nhẫn chờ đợi.</li>
+      </ul>
+    </li>
+  </ol>
 
-<p><strong>Một số tổ chức từ thiện uy tín tại Việt Nam:</strong></p>
-<ul>
-  <li>Quỹ Bảo trợ trẻ em Việt Nam</li>
-  <li>Tổ chức Trẻ em Rồng Xanh</li>
-  <li>Quỹ Hy Vọng</li>
-  <li>Tổ chức Operation Smile</li>
-</ul>
+  <p><strong>Một số tổ chức từ thiện uy tín tại Việt Nam:</strong></p>
+  <ul>
+    <li>Quỹ Bảo trợ trẻ em Việt Nam</li>
+    <li>Tổ chức Trẻ em Rồng Xanh</li>
+    <li>Quỹ Hy Vọng</li>
+    <li>Tổ chức Operation Smile</li>
+  </ul>
 
-<p><strong>Lời khuyên:</strong></p>
-<ul>
-  <li>Tìm kiếm sự hỗ trợ từ người thân, bạn bè.</li>
-  <li>Tham gia các hoạt động cộng đồng.</li>
-</ul>
+  <p><strong>Lời khuyên:</strong></p>
+  <ul>
+    <li>Tìm kiếm sự hỗ trợ từ người thân, bạn bè.</li>
+    <li>Tham gia các hoạt động cộng đồng.</li>
+  </ul>
 
-<button class="btn btn-success" (click)="onSubscribe()">Đăng ký</button>
+  <div>
+    <button *ngIf="!subscribed" class="btn btn-success" (click)="onSubscribe()">
+      Đăng ký
+    </button>
+    <button *ngIf="subscribed" class="btn btn-warning" disabled>
+      Đã đăng ký
+    </button>
+  </div>
+</div>

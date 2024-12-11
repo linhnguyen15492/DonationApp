@@ -312,6 +312,10 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
+                    b.Property<string>("SubscribeStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("CampaignId", "UserId");
 
                     b.HasIndex("UserId");

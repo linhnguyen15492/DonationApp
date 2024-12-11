@@ -30,7 +30,7 @@
           <div class="mt-2">
             <a
               [ngClass]="{ disabled: !campaign.isActivated }"
-              routerLink="/subscribe-campaign"
+              (click)="subscribe()"
               class="fw-bold text-decoration-none btn btn-sm btn-outline-success"
               ><i class="fa fa-plus" style="font-size: 12px"></i> Đăng ký để
               được hỗ trợ</a

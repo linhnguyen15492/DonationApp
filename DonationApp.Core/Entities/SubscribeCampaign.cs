@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DonationApp.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace DonationApp.Core.Entities
 
         [ForeignKey("UserId")]
         public ApplicationUser? ApplicationUser { get; set; }
+
+        public string SubscribeStatus { get; set; } = string.Empty;
     }
 }

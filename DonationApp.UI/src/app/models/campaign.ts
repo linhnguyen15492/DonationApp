@@ -1,4 +1,4 @@
-import { CommentResponse } from "./comment";
+import { CommentResponse } from './comment';
 
 export interface Campaign {
   name: string;
@@ -15,4 +15,13 @@ export interface Campaign {
   isDeleted: boolean;
   comments: CommentResponse[];
   likeCount: number;
+}
+
+export interface CreateCampaign {
+  name: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  organizationId: string;
 }
