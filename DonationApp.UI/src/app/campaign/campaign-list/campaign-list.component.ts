@@ -23,21 +23,33 @@ export class CampaignListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe((user) => {
-      this.user = user;
+    this.user = this.authService.getUser();
 
-      if (!this.user) {
-        this.router.navigate(['/login']);
-      }
+    if (!this.user) {
+      this.router.navigate(['/login']);
+    }
 
-      if (this.user && this.user.roles !== 'CharitableOrganization') {
-        this.router.navigate(['/unauthorize-error']);
-      }
+    if (this.user && this.user.roles !== 'CharitableOrganization') {
+      this.router.navigate(['/unauthorize-error']);
+    }
 
-      this.getCampagins();
+    this.getCampagins();
 
-      // this.getAllCampaigns();
-    });
+    // this.authService.currentUser.subscribe((user) => {
+    //   this.user = user;
+
+    //   if (!this.user) {
+    //     this.router.navigate(['/login']);
+    //   }
+
+    //   if (this.user && this.user.roles !== 'CharitableOrganization') {
+    //     this.router.navigate(['/unauthorize-error']);
+    //   }
+
+    //   this.getCampagins();
+
+    //   // this.getAllCampaigns();
+    // });
   }
 
   getCampagins() {

@@ -66,16 +66,16 @@ export class AuthService {
 
   // Lấy token
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return sessionStorage.getItem(this.tokenKey);
   }
 
   setUser(user: User) {
-    console.log(user);
+    console.log('set user', user);
     sessionStorage.setItem(this.userKey, JSON.stringify(user));
   }
 
   getUser(): User | null {
-    const json = localStorage.getItem(this.userKey);
+    const json = sessionStorage.getItem(this.userKey);
 
     let user: User;
     user = JSON.parse(json!);
@@ -97,14 +97,15 @@ export class AuthService {
 
   logout() {
     // Xóa token khỏi sessionStorage
-    sessionStorage.removeItem('token');
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.userKey);
     this.currentUserSubject.next(null);
     this.isLoggedInSubject.next(false);
   }
 
   checkToken() {
     // Kiểm tra xem token có tồn tại và hợp lệ không
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
       this.http.get<User>('/api/user').subscribe(
         (user) => {
