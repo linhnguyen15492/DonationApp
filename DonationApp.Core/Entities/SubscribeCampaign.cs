@@ -21,5 +21,7 @@ namespace DonationApp.Core.Entities
         public ApplicationUser? ApplicationUser { get; set; }
 
         public string SubscribeStatus { get; set; } = string.Empty;
+
+        public bool IsVerified { get; set; }
     }
 }

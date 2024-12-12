@@ -29,6 +29,8 @@ export class CampaignService {
     getSubscribers: environment.apiUrl + '/campaign/get-subscribers',
     activate: environment.apiUrl + '/campaign/activate',
     deactivate: environment.apiUrl + '/campaign/deactivate',
+    approve: environment.apiUrl + '/campaign/verify-subscriber',
+    reject: environment.apiUrl + '/campaign/reject-subscriber',
   };
 
   httpOptions = {
@@ -186,6 +188,32 @@ export class CampaignService {
       .pipe(
         tap((_) => this.log(`deactivated campaign id=${campaignId}`)),
         catchError(this.handleError<any>('deactivateCampaign'))
+      );
+  }
+
+  approveSubscriber(subscriberId: string, campaginId: number): Observable<any> {
+    return this.http
+      .post(
+        `${this.campaignUrl.approve}`,
+        { userId: subscriberId, campaignId: campaginId },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => this.log(`approved subscriber id=${subscriberId}`)),
+        catchError(this.handleError<any>('approveSubscriber'))
+      );
+  }
+
+  rejectSubscriber(subscriberId: string, campaginId: number): Observable<any> {
+    return this.http
+      .post(
+        `${this.campaignUrl.reject}`,
+        { userId: subscriberId, campaignId: campaginId },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => this.log(`rejected subscriber id=${subscriberId}`)),
+        catchError(this.handleError<any>('approveSubscriber'))
       );
   }
 

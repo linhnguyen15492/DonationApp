@@ -15,7 +15,8 @@ namespace DonationApp.UseCase.Repositories
         Task<Campaign> GetCampaignByCodeWithAccountAsync(string campaignCode);
 
         Task<IEnumerable<Campaign>> GetAllCampaignByUserId(string userId);
-        Task<bool> DeactivateCompaign(int id);
+        Task<bool> DeactivateCampaign(int id);
+        Task<bool> ActivateCampaign(int id);
 
     }
 }

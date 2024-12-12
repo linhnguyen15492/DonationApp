@@ -221,7 +221,8 @@ namespace DonationApp.Infrastructure.Migrations
                 {
                     CampaignId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    SubscribeStatus = table.Column<string>(type: "text", nullable: false)
+                    SubscribeStatus = table.Column<string>(type: "text", nullable: false),
+                    IsVerified = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

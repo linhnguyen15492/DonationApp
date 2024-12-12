@@ -7,11 +7,11 @@ import {
 } from '@microsoft/signalr';
 
 @Component({
-    selector: 'app-notification',
-    imports: [CommonModule],
-    standalone: true,
-    templateUrl: './notification.component.html',
-    styleUrl: './notification.component.css'
+  selector: 'app-notification',
+  imports: [CommonModule],
+  standalone: true,
+  templateUrl: './notification.component.html',
+  styleUrl: './notification.component.css',
 })
 export class NotificationComponent {
   private api_url = 'https://localhost:7112/messageHub';
@@ -19,16 +19,18 @@ export class NotificationComponent {
   private hubConnectionBuilder!: HubConnection;
 
   offers: any[] = [];
-  constructor() { }
+  constructor() {}
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder()
       .withUrl(this.api_url)
       .configureLogging(LogLevel.Information)
       .build();
+
     this.hubConnectionBuilder
       .start()
       .then(() => console.log('Connection started.......!'))
       .catch((err) => console.log('Error while connect with server'));
+
     this.hubConnectionBuilder.on('PushNotificationAsync', (result: any) => {
       this.offers.push(result);
     });

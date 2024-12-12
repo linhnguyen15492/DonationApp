@@ -44,14 +44,14 @@
           >Chi tiết</a
         >
         <button
-        (click)="deactivateCampaign(campaign.id)"
+          (click)="deactivateCampaignConfirmation(campaign)"
           *ngIf="campaign.isActivated"
           class="btn btn-sm btn-outline-danger m-1"
         >
           Deactivate
         </button>
         <button
-          (click)="activateCampaign(campaign.id)"
+          (click)="activateCampaignConfirmation(campaign)"
           *ngIf="!campaign.isActivated"
           class="btn btn-sm btn-outline-primary m-1"
         >

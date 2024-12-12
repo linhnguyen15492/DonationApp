@@ -12,5 +12,7 @@ namespace DonationApp.Core.Interfaces.Repositories
         public Task<SubscribeCampaign?> GetByCampaignIdAndUserId(int campaignId, string userId);
 
         public Task<IEnumerable<SubscribeCampaign>> GetSubscribersByCampaignId(int campaignId);
+        public Task<bool> ApproveSubscriber(int campaignId, string userId);
+        public Task<bool> RejectSubscriber(int campaignId, string userId);
     }
 }

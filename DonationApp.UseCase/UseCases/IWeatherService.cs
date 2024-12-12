@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DonationApp.Core.Enums
+namespace DonationApp.UseCase.UseCases
 {
-    public enum SubscribeStatusEnum
+    public interface IWeatherService
     {
-        Pending,
-        Verified,
-        Rejected
     }
 }

@@ -158,7 +158,12 @@ namespace DonationApp.Infrastructure.Services
 
         public async Task<bool> DeactivateCampaign(int id)
         {
-            return await _campaignRepository.DeactivateCompaign(id);
+            return await _campaignRepository.DeactivateCampaign(id);
+        }
+
+        public async Task<bool> ActivateCampaign(int id)
+        {
+            return await _campaignRepository.ActivateCampaign(id);
         }
     }
 }

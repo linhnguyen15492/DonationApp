@@ -68,6 +68,8 @@ export class CampaignDetailComponent implements OnInit {
         this.user = user;
       },
     });
+
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   comment() {

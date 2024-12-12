@@ -13,12 +13,14 @@ namespace DonationApp.Infrastructure.Services
     {
         private readonly ISubcribeCampaignRepository _subcribeCampaignRepository;
 
-        private readonly IUserAccountRepository _userAccountRepository;
-
-        public SubscribeService(ISubcribeCampaignRepository subcribeCampaignRepository, IUserAccountRepository userAccountRepository)
+        public SubscribeService(ISubcribeCampaignRepository subcribeCampaignRepository)
         {
             _subcribeCampaignRepository = subcribeCampaignRepository;
-            _userAccountRepository = userAccountRepository;
+        }
+
+        public async Task<bool> ApproveSubscriber(int campaignId, string userId)
+        {
+            return await _subcribeCampaignRepository.ApproveSubscriber(campaignId, userId);
         }
 
         public async Task<IEnumerable<Subscribers>> GetSubscribersByCampaignId(int campaignId)
@@ -33,11 +35,17 @@ namespace DonationApp.Infrastructure.Services
                 Email = x.ApplicationUser.Email,
                 SubscribeStatus = x.SubscribeStatus,
                 PhoneNumber = x.ApplicationUser.PhoneNumber,
-                AccountNumber = x.ApplicationUser.UserAccount!.AccountNumber
+                AccountNumber = x.ApplicationUser.UserAccount!.AccountNumber,
+                IsVerified = x.IsVerified
             });
 
             return s;
 
+        }
+
+        public async Task<bool> RejectSubscriber(int campaignId, string userId)
+        {
+            return await _subcribeCampaignRepository.RejectSubscriber(campaignId, userId);
         }
     }
 }

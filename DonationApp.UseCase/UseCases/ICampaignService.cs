@@ -14,6 +14,7 @@ namespace DonationApp.UseCase.UseCases
         Task<bool> SubscribeCampaign(IModel model);
         Task<bool> IsSubscribedCampaign(IModel model);
         Task<bool> DeactivateCampaign(int id);
+        Task<bool> ActivateCampaign(int id);
 
     }
 }

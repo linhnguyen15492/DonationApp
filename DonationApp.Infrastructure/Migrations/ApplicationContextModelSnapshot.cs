@@ -312,6 +312,9 @@ namespace DonationApp.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("SubscribeStatus")
                         .IsRequired()
                         .HasColumnType("text");

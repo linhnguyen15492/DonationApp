@@ -23,19 +23,15 @@ namespace DonationApp.API.Controllers
 
         private readonly ICommentService _commentService;
 
-        private readonly ISubcribeCampaignRepository _subcribeCampaignRepository;
-
         private readonly ISubscribeService _subscribeService;
 
         public CampaignsController(ICampaignService campaignService, IHubContext<MessageHub, IMessageHubClient> messageHub,
-            ICampaignLikeService campaignLikeService, ICommentService commentService,
-             ISubcribeCampaignRepository subcribeCampaignRepository, ISubscribeService subscribeService)
+            ICampaignLikeService campaignLikeService, ICommentService commentService, ISubscribeService subscribeService)
         {
             _campaignService = campaignService;
             _messageHub = messageHub;
             _campaignLikeService = campaignLikeService;
             _commentService = commentService;
-            _subcribeCampaignRepository = subcribeCampaignRepository;
             _subscribeService = subscribeService;
         }
 
@@ -185,7 +181,7 @@ namespace DonationApp.API.Controllers
             var result = await _campaignService.SubscribeCampaign(model);
             if (result)
             {
-                return Ok("Success");
+                return Ok(true);
             }
             else
             {
@@ -205,7 +201,7 @@ namespace DonationApp.API.Controllers
             }
             else
             {
-                return Ok(false);
+                return BadRequest();
             }
         }
 
@@ -245,9 +241,43 @@ namespace DonationApp.API.Controllers
         [HttpPost("activate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ActivateCampaign(int campaignId)
+        public async Task<IActionResult> ActivateCampaign([FromBody] int campaignId)
         {
-            var result = await _campaignService.DeactivateCampaign(campaignId);
+            var result = await _campaignService.ActivateCampaign(campaignId);
+
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("verify-subscriber")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ApproveSubscriber([FromBody] VerifySubscriberModel model)
+        {
+            var result = await _subscribeService.ApproveSubscriber(model.CampaignId, model.UserId);
+
+            if (result)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("reject-subscriber")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RejectSubscriber([FromBody] VerifySubscriberModel model)
+        {
+            var result = await _subscribeService.RejectSubscriber(model.CampaignId, model.UserId);
 
             if (result)
             {

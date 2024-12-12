@@ -17,5 +17,6 @@ namespace DonationApp.UseCase.Dtos
         public string? PhoneNumber { get; set; }
 
         public string SubscribeStatus { get; set; } = string.Empty;
+        public bool IsVerified { get; set; }
     }
 }

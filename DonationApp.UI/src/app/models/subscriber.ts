@@ -6,4 +6,5 @@ export interface Subscriber {
   subscribeStatus: string;
   phoneNumber: string;
   address: string;
+  isVerified: boolean;
 }

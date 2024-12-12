@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonationApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241211153407_init")]
+    [Migration("20241212055426_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -314,6 +314,9 @@ namespace DonationApp.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SubscribeStatus")
                         .IsRequired()

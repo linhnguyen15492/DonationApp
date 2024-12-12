@@ -1,15 +1,28 @@
 <div class="container-fluid">
   <h3>{{ campaign.name }}</h3>
 
-  <div class="mb-3 row">
+  <div class="mb-1 row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Số dư</label>
     <div class="col-sm-10">
       <input
         type="text"
         readonly
         class="form-control-plaintext text-success fw-bold h6"
-        id="staticEmail"
         value="{{ campaign.accountBalance | number : '1.0-0' }}"
+      />
+    </div>
+  </div>
+
+  <div class="mb-1 row">
+    <label for="staticEmail" class="col-sm-2 col-form-label"
+      >Số người đăng ký</label
+    >
+    <div class="col-sm-10">
+      <input
+        type="text"
+        readonly
+        class="form-control-plaintext text-success fw-bold h6"
+        value="{{ subscribers.length | number : '1.0-0' }}"
       />
     </div>
   </div>
@@ -31,6 +44,7 @@
         <td>{{ sub.phoneNumber }}</td>
         <td>{{ sub.address }}</td>
         <td>{{ sub.email }}</td>
+
         <td>
           <div
             *ngIf="sub.subscribeStatus === 'Pending'"
@@ -44,15 +58,40 @@
           >
             {{ sub.subscribeStatus }}
           </div>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-outline-success me-2">Phê duyệt</button>
-          <button
-            class="btn btn-sm btn-outline-primary"
-            (click)="disburse(campaign, sub)"
+          <div
+            *ngIf="sub.subscribeStatus === 'Rejected'"
+            class="text-danger fw-bold"
           >
-            Chi hỗ trợ
-          </button>
+            {{ sub.subscribeStatus }}
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="sub.isVerified">
+            <button
+              class="btn btn-sm btn-outline-primary"
+              [disabled]="sub.subscribeStatus === 'Pending'"
+              (click)="disburse(campaign, sub)"
+            >
+              Chi hỗ trợ
+            </button>
+          </div>
+          <div *ngIf="!sub.isVerified">
+            <button
+              class="btn btn-sm btn-outline-success me-2"
+              [disabled]="sub.subscribeStatus === 'Rejected'"
+              (click)="approveConfirmation(campaign, sub)"
+            >
+              Phê duyệt
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger me-2"
+              [disabled]="sub.subscribeStatus === 'Rejected'"
+              (click)="rejectConfirmation(campaign, sub)"
+            >
+              Từ chối
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>

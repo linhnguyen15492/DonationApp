@@ -11,5 +11,8 @@ namespace DonationApp.UseCase.UseCases
     public interface ISubscribeService
     {
         Task<IEnumerable<Subscribers>> GetSubscribersByCampaignId(int campaignId);
+
+        Task<bool> ApproveSubscriber(int campaignId, string userId);
+        Task<bool> RejectSubscriber(int campaignId, string userId);
     }
 }
