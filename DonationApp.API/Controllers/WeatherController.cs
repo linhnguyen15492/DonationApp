@@ -28,10 +28,14 @@ namespace DonationApp.API.Controllers
             var locations = new List<GeoLocation>
             {
                 new GeoLocation(10.8333, 106.6667), // Ho Chi Minh City [10.8333, 106.6667]
-                new GeoLocation(21.7, 104.8667), // Yen Bai  [21.7, 104.8667]
-                new GeoLocation(21.2667, 106.2), // Bac Giang [21.2667, 106.2]
-                new GeoLocation(21.5928, 105.8442), // Thai Nguyen [21.5928, 105.8442]
-                new GeoLocation(21.1833, 106.05), // Bac Ninh [21.1833, 106.05]
+                new GeoLocation(21.0245, 105.8412), // Ha Noi 
+                new GeoLocation(20.858864, 106.6749591), // Hai Phong 
+                new GeoLocation(16.0678, 108.2208), // Da Nang  [16.0678, 108.2208]
+                new GeoLocation(10.0364216, 105.7875219), // Can Tho
+                //new GeoLocation(21.7, 104.8667), // Yen Bai  [21.7, 104.8667]
+                //new GeoLocation(21.2667, 106.2), // Bac Giang [21.2667, 106.2]
+                //new GeoLocation(21.5928, 105.8442), // Thai Nguyen [21.5928, 105.8442]
+                //new GeoLocation(21.1833, 106.05), // Bac Ninh [21.1833, 106.05]
             };
 
             foreach (var location in locations)
