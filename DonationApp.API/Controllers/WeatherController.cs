@@ -23,17 +23,43 @@ namespace DonationApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeather()
+        public async Task<IActionResult> PushMessage()
         {
-            var url = "https://api.openweathermap.org/data/2.5/weather?lat=10.7758439&lon=106.7017555&appid=9ffd275e699722b3981fe6eda8765244&units=metric";
+            var locations = new List<GeoLocation>
+            {
+                new GeoLocation(10.8333, 106.6667), // Ho Chi Minh City [10.8333, 106.6667]
+                new GeoLocation(21.7, 104.8667), // Yen Bai  [21.7, 104.8667]
+                new GeoLocation(21.2667, 106.2), // Bac Giang [21.2667, 106.2]
+                new GeoLocation(21.5928, 105.8442), // Thai Nguyen [21.5928, 105.8442]
+                new GeoLocation(21.1833, 106.05), // Bac Ninh [21.1833, 106.05]
+            };
+
+            foreach (var location in locations)
+            {
+                var weather = await GetWeather(location.Lat, location.Lon);
+                if (weather != null)
+                {
+                    await _messageHub.Clients.All.PushNotificationAsync(weather);
+                }
+
+                await Task.Delay(1000);
+
+            }
+
+            return Ok();
+        }
+
+        private async Task<string> GetWeather(double lat, double lon)
+        {
+            string apiKey = "9ffd275e699722b3981fe6eda8765244";
+
+            var url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric";
 
             var response = await _httpClient.GetAsync(url);
 
-            
-
             if (!response.IsSuccessStatusCode)
             {
-                return BadRequest();
+                return "Not found";
             }
 
             var body = await response.Content.ReadAsStringAsync();
@@ -45,6 +71,8 @@ namespace DonationApp.API.Controllers
             var temperature = json["main"]?["temp"]?.ToObject<double>();
             var humidity = json["main"]?["humidity"]?.ToObject<int>();
             var description = json["weather"]?[0]?["description"]?.ToString();
+            var windSpeed = json["wind"]?["speed"]?.ToObject<double>();
+            var rain = json["rain"]?["1h"]?.ToObject<double>();
 
             // Hiển thị kết quả
             Console.WriteLine($"City: {cityName}");
@@ -52,8 +80,23 @@ namespace DonationApp.API.Controllers
             Console.WriteLine($"Humidity: {humidity}%");
             Console.WriteLine($"Description: {description}");
 
+            string template = $"[Thời tiết] {cityName}, {description}, nhiệt độ {temperature}°C, độ ẩm {humidity}%, gió {windSpeed} m/s, lượng mưa {rain} mm/h";
 
-            return Ok(json);
+            return template;
         }
     }
+
+
+    public class GeoLocation
+    {
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+
+        public GeoLocation(double lat, double lon)
+        {
+            Lat = lat;
+            Lon = lon;
+        }
+    }
+
 }

@@ -66,7 +66,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
         Hủy
       </button>
       <button
-        [ngClass]="{ disabled: !amount.value || +amount.value === 0 }"
         type="button"
         ngbAutofocus
         class="btn btn-success"
@@ -83,7 +82,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
   `,
   standalone: true,
-  imports: [NgClass, CommonModule],
+  imports: [CommonModule],
 })
 export class NgModalConfirm {
   campaign: Campaign;
@@ -116,6 +115,7 @@ export class CampaignComponent implements OnInit {
   error: boolean = false;
 
   user: User | null = null;
+  isLoggedIn: boolean = false;
 
   constructor(
     private router: Router,
@@ -128,6 +128,16 @@ export class CampaignComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCampaigns();
+
+    this.isLoggedIn = this.authService.isLoggedIn();
+    console.log('isLoggedIn', this.isLoggedIn);
+
+    this.authService.currentUser.subscribe({
+      next: (user) => {
+        this.user = user;
+        console.log(this.user);
+      },
+    });
   }
 
   async getCampaigns() {
@@ -161,78 +171,73 @@ export class CampaignComponent implements OnInit {
   }
 
   donate(campaign: Campaign) {
-    this.authService.isLoggedIn$.subscribe({
-      next: (isLoggedIn) => {
-        if (!isLoggedIn) {
-          this.router.navigate(['/login']);
+    console.log('chay ham donate');
+    if (!this.isLoggedIn) {
+      console.log('kiem tra dang nhap', this.isLoggedIn);
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.user = this.authService.getUser();
+    console.log('user trong component', this.user);
+
+    console.log(this.user);
+    this.modalService
+      .open(MODALS['donateModal'], {
+        ariaLabelledBy: 'modal-basic-title',
+        injector: Injector.create({
+          providers: [{ provide: 'campaign', useValue: campaign }],
+        }),
+      })
+      .result.then((result: { amount: any; note: any }) => {
+        console.log(
+          'result lấy từ modal, user, campaign trong component',
+          result
+        );
+        const transferModel: TransferModel = {
+          fromAccountNumber: this.user!.accountNumber,
+          toAccountNumber: campaign.accountNumber,
+          amount: result.amount,
+          note: result.note,
+          transferType: 0,
+          sender: this.user!.fullName,
+          receiver: campaign.name,
+        };
+
+        if (this.user!.balance < result.amount) {
+          alert('Số dư không đủ');
+          this.error = true;
+
           return;
         }
 
-        this.authService.currentUser.subscribe({
-          next: (user) => {
-            this.user = user;
-            console.log(this.user);
-          },
-        });
-
-        this.modalService
-          .open(MODALS['donateModal'], {
-            ariaLabelledBy: 'modal-basic-title',
-            injector: Injector.create({
-              providers: [{ provide: 'campaign', useValue: campaign }],
-            }),
-          })
-          .result.then((result: { amount: any; note: any }) => {
-            console.log(
-              'result lấy từ modal, user, campaign trong component',
-              result
-            );
-            const transferModel: TransferModel = {
-              fromAccountNumber: this.user!.accountNumber,
-              toAccountNumber: campaign.accountNumber,
-              amount: result.amount,
-              note: result.note,
-              transferType: 0,
-              sender: this.user!.fullName,
-              receiver: campaign.name,
-            };
-
-            if (this.user!.balance < result.amount) {
-              alert('Số dư không đủ');
-              this.error = true;
-
-              return;
-            }
-
-            this.transferManager.transfer(transferModel).subscribe({
-              next: (res) => {
-                this.router.navigate(['/transfer-result'], {
-                  queryParams: {
-                    amount: result.amount,
-                    note: result.note,
-                    success: res.isSuccess,
-                    sender: res.sender,
-                    receiver: res.receiver,
-                  },
-                });
-              },
-              error: (error) => {
-                console.log('error trong component', error);
-
-                this.router.navigate(['/transfer-result'], {
-                  queryParams: {
-                    amount: result.amount,
-                    note: result.note,
-                    success: false,
-                    sender: this.user!.fullName,
-                    receiver: campaign.name,
-                  },
-                });
+        this.transferManager.transfer(transferModel).subscribe({
+          next: (res) => {
+            this.router.navigate(['/transfer-result'], {
+              queryParams: {
+                amount: result.amount,
+                note: result.note,
+                success: res.isSuccess,
+                sender: res.sender,
+                receiver: res.receiver,
               },
             });
-          });
-      },
-    });
+          },
+          error: (error) => {
+            console.log('error trong component', error);
+
+            this.router.navigate(['/transfer-result'], {
+              queryParams: {
+                amount: result.amount,
+                note: result.note,
+                success: false,
+                sender: this.user!.fullName,
+                receiver: campaign.name,
+              },
+            });
+          },
+        });
+      });
   }
 
   // deleteCampaignConfirmation(employee: any) {

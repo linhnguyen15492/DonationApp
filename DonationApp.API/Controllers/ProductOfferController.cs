@@ -25,7 +25,7 @@ namespace DonationApp.API.Controllers
             offers.Add("15% Off on HP Pavillion");
             offers.Add("25% Off on Samsung Smart TV");
 
-            _messageHub.Clients.All.PushNotificationAsync(offers);
+            _messageHub.Clients.All.PushNotificationsAsync(offers);
             return "Offers sent successfully to all users!";
         }
     }

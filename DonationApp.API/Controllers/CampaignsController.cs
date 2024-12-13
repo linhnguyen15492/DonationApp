@@ -51,7 +51,7 @@ namespace DonationApp.API.Controllers
             else
             {
                 var messages = new List<string> { $"New Campaign {model.Name} Created" };
-                await _messageHub.Clients.All.PushNotificationAsync(messages);
+                await _messageHub.Clients.All.PushNotificationsAsync(messages);
 
                 return Ok(result.Value);
             }

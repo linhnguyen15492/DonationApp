@@ -92,6 +92,8 @@ export class AuthService {
 
   // Kiểm tra trạng thái đăng nhập
   isLoggedIn(): boolean {
+    console.log('chay ham isLoggedIn AtuhService');
+    console.log('trang thai dang nhap', !!this.getToken());
     return !!this.getToken();
   }
 

@@ -17,6 +17,7 @@ namespace DonationApp.API.Controllers
         private IHubContext<MessageHub, IMessageHubClient> _messageHub;
 
         List<string> notifications = new List<string>();
+        Stack<string> messages = new Stack<string>();
 
         public TransferController(ITransferManager transferManager, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
@@ -39,8 +40,14 @@ namespace DonationApp.API.Controllers
                 return BadRequest(result.ResultCode.ToString());
             }
 
-            notifications.Add($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
-            await _messageHub.Clients.All.PushNotificationAsync(notifications);
+            string message = $"[Quyên góp] {model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng";
+
+            //notifications.Add($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            //messages.Push($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            //await _messageHub.Clients.All.PushNotificationAsync(messages.Pop());
+
+            await _messageHub.Clients.All.PushNotificationAsync(message);
+
             return Ok(result);
         }
 
@@ -59,8 +66,12 @@ namespace DonationApp.API.Controllers
                 return BadRequest(result.ResultCode.ToString());
             }
 
-            notifications.Add($"{model.Sender} vừa thực hiện chi hỗ trợ cho {model.Receiver} số tiền {model.Amount:N0} đồng");
-            await _messageHub.Clients.All.PushNotificationAsync(notifications);
+            string message = $"[Hỗ trợ] {model.Sender} vừa thực hiện chi hỗ trợ cho {model.Receiver} số tiền {model.Amount:N0} đồng";
+
+            //notifications.Add($"{model.Sender} vừa thực hiện chi hỗ trợ cho {model.Receiver} số tiền {model.Amount:N0} đồng");
+            //await _messageHub.Clients.All.PushNotificationsAsync(notifications);
+
+            await _messageHub.Clients.All.PushNotificationAsync(message);
             return Ok(result);
         }
 
@@ -70,7 +81,7 @@ namespace DonationApp.API.Controllers
         {
 
             notifications.Add($"{model.Sender} vừa thực hiện quyên góp cho {model.Receiver} số tiền {model.Amount:N0} đồng");
-            await _messageHub.Clients.All.PushNotificationAsync(notifications);
+            await _messageHub.Clients.All.PushNotificationsAsync(notifications);
 
             var result = TransactionResult.Success("", sender: model.Sender, receiver: model.Receiver);
 

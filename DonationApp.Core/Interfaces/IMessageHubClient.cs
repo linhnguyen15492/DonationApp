@@ -8,6 +8,7 @@ namespace DonationApp.Core.Interfaces
 {
     public interface IMessageHubClient
     {
-        Task PushNotificationAsync(List<string> message);
+        Task PushNotificationsAsync(List<string> messages);
+        Task PushNotificationAsync(string message);
     }
 }
