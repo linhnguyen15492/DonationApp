@@ -6,6 +6,8 @@ import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CampaignService } from '../campaign.service';
 import { Router } from '@angular/router';
+import { AuthInterceptor } from 'src/app/services/authInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-campaign',
@@ -24,19 +26,22 @@ export class AddCampaignComponent {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe((user) => {
-      this.user = user;
-    });
+    this.user = this.authService.getUser();
   }
 
   createCampaign() {
     this.campaign.organizationId = this.user!.id;
 
     setTimeout(() => {
-      this.campaignService.addCampaign(this.campaign).subscribe((campaign) => {
-        console.log(campaign);
+      this.campaignService.addCampaign(this.campaign).subscribe({
+        next: (campaign) => {
+          console.log(campaign);
 
-        this.router.navigate(['/campaignManager']);
+          this.router.navigate(['/campaignManager']);
+        },
+        error: (error) => {
+          console.error(error);
+        },
       });
     }, 1000);
 

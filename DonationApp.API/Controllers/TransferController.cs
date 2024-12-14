@@ -3,6 +3,7 @@ using DonationApp.Core.Interfaces;
 using DonationApp.Infrastructure.Services;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -27,6 +28,8 @@ namespace DonationApp.API.Controllers
 
 
         [HttpPost("donate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DonateAsync([FromBody] TransferModel model)
         {
             if (model.TransferType != Core.Enums.TransferTypeEnum.Donation)
@@ -53,6 +56,10 @@ namespace DonationApp.API.Controllers
 
 
         [HttpPost("disburse")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> DisburseAsync([FromBody] TransferModel model)
         {
             if (model.TransferType != Core.Enums.TransferTypeEnum.Disbursement)

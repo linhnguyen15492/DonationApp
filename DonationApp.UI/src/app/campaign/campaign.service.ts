@@ -75,7 +75,7 @@ export class CampaignService {
       .post<Campaign>(this.campaignUrl.addCampaign, campaign, this.httpOptions)
       .pipe(
         tap((newCampaign: Campaign) =>
-          this.log(`added hero w/ id=${newCampaign.id}`)
+          this.log(`added campaign w/ id=${newCampaign.id}`)
         ),
         catchError(this.handleError<Campaign>('addCampaign'))
       );

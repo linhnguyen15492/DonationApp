@@ -1,10 +1,12 @@
 ﻿using DonationApp.API.Hubs;
 using DonationApp.Core.Entities;
+using DonationApp.Core.Enums;
 using DonationApp.Core.Interfaces;
 using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Core.Shared;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -38,7 +40,8 @@ namespace DonationApp.API.Controllers
         [HttpPost]
         [Route("create-campaign")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> CreateCampaignAsync([FromBody] CampaignModel model)
         {
             var result = await _campaignService.CreateCampaignAsync(model);
@@ -224,6 +227,8 @@ namespace DonationApp.API.Controllers
         [HttpPost("deactivate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> DeactivateCampaign([FromBody] int campaignId)
         {
             var result = await _campaignService.DeactivateCampaign(campaignId);
@@ -241,6 +246,8 @@ namespace DonationApp.API.Controllers
         [HttpPost("activate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> ActivateCampaign([FromBody] int campaignId)
         {
             var result = await _campaignService.ActivateCampaign(campaignId);
@@ -258,6 +265,8 @@ namespace DonationApp.API.Controllers
         [HttpPost("verify-subscriber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> ApproveSubscriber([FromBody] VerifySubscriberModel model)
         {
             var result = await _subscribeService.ApproveSubscriber(model.CampaignId, model.UserId);
@@ -275,6 +284,8 @@ namespace DonationApp.API.Controllers
         [HttpPost("reject-subscriber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "CharitableOrganization")]
         public async Task<IActionResult> RejectSubscriber([FromBody] VerifySubscriberModel model)
         {
             var result = await _subscribeService.RejectSubscriber(model.CampaignId, model.UserId);
