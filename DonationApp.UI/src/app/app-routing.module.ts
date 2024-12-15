@@ -17,6 +17,7 @@ import { AddCampaignComponent } from './campaign/add-campaign/add-campaign.compo
 import { SubscribeCampaignComponent } from './subscribe-campaign/subscribe-campaign.component';
 import { ManageCampaignComponent } from './manage-campaign/manage-campaign.component';
 import { DisburseComponent } from './disburse/disburse.component';
+import { CharityDocumentsComponent } from './charity-documents/charity-documents.component';
 
 const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
@@ -37,7 +38,7 @@ const routes: Routes = [
   { path: 'subscribe-campaign', component: SubscribeCampaignComponent },
   { path: 'manage-campaign/:id', component: ManageCampaignComponent },
   { path: 'disburse', component: DisburseComponent },
-
+  { path: 'charity-document', component: CharityDocumentsComponent },
 ];
 
 @NgModule({
