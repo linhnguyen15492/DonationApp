@@ -160,21 +160,21 @@ namespace DonationApp.Infrastructure.Services
                 Messages.Enqueue("Seed data User thất bại");
             }
 
-            var donee1 = new ApplicationUser
+            var donee = new ApplicationUser
             {
-                UserName = "donee1",
+                UserName = "donee",
                 FullName = "Nguyễn Văn A",
                 Email = "system@gmail.com",
                 PhoneNumber = "0123456789",
                 CreatedAt = DateTime.UtcNow,
             };
 
-            var result5 = await _userManager.CreateAsync(donee1, "Abc@123");
+            var result5 = await _userManager.CreateAsync(donee, "Abc@123");
 
             if (result5.Succeeded)
             {
-                await _userManager.AddToRoleAsync(donee1, UserRoleEnum.Donor.ToString());
-                Messages.Enqueue($"Seed data User {donee1.UserName} thành công");
+                await _userManager.AddToRoleAsync(donee, UserRoleEnum.Donor.ToString());
+                Messages.Enqueue($"Seed data User {donee.UserName} thành công");
             }
             else
             {
@@ -277,7 +277,6 @@ namespace DonationApp.Infrastructure.Services
                     Balance = 2000000000,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = hcmus.Id,
-                    MinimumRequiredAmount = double.MinValue,
                 };
 
                 await _context.UserAccounts.AddAsync(account);
@@ -302,7 +301,6 @@ namespace DonationApp.Infrastructure.Services
                     Balance = 0,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = charity.Id,
-                    MinimumRequiredAmount = double.MinValue,
                 };
 
                 await _context.UserAccounts.AddAsync(account);
