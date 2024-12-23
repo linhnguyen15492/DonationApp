@@ -4,6 +4,7 @@ using DonationApp.Core.Enums;
 using DonationApp.Core.Interfaces;
 using DonationApp.Core.Interfaces.Repositories;
 using DonationApp.Core.Shared;
+using DonationApp.UseCase.Dtos;
 using DonationApp.UseCase.Models;
 using DonationApp.UseCase.UseCases;
 using Microsoft.AspNetCore.Authorization;
@@ -254,6 +255,16 @@ namespace DonationApp.API.Controllers
 
             if (result)
             {
+                var dto = await _campaignService.GetCampaignByIdAsync(campaignId);
+                var campaign = dto.Value as CampaignDto;
+
+                //var messages = new List<string> { $"Campaign {campaign.Name} Activated" };
+                //await _messageHub.Clients.All.PushNotificationsAsync(messages);
+
+                var message = $"Chương trình {campaign.Name} được tổ chức bởi {campaign.OrganizationName} đã được kích hoạt";
+                await _messageHub.Clients.All.PushNotificationAsync(message);
+
+
                 return Ok(true);
             }
             else
